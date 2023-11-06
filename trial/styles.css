@@ -1,0 +1,12 @@
+.scene {
+    display: none;
+    padding: 20px;
+    text-align: center;
+  }
+  
+.active {
+  display: block;
+}
+#gameScene {
+  background-color: rgb(43, 159, 163); /* ゲームシーンの背景を黄色に設定 */
+}
