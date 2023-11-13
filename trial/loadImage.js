@@ -24,6 +24,7 @@ function loadSpecificImages() {
     gameImages.innerHTML = ''; // 既存の画像をクリア
   
     // 特定の画像のリスト（フォルダ名とファイル名を含む）
+    //ここでは「ドカドカ空命」とひょうじする
     const specificImages = [
       { folder: '0', file: '05.gif' },
       { folder: '0', file: '03.gif' },
@@ -43,17 +44,19 @@ function loadSpecificImages() {
 
   // イベントリスナーのセットアップ関数にフォルダ選択ボタン用のリスナーを追加
 function setupListeners() {
-    document.getElementById('loadFolder0').addEventListener('click', function() {
-      loadImageFromFolder('0');
+    const gameScene = document.getElementById('gameScene');
+    gameScene.addEventListener('click', function(event) {
+      const target = event.target;
+      if (target.classList.contains('imageButton')) {
+        const folder = target.getAttribute('data-folder');
+        if (folder=="X"){
+          loadSpecificImages();
+        }
+        else if(folder){
+          loadImageFromFolder(folder);
+        }
+      }
     });
-  
-    document.getElementById('loadFolder1').addEventListener('click', function() {
-      loadImageFromFolder('1');
-    });
-
-    document.getElementById('loadSpecificImages').addEventListener('click', function() {
-        loadSpecificImages();
-      });
   
     // ...他のイベントリスナー...
 }

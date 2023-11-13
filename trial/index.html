@@ -17,16 +17,21 @@
     <h1>操作説明画面</h1>
     <p>ゲームの説明がここにくるよ</p>
     <button id="backToTitleFromInstructions">タイトルに戻る</button>
+
 </div>
 
 <div id="gameScene" class="scene">
   <h1>ゲーム画面</h1>
-  <button id="loadFolder0">空白のカード</button>
-  <button id="loadFolder1">命のカード</button>
-  <button id="loadSpecificImages">ドカドカ空命</button>
-
 
   <div id="gameImages"></div>
+
+  <div id="buttonArea">
+    <img class="imageButton" src="button/00.jpg" alt="フォルダ0" data-folder="0">
+    <img class="imageButton" src="button/01.jpg" alt="フォルダ1" data-folder="1">
+    <img class="imageButton" src="button/01.jpg" alt="フォルダ2" data-folder="X">
+  </div>
+  
+
 
   <button id="showResult">結果発表</button>
 </div>
