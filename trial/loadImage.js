@@ -42,26 +42,52 @@ function loadSpecificImages() {
     });
 }
 
+function parseCSV(text) {
+  const lines = text.split('\n');
+  const headers = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    const data = line.split(',');
+    return headers.reduce((obj, nextKey, index) => {
+      obj[nextKey] = data[index];
+      return obj;
+    }, {});
+  });
+}
+
+//ボタン画像を押したらそれに対応する画像を表示するスクリプト
   // イベントリスナーのセットアップ関数にフォルダ選択ボタン用のリスナーを追加
 function setupListeners() {
-    const gameScene = document.getElementById('gameScene');
-    gameScene.addEventListener('click', function(event) {
-      const target = event.target;
-      if (target.classList.contains('imageButton')) {
-        const folder = target.getAttribute('data-folder');
-        if (folder=="X"){
-          loadSpecificImages();
+  fetch("buttons.csv")
+    .then(response => response.text())
+    .then(text=>{
+    const buttons = parseCSV(text);
+    // ボタンエリアの取得
+    const buttonArea = document.getElementById('buttonArea');
+
+    // ボタンの動的生成
+    buttons.forEach(buttonData => {
+      const img = document.createElement('img');
+      img.classList.add('imageButton');
+      img.src = buttonData.src;
+      img.alt = buttonData.alt;
+      img.setAttribute('data-folder', buttonData.folder);
+      img.addEventListener('click', function() {
+        if (buttonData.folder=="X"){
+          loadSpecificImages()
         }
-        else if(folder){
-          loadImageFromFolder(folder);
+        else{
+          loadImageFromFolder(buttonData.folder);
         }
-      }
+      });
+      buttonArea.appendChild(img);
     });
-  
-    // ...他のイベントリスナー...
+  })
+  .catch(error => console.error("CSVの読み込みに失敗",error));
 }
-  
-  // DOMContentLoadedイベントで関数を実行
+
+
+
+// DOMContentLoadedイベントで関数を実行
 document.addEventListener('DOMContentLoaded', function() {
     setupListeners();
 });

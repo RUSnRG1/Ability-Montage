@@ -11,10 +11,18 @@
   background-color: rgb(43, 159, 163); /* ゲームシーンの背景を黄色に設定 */
 }
 
+#text span.current {
+  color: red;
+}
+
 #gameImages{
-  height: 500px;
+  height: 450px;
 }
 
 #buttonArea{
-  height: 200px;
+  height: 480px;
+}
+
+#textArea{
+  height: 100px;
 }
