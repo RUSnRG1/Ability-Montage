@@ -2,15 +2,32 @@
 const imageFolders = {
     '0': ['00.gif','01.gif','02.gif','03.gif','04.gif','05.gif'],
     '1': ['00.gif','01.gif','02.gif','03.gif','04.gif'],
+    '2': ['00.gif','01.gif','02.gif','03.gif','04.gif','05.gif','06.gif'],
+    '3': ['00.gif','01.gif','02.gif','03.gif','04.gif','05.gif','06.gif','07.gif'],
     // ...他のフォルダ...
 };
 
+//上記の各フォルダとファイル名オブジェクトを作る関数
+function generateImageNames(numberOfImages) {
+  // 画像ファイル名の配列を生成
+  let imageNames = [];
+  for (let i = 0; i < numberOfImages; i++) {
+      // ゼロ埋めした画像ファイル名を生成（例：'00.gif', '01.gif', ...）
+      let imageName = `${i.toString().padStart(2, '0')}.gif`;
+      imageNames.push(imageName);
+  }
+
+  // 結果をオブジェクトとして返す
+  return imageNames;
+}
+
 // 特定のフォルダの画像のみを読み込む関数
-function loadImageFromFolder(folderName) {
+//今はフォルダ内全部表示しているが、ゆくゆくは一枚のみ
+function loadImageFromFolder(folderName,imageNum) {
     const gameImages = document.getElementById('gameImages');
     gameImages.innerHTML = ''; // 既存の画像をクリア
   
-    const images = imageFolders[folderName];
+    const images = generateImageNames(imageNum)
     images.forEach(file => {
       const img = document.createElement('img');
       img.src = `images/${folderName}/${file}`;
@@ -72,12 +89,7 @@ function setupListeners() {
       img.alt = buttonData.alt;
       img.setAttribute('data-folder', buttonData.folder);
       img.addEventListener('click', function() {
-        if (buttonData.folder=="X"){
-          loadSpecificImages()
-        }
-        else{
-          loadImageFromFolder(buttonData.folder);
-        }
+        loadImageFromFolder(buttonData.folder,buttonData.alt.length);
       });
       buttonArea.appendChild(img);
     });
