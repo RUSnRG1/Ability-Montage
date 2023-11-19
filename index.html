@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>シンプルな画面遷移ゲーム</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+<div id="initScene" class="scene active">
+    <!-- ロード画面 -->
+    <div id="loadingScreen" style="display: none;">
+        <div class="loader"></div>
+    </div>
+</div>
+
+<div id="titleScene" class="scene">
+    <div id="titletext">タイトル画面</div>
+    <div id="touchArea"></div>
+</div>
+
+<div id="gameScene" class="scene">
+    <div id="instruction">操作説明画面</div>
+    <button id="startGameButton">ゲームスタート</button>
+
+    <!--開始演出画面-->
+    <div id="gameIntro">
+    <!-- 演出用のテキストや画像を追加 -->
+    <div id="readyGo">Ready Go!</div>
+    <!-- ここに演出用のイラストなどを追加 -->
+    </div>
+
+
+    <div id="score">スコア: 0</div>
+    <div id="timer">残り時間: 30秒</div>
+    <div id="gameImages"></div>
+    <div id="textArea">
+    <p id="text">ここにゲームの文章が表示されます</p>
+    </div>
+
+    <div id="buttonArea"></div>
+  
+</div>
+
+<div id="resultScene" class="scene">
+  <h1>リザルト画面</h1>
+  <button id="backToTitle">タイトルに戻る</button>
+</div>
+
+<script src="init.js"></script>
+<script src="titleScreen.js"></script>
+<script src="windowsize.js"></script>
+<!--<script src="instructionScreen.js"></script>-->
+<script src="gameScreen.js"></script>
+<script src="resultScreen.js"></script>
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+</body>
+</html>

@@ -1,12 +1,23 @@
 .scene {
-    display: none;
-    padding: 20px;
-    text-align: center;
-  }
-  
-.active {
+  width: 930px;   
+  height: 750px;  
+  display: none;  /* デフォルトでは非表示 */
+} 
+.scene.active {
   display: block;
 }
+#initScene{
+  background-color: rgb(33, 32, 99)
+}
+
+#titleScene{
+  background-color: rgb(163, 43, 123)
+}
+#touchArea{
+  width: 100%;   /* 画面全体の幅 */
+  height: 100%;  /* 画面全体の高さ */
+}
+
 #gameScene {
   background-color: rgb(43, 159, 163); /* ゲームシーンの背景を黄色に設定 */
 }
@@ -62,4 +73,8 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+html {
+  touch-action: manipulation;
 }
