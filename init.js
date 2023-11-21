@@ -126,6 +126,13 @@ function changeScene(sceneId) {
   document.getElementById(sceneId).classList.add('active');
 }
 
+function displayImage() {
+  const buttonArea = document.getElementById('buttonArea');
+  window.imageElements.forEach(img => {
+    img.style.boxSizing = 'border-box';
+    buttonArea.appendChild(img);
+  })
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -139,11 +146,27 @@ document.addEventListener('DOMContentLoaded', function() {
   resultimg.src = `images/Result.jpg`;
   document.getElementById("resultImage").appendChild(resultimg);
 
+  const startimg = document.createElement('img');
+  startimg.src = `images/startButton.jpg`;
+  document.getElementById("startButtonImage").appendChild(startimg);
+
+  var descriptionElement = document.querySelector('.description');
+  descriptionElement.innerText = "How to play\nアビリティカードを繋げて文を作ろう！\nカードをクリックで選択\n文の完成でお金と酸素（制限時間）が増えるぞ！\n酸素が亡くなる前にたくさん完成させよう！";
+
+  const onemoreimg = document.createElement('img');
+  onemoreimg.src = `images/OneMore.jpg`;
+  document.getElementById("oneMore").appendChild(onemoreimg);
+
+  const tweetimg = document.createElement('img');
+  tweetimg.src = `images/Tweet.jpg`;
+  document.getElementById("Tweet").appendChild(tweetimg);
+
   preloadAllResources(() => {
     setTimeout(() => {
-    hideLoadingScreen();
-    document.getElementById("titleImage").style.display = "block";
-    changeScene("titleScene");
+      displayImage();
+      hideLoadingScreen();
+      document.getElementById("titleImage").style.display = "block";
+      changeScene("titleScene");
     }, 3000);
   });
 });

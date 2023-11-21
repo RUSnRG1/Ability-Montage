@@ -20,8 +20,10 @@
 </div>
 
 <div id="gameScene" class="scene">
-    <div id="instruction">操作説明画面</div>
-    <button id="startGameButton">ゲームスタート</button>
+    <div id="methodsBox" class="box methodsBox">
+        <div class="description">ここに説明文を記述します</div>
+        <div id="startButtonImage"></div>
+    </div>
 
     <!--開始演出画面-->
     <div id="gameIntro">
@@ -36,7 +38,7 @@
     </div>
     <div id="gameImages"></div>
     <div id="textArea">
-        <p id="text">ここにゲームの文章が表示されます</p>
+        <p id="text"></p>
     </div>
 
     <div id="buttonArea"></div>
@@ -44,10 +46,14 @@
 </div>
 
 <div id="resultScene" class="scene">
-  <h1>リザルト画面</h1>
-  <div id="resultImage" style="display: none"></div>
-  <div id="scoreResult">スコア: 0</div>
-  <button id="backToTitle">タイトルに戻る</button>
+    <div id="resultImage" class="result">
+        <div id="scoreResult">スコア: 0</div>
+        <div id="oneMore"></div>
+        <div id="Tweet"></div>
+    </div>
+    <div class="tweet-text" id="tweet-text">
+        わーいわーい
+    </div>
 </div>
 
 <script src="init.js"></script>
@@ -56,6 +62,5 @@
 <!--<script src="instructionScreen.js"></script>-->
 <script src="gameScreen.js"></script>
 <script src="resultScreen.js"></script>
-<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
 </body>
 </html>

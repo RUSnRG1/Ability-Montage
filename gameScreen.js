@@ -9,7 +9,7 @@ const scoreResultElement = document.getElementById('scoreResult');
 window.score = 0; // スコア
 let timeLeft = 30; // 制限時間 (秒)
 let timerInterval = null; // タイマーのインターバルID
-
+let selectedImage = null; // 選択された画像の追跡
 
 //以下デバッグ用
 var textCount = 55;
@@ -111,21 +111,13 @@ function startTimer() {
   // イベントリスナーのセットアップ関数にフォルダ選択ボタン用のリスナーを追加
 
 function showGameScreen() {
-  document.getElementById('startGameButton').addEventListener('click', function() {
-    document.getElementById('instruction').style.display = "none";
-    document.getElementById('startGameButton').style.display = "none";
+  document.getElementById('startButtonImage').addEventListener('click', function (){
+    document.getElementById('methodsBox').style.display = "none";
     //setupListeners();
-    displayImage();
     showGameIntro();
   });
 }
 
-function displayImage() {
-  const buttonArea = document.getElementById('buttonArea');
-  window.imageElements.forEach(img => {
-    buttonArea.appendChild(img);
-  })
-}
 
 function showGameIntro() {
   const gameIntro = document.getElementById('gameIntro');
@@ -170,6 +162,12 @@ function startGame() {
   images.forEach(img => {
     img.addEventListener('click', function () {
       if (!gameActive) return;//ゲームが非アクティブならボタン押し無効
+      //選択したカードを赤枠で囲む
+      if (selectedImage) {
+        selectedImage.style.outline = "none"
+      }
+      selectedImage = img;
+      selectedImage.style.outline = "2px solid red";
       if (img.alt.includes(gameText[currentIndex])) {
         //loadImageFromFolder(img.folder, img.alt.length, img.alt.indexOf(gameText[currentIndex]));
         displayImageFromMap(Number(img.folder),gameText[currentIndex])

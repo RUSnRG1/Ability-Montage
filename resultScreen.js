@@ -12,12 +12,21 @@ function changeScene(sceneId) {
   
 // イベントリスナーをセットアップするための関数
 function setupListeners() {
-  document.getElementById('backToTitle').addEventListener('click', function() {
-    document.getElementById("resultImage").style.display = "none";
+  document.getElementById('oneMore').addEventListener('click', function () {
+    document.getElementById('methodsBox').style.display = "flex";
     changeScene('gameScene');
+  });
+  document.getElementById('Tweet').addEventListener('click', function () {
+    let text = document.getElementById("tweet-text").innerText;
+
+    // オプションパラメータを設定
+    let hashtags = "ハッシュタグ";
+    let url = encodeURIComponent(location.href)  // location.hrefは今いるURL
+
+    // URLを生成して遷移
+    window.open("https://twitter.com/share?text=" + text + "&hashtags=" + hashtags + "&url=" + url);
   });
 }
   
   // DOMContentLoadedイベントで関数を実行
 document.addEventListener('DOMContentLoaded', setupListeners);
-  

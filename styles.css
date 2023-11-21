@@ -7,6 +7,7 @@ body{
 }
 
 .scene {
+  position: relative;
   width: 930px;   
   height: 750px;  
   display: none;  /* デフォルトでは非表示 */
@@ -24,6 +25,30 @@ body{
 #titleImage{
   width: 100%;   /* 画面全体の幅 */
   height: 100%;  /* 画面全体の高さ */
+}
+
+.methodsBox{
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  width: 900px;
+  height: 405px;
+  background-color: rgba(0, 0, 0, .5);
+  color: #fff;
+  border-radius: 15px;
+  border: 2px solid #000000;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.description {
+  margin-bottom: 20px;/* 説明文とボタンの間隔 */
+  color: #f0f0f0;/* 文字色 */
+  font-size: 18px;/* 文字サイズ */
 }
 
 #gameScene {
@@ -59,6 +84,37 @@ body{
 }
 #gameImage img{
   margin-right: -1px; /* 右の画像と1px重なる */
+}
+
+
+.result {
+  position: absolute;
+  width: 900px;
+  height: 700px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#scoreResult{
+  position: absolute;
+  font-size: 40px;
+  color: #f0f0f0;
+}
+
+#oneMore{
+  position: absolute;
+  top: 600px;
+  left:200px;
+}
+
+#Tweet{
+  position: absolute;
+  top: 600px;
+  left: 600px;
 }
 
 #textArea{
