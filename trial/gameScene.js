@@ -124,27 +124,6 @@ function hideLoadingScreen() {
   document.getElementById('loadingScreen').style.display = 'none';
 }
 
-
-function preloadButtonImages(callback) {
-  fetch("buttons.csv")
-    .then(response => response.text())
-    .then(text => {
-      const buttons = parseCSV(text);
-      buttons.forEach(buttonData => {
-        const img = new Image();
-        img.classList.add('imageButton');
-        img.src = buttonData.src;
-        img.folder = buttonData.folder;
-        img.alt = buttonData.alt;
-        img.onload = imageLoaded;
-        img.setAttribute('data-folder', img.folder);
-        imageElements.push(img);
-      });
-    })
-    .catch(error => console.error("CSVの読み込みに失敗", error));
-  callback();
-}
-
 function imageLoaded() {
   loadedImages++;
   if (loadedImages === 56) {

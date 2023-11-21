@@ -1,3 +1,11 @@
+body{
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  min-height: 10vh; /* ビューポートの高さに合わせる */
+  margin: 0; /* デフォルトのマージンを削除 */
+}
+
 .scene {
   width: 930px;   
   height: 750px;  
@@ -11,9 +19,9 @@
 }
 
 #titleScene{
-  background-color: rgb(163, 43, 123)
+  background-color: rgb(109, 13, 13)
 }
-#touchArea{
+#titleImage{
   width: 100%;   /* 画面全体の幅 */
   height: 100%;  /* 画面全体の高さ */
 }
@@ -38,21 +46,43 @@
   /* 必要に応じて他のスタイルを追加 */
 }
 
+#scoreTimerArea{
+  height: 60px;
+}
+
+#gameImages{
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  flex-wrap: wrap; /* 要素が多い場合は折り返し */
+  height: 300px; 
+}
+#gameImage img{
+  margin-right: -1px; /* 右の画像と1px重なる */
+}
+
+#textArea{
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  height: 60px;
+  
+}
+
 #text span.current {
   color: red;
 }
 
-#gameImages{
-  height: 450px;
-}
-
 #buttonArea{
-  height: 480px;
+  height: 326px;
+  display: grid;
+  grid-template-columns: repeat(14, 64px);
+  grid-gap: 2px;
+  padding: 2px 2px;
+  justify-content: center;
 }
 
-#textArea{
-  height: 100px;
-}
+
 
 .loader {
   border: 16px solid #f3f3f3;

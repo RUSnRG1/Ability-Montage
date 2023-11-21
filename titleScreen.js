@@ -12,9 +12,10 @@ function changeScene(sceneId) {
 function showInstScreen() {
     // タイトル画面を表示
     // ここで操作説明を表示する要素にイベントリスナーを設定
-    document.getElementById('touchArea').addEventListener('click', function() {
-        changeScene('gameScene');
-      });
+    document.getElementById('titleImage').addEventListener('click', function() {
+      document.getElementById("titleImage").style.display = "none";
+      changeScene('gameScene');
+    });
 }
 
 document.addEventListener('DOMContentLoaded', showInstScreen);

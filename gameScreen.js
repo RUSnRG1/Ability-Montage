@@ -1,15 +1,18 @@
 const textElement = document.getElementById('text');
 let currentIndex = 0; // 現在の赤文字インデックス
 let loadedImages = 0; //ロード枚数確認
-
-
 let gameActive = false; //ゲームがアクティブか判定する変数
 
 const scoreElement = document.getElementById('score');
 const timerElement = document.getElementById('timer');
-let score = 0; // スコア
+const scoreResultElement = document.getElementById('scoreResult');
+window.score = 0; // スコア
 let timeLeft = 30; // 制限時間 (秒)
 let timerInterval = null; // タイマーのインターバルID
+
+
+//以下デバッグ用
+var textCount = 55;
 
 
 function changeScene(sceneId) {
@@ -46,9 +49,17 @@ function loadImageFromFolder(folderName, imageNum,indexNum) {
 }
 
 function makeText() {
-  const max = 6;
+  const max = 56;
   var a = Math.floor(Math.random() * max);
   return window.textdata[a];
+}
+
+function makeTextForDebug() {
+  textCount++;
+  if(textCount == window.textdata.length){
+    textCount = 0;
+  }
+  return window.textdata[textCount];
 }
 
 function updateText(gameText) {
@@ -66,13 +77,13 @@ function updateText(gameText) {
 // スコアとタイマーを更新
 function updateScoreAndTimer(correct) {
   if (correct) {
-    score += 10; // 正解の場合、スコアを加算
+    window.score += 10; // 正解の場合、スコアを加算
     timeLeft += 5; // 時間を5秒延長
   } else {
     timeLeft -= 3; // 間違いの場合、時間を3秒減少
     if (timeLeft < 0) timeLeft = 0; // 時間が負にならないようにする
   }
-  scoreElement.textContent = `スコア: ${score}`;
+  scoreElement.textContent = `スコア: ${window.score}`;
   timerElement.textContent = `残り時間: ${timeLeft}秒`;
 }
 
@@ -86,6 +97,8 @@ function startTimer() {
       gameText = "ゲームオーバー！"; // 文章生成
       updateText(gameText);
       setTimeout(() =>{
+        scoreResultElement.textContent = window.score;
+        document.getElementById("resultImage").style.display = "block";
         changeScene("resultScene");
       },3000)
     }
@@ -98,13 +111,13 @@ function startTimer() {
   // イベントリスナーのセットアップ関数にフォルダ選択ボタン用のリスナーを追加
 
 function showGameScreen() {
-    document.getElementById('startGameButton').addEventListener('click', function() {
-        document.getElementById('instruction').style.display = "none";
-        document.getElementById('startGameButton').style.display = "none";
-        //setupListeners();
-        displayImage();
-        showGameIntro();
-    });
+  document.getElementById('startGameButton').addEventListener('click', function() {
+    document.getElementById('instruction').style.display = "none";
+    document.getElementById('startGameButton').style.display = "none";
+    //setupListeners();
+    displayImage();
+    showGameIntro();
+  });
 }
 
 function displayImage() {
@@ -133,8 +146,24 @@ function showGameIntro() {
   }, 2000);
 }
 
+
+function displayImageFromMap(mapIndex, imageKey) {
+  const gameImageArea = document.getElementById('gameImages');
+  const selectedMap = window.gameImageElements[mapIndex];
+
+  if (selectedMap && selectedMap.has(imageKey)) {
+    const imageSrc = selectedMap.get(imageKey);
+    const img = document.createElement('img');
+    img.src = imageSrc;
+    img.alt = imageKey;
+    console.log(img);
+    gameImageArea.appendChild(img);
+  }
+}
+
 function startGame() {
-  var gameText = makeText(); // 文章生成
+  //var gameText = makeText(); // 文章生成
+  var gameText = makeTextForDebug(); // 文章生成
   updateText(gameText);
 
   const images = document.querySelectorAll(".imageButton");
@@ -142,7 +171,8 @@ function startGame() {
     img.addEventListener('click', function () {
       if (!gameActive) return;//ゲームが非アクティブならボタン押し無効
       if (img.alt.includes(gameText[currentIndex])) {
-        loadImageFromFolder(img.folder, img.alt.length, img.alt.indexOf(gameText[currentIndex]));
+        //loadImageFromFolder(img.folder, img.alt.length, img.alt.indexOf(gameText[currentIndex]));
+        displayImageFromMap(Number(img.folder),gameText[currentIndex])
         currentIndex++;
         if (currentIndex >= gameText.length) {
           gameActive = false;
@@ -150,7 +180,8 @@ function startGame() {
           setTimeout(() => {
             document.getElementById("gameImages").innerHTML = ''; // 既存の画像をクリア
             currentIndex = 0;
-            gameText = makeText(); // 文章生成
+            //gameText = makeText(); // 文章生成
+            gameText = makeTextForDebug(); // 文章生成
             updateText(gameText);
             gameActive = true;
           }, 2000);

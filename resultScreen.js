@@ -1,4 +1,5 @@
-// DOMContentLoadedイベントを待つのではなく、関数を直接グローバルスコープに配置
+
+
 function changeScene(sceneId) {
     // すべてのシーンを非表示にする
     document.querySelectorAll('.scene').forEach(scene => {
@@ -11,9 +12,10 @@ function changeScene(sceneId) {
   
 // イベントリスナーをセットアップするための関数
 function setupListeners() {
-    document.getElementById('backToTitle').addEventListener('click', function() {
-      changeScene('titleScene');
-    });
+  document.getElementById('backToTitle').addEventListener('click', function() {
+    document.getElementById("resultImage").style.display = "none";
+    changeScene('gameScene');
+  });
 }
   
   // DOMContentLoadedイベントで関数を実行

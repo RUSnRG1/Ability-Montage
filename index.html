@@ -16,8 +16,7 @@
 </div>
 
 <div id="titleScene" class="scene">
-    <div id="titletext">タイトル画面</div>
-    <div id="touchArea"></div>
+    <div id="titleImage" style="display: none"></div>
 </div>
 
 <div id="gameScene" class="scene">
@@ -31,12 +30,13 @@
     <!-- ここに演出用のイラストなどを追加 -->
     </div>
 
-
-    <div id="score">スコア: 0</div>
-    <div id="timer">残り時間: 30秒</div>
+    <div id="scoreTimerArea">
+        <div id="score">スコア: 0</div>
+        <div id="timer">残り時間: 30秒</div>
+    </div>
     <div id="gameImages"></div>
     <div id="textArea">
-    <p id="text">ここにゲームの文章が表示されます</p>
+        <p id="text">ここにゲームの文章が表示されます</p>
     </div>
 
     <div id="buttonArea"></div>
@@ -45,6 +45,8 @@
 
 <div id="resultScene" class="scene">
   <h1>リザルト画面</h1>
+  <div id="resultImage" style="display: none"></div>
+  <div id="scoreResult">スコア: 0</div>
   <button id="backToTitle">タイトルに戻る</button>
 </div>
 
