@@ -177,6 +177,7 @@ function startGame() {
   const images = document.querySelectorAll(".imageButton");
   images.forEach(img => {
     img.addEventListener('click', function () {
+      console.log(gameText[currentIndex]);
       if (!gameActive) return;//ゲームが非アクティブならボタン押し無効
       if (img.alt.includes(gameText[currentIndex])) {
         loadImageFromFolder(img.folder, img.alt.length, img.alt.indexOf(gameText[currentIndex]));

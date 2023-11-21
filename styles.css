@@ -33,10 +33,10 @@ body{
   left: 15px;
   width: 900px;
   height: 405px;
-  background-color: rgba(0, 0, 0, .5);
-  color: #fff;
+  background-color: rgba(255, 252, 252, 0.3);
+  color: #ffffff;
   border-radius: 15px;
-  border: 2px solid #000000;
+  border: 3px solid #570649;
 
   display: flex;
   flex-direction: column;
@@ -47,13 +47,10 @@ body{
 
 .description {
   margin-bottom: 20px;/* 説明文とボタンの間隔 */
-  color: #f0f0f0;/* 文字色 */
-  font-size: 18px;/* 文字サイズ */
+  color: #ffffff;/* 文字色 */
+  font-size: 26px;/* 文字サイズ */
 }
 
-#gameScene {
-  background-color: rgb(43, 159, 163); /* ゲームシーンの背景を黄色に設定 */
-}
 
 #gameIntro {
   display: none;
@@ -65,14 +62,29 @@ body{
   /* 必要に応じて他のスタイルを追加 */
 }
 
-#readyGo {
-  opacity: 0;
-  transition: opacity 2s;
-  /* 必要に応じて他のスタイルを追加 */
+.backImage{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 930px;
+  height: 750px;
+  z-index: -1;
 }
 
 #scoreTimerArea{
   height: 60px;
+}
+
+#score{
+  position: absolute;
+  left: 100px;
+  color: rgb(255, 255, 255);
+}
+
+#timer{
+  position: absolute;
+  left: 400px;
+  color: rgb(255, 255, 255);
 }
 
 #gameImages{
@@ -122,12 +134,39 @@ body{
   justify-content: center; /* 水平方向の中央揃え */
   align-items: center; /* 垂直方向の中央揃え */
   height: 60px;
-  
+}
+
+.textBox{
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.274);
+  color: #ffffff;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+  display: none; /* ボックスの幅を内容に合わせる */
 }
 
 #text span.current {
   color: red;
 }
+#text span {
+  color: rgb(255, 255, 255);
+}
+
+#messageArea{
+  position: absolute;
+  top: 300px;
+  width: 930px;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  text-align: center;
+  z-index: -1;
+}
+
+#message{
+  color: rgb(216, 4, 4);
+  font-size: 60px;
+}
+
 
 #buttonArea{
   height: 326px;

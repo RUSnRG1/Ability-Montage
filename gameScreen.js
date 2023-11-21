@@ -1,15 +1,21 @@
 const textElement = document.getElementById('text');
-let currentIndex = 0; // 現在の赤文字インデックス
+const messageElement = document.getElementById('message');
+let currentIndex = 1000; // 現在の赤文字インデックス
 let loadedImages = 0; //ロード枚数確認
 let gameActive = false; //ゲームがアクティブか判定する変数
 
 const scoreElement = document.getElementById('score');
 const timerElement = document.getElementById('timer');
 const scoreResultElement = document.getElementById('scoreResult');
-window.score = 0; // スコア
-let timeLeft = 30; // 制限時間 (秒)
+var imageButtons = null;
+
+window.scoreResult = 0; // スコアをリザルト画面に送るためのグローバル変数
+let score = 0;//スコア
+let timeLeft = 60; // 制限時間 (秒)
 let timerInterval = null; // タイマーのインターバルID
 let selectedImage = null; // 選択された画像の追跡
+var gameText = "";
+var messageText = "";
 
 //以下デバッグ用
 var textCount = 55;
@@ -39,15 +45,6 @@ function generateImageNames(numberOfImages) {
   return imageNames;
 }
 
-function loadImageFromFolder(folderName, imageNum,indexNum) {
-  const gameImages = document.getElementById('gameImages');
-  const images = generateImageNames(imageNum)
-  const img = document.createElement('img');
-  img.src = `images/${folderName}/${images[indexNum]}`;
-  img.alt = "hello";
-  gameImages.appendChild(img);
-}
-
 function makeText() {
   const max = 56;
   var a = Math.floor(Math.random() * max);
@@ -74,17 +71,47 @@ function updateText(gameText) {
   });
 }
 
+function updateMessage(massageText) {
+  messageElement.innerHTML = '';
+  Array.from(massageText).forEach(char => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    messageElement.appendChild(span);
+  });
+}
+
 // スコアとタイマーを更新
 function updateScoreAndTimer(correct) {
   if (correct) {
-    window.score += 10; // 正解の場合、スコアを加算
+    score += 100; // 正解の場合、スコアを加算
     timeLeft += 5; // 時間を5秒延長
   } else {
     timeLeft -= 3; // 間違いの場合、時間を3秒減少
     if (timeLeft < 0) timeLeft = 0; // 時間が負にならないようにする
   }
-  scoreElement.textContent = `スコア: ${window.score}`;
+  scoreElement.textContent = `スコア: ${score}`;
   timerElement.textContent = `残り時間: ${timeLeft}秒`;
+}
+
+function resetGame(){
+  gameActive=false;
+  timeLeft = 60;
+  if (selectedImage) {
+    selectedImage.style.outline = "none"
+  }
+  selectedImage = null;
+  timerInterval = null;
+  gameText = ""; // 文章生成
+  updateText(gameText);
+  timerElement.textContent = `残り時間: ${timeLeft}秒`;
+  window.scoreResult = score;
+  score = 0;
+  scoreElement.textContent = `スコア: ${score}`;
+  document.getElementById("gameImages").innerHTML = '';
+  imageButtons.forEach(img => {
+    img.removeEventListener('click', onCardClick);
+  });
+  document.getElementById("dynamicBox").style.display = "none";
 }
 
 // タイマーを開始
@@ -97,7 +124,8 @@ function startTimer() {
       gameText = "ゲームオーバー！"; // 文章生成
       updateText(gameText);
       setTimeout(() =>{
-        scoreResultElement.textContent = window.score;
+        resetGame();
+        scoreResultElement.textContent = window.scoreResult;
         document.getElementById("resultImage").style.display = "block";
         changeScene("resultScene");
       },3000)
@@ -112,6 +140,9 @@ function startTimer() {
 
 function showGameScreen() {
   document.getElementById('startButtonImage').addEventListener('click', function (){
+    if(imageButtons == null){
+      imageButtons = document.querySelectorAll(".imageButton");
+    }
     document.getElementById('methodsBox').style.display = "none";
     //setupListeners();
     showGameIntro();
@@ -120,22 +151,21 @@ function showGameScreen() {
 
 
 function showGameIntro() {
-  const gameIntro = document.getElementById('gameIntro');
-  const readyGo = document.getElementById('readyGo');
-
-  gameIntro.style.display = 'block';
-  readyGo.style.opacity = 1;
-
+  messageText = "Ready...";
+  updateMessage(messageText);
   setTimeout(() => {
-    readyGo.style.opacity = 0;
-  }, 2000);
-
-  setTimeout(() => {
-    gameIntro.style.display = 'none';
-    // ここでゲームスタートのロジックを呼び出す
-    gameActive = true;
-    startGame();
-  }, 2000);
+    messageText = "Go!";
+    updateMessage(messageText);
+    setTimeout(() => {
+      document.getElementById("dynamicBox").style.display = "inline-block";
+      messageText = "";
+      updateMessage(messageText);
+      gameActive = true;
+      currentIndex = 0;
+      startGame();
+    }, 600);
+  }, 600);
+  
 }
 
 
@@ -148,47 +178,48 @@ function displayImageFromMap(mapIndex, imageKey) {
     const img = document.createElement('img');
     img.src = imageSrc;
     img.alt = imageKey;
-    console.log(img);
     gameImageArea.appendChild(img);
   }
 }
 
-function startGame() {
-  //var gameText = makeText(); // 文章生成
-  var gameText = makeTextForDebug(); // 文章生成
-  updateText(gameText);
-
-  const images = document.querySelectorAll(".imageButton");
-  images.forEach(img => {
-    img.addEventListener('click', function () {
-      if (!gameActive) return;//ゲームが非アクティブならボタン押し無効
-      //選択したカードを赤枠で囲む
-      if (selectedImage) {
-        selectedImage.style.outline = "none"
-      }
-      selectedImage = img;
-      selectedImage.style.outline = "2px solid red";
-      if (img.alt.includes(gameText[currentIndex])) {
-        //loadImageFromFolder(img.folder, img.alt.length, img.alt.indexOf(gameText[currentIndex]));
-        displayImageFromMap(Number(img.folder),gameText[currentIndex])
-        currentIndex++;
-        if (currentIndex >= gameText.length) {
-          gameActive = false;
-          updateScoreAndTimer(true);
-          setTimeout(() => {
-            document.getElementById("gameImages").innerHTML = ''; // 既存の画像をクリア
-            currentIndex = 0;
-            //gameText = makeText(); // 文章生成
-            gameText = makeTextForDebug(); // 文章生成
-            updateText(gameText);
-            gameActive = true;
-          }, 2000);
-        }
+function onCardClick(e) {
+  const img = e.target;
+  if (!gameActive) return;//ゲームが非アクティブならボタン押し無効
+  //選択したカードを赤枠で囲む
+  if (selectedImage) {
+    selectedImage.style.outline = "none"
+  }
+  selectedImage = img;
+  selectedImage.style.outline = "2px solid red";
+  console.log(gameText[currentIndex]);
+  if (img.alt.includes(gameText[currentIndex])) {
+    displayImageFromMap(Number(img.folder),gameText[currentIndex])
+    currentIndex++;
+    if (currentIndex >= gameText.length) {
+      gameActive = false;
+      updateScoreAndTimer(true);
+      setTimeout(() => {
+        document.getElementById("gameImages").innerHTML = ''; // 既存の画像をクリア
+        currentIndex = 0;
+        //gameText = makeText(); // 文章生成
+        gameText = makeTextForDebug(); // 文章生成
         updateText(gameText);
-      } else {
-        updateScoreAndTimer(false);
-      }
-    });
+        gameActive = true;
+      }, 2000);
+    }
+    updateText(gameText);
+  } else {
+    updateScoreAndTimer(false);
+  }
+}
+
+function startGame() {
+  //gameText = makeText(); // 文章生成
+  gameText = makeTextForDebug(); // 文章生成
+  updateText(gameText);
+  imageButtons.forEach(img => {
+    console.log(img)
+    img.addEventListener('click', onCardClick);
     buttonArea.appendChild(img);
   });
   startTimer();

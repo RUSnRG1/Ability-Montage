@@ -20,16 +20,10 @@
 </div>
 
 <div id="gameScene" class="scene">
+    <div class="backImage"></div>
     <div id="methodsBox" class="box methodsBox">
         <div class="description">ここに説明文を記述します</div>
         <div id="startButtonImage"></div>
-    </div>
-
-    <!--開始演出画面-->
-    <div id="gameIntro">
-    <!-- 演出用のテキストや画像を追加 -->
-    <div id="readyGo">Ready Go!</div>
-    <!-- ここに演出用のイラストなどを追加 -->
     </div>
 
     <div id="scoreTimerArea">
@@ -37,11 +31,17 @@
         <div id="timer">残り時間: 30秒</div>
     </div>
     <div id="gameImages"></div>
+    <div id="messageArea">
+        <span id="message"></span>
+    </div>
     <div id="textArea">
-        <p id="text"></p>
+        <div id="dynamicBox" class="box textBox">
+            <span id="text">ここにテキストが表示されます</span>
+        </div>
     </div>
 
     <div id="buttonArea"></div>
+    
   
 </div>
 

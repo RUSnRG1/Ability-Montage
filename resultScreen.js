@@ -18,7 +18,6 @@ function setupListeners() {
   });
   document.getElementById('Tweet').addEventListener('click', function () {
     let text = document.getElementById("tweet-text").innerText;
-
     // オプションパラメータを設定
     let hashtags = "ハッシュタグ";
     let url = encodeURIComponent(location.href)  // location.hrefは今いるURL

@@ -150,6 +150,9 @@ document.addEventListener('DOMContentLoaded', function() {
   startimg.src = `images/startButton.jpg`;
   document.getElementById("startButtonImage").appendChild(startimg);
 
+  var backimg = document.querySelector('.backImage');
+  backimg.style.backgroundImage = 'url(images/Back.jpg)';
+
   var descriptionElement = document.querySelector('.description');
   descriptionElement.innerText = "How to play\nアビリティカードを繋げて文を作ろう！\nカードをクリックで選択\n文の完成でお金と酸素（制限時間）が増えるぞ！\n酸素が亡くなる前にたくさん完成させよう！";
 
