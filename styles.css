@@ -15,8 +15,23 @@ body{
 .scene.active {
   display: block;
 }
-#initScene{
-  background-color: rgb(33, 32, 99)
+
+.loading-screen{
+  position: absolute;
+  width: 100%; /* 画面全体を覆う */
+  height: 100%;
+  background-image: url('images/Loading.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.ufo {
+  position: absolute;
+  width: 50px; /* UFOのサイズを適切に設定 */
+  height: 50px;
+  top: 50%;  /* 初期位置設定 */
+  left: 50%;
+  transform-origin: 50px 50px; /* UFOの中心点を指定 */
 }
 
 #titleScene{
@@ -64,10 +79,8 @@ body{
 
 .backImage{
   position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 930px;
-  height: 750px;
+  width: 100%;   /* 画面全体の幅 */
+  height: 100%;  /* 画面全体の高さ */
   z-index: -1;
 }
 
@@ -80,12 +93,37 @@ body{
   left: 100px;
   color: rgb(255, 255, 255);
 }
+#timer {
+  display: flex; /* フレックスボックスを使用 */
+  align-items: center; /* 中央揃え */
+}
 
-#timer{
-  position: absolute;
-  left: 400px;
+.timer-text {
+  font-size: 30;
+  margin-right: 10px; /* バーとの間隔 */
+  left: 500px;
+  position: relative;
   color: rgb(255, 255, 255);
 }
+
+.timer-bar-outer {
+  left: 500px;
+  width: 300px; /* 外枠の幅 */
+  height: 50px; /* 外枠の高さ */
+  background-image: url("images/outerBar.png"); /* 外枠の画像 */
+  position: relative;
+}
+
+.timer-bar-inner {
+  height: 50px;
+  background-image: url('images/innerBar.png'); /* 中の棒の画像 */
+  position: absolute;
+  left: 0;
+  background-size: cover; /* または 100% 100% */
+  background-repeat: no-repeat;
+}
+
+
 
 #gameImages{
   display: flex;
@@ -175,31 +213,4 @@ body{
   grid-gap: 2px;
   padding: 2px 2px;
   justify-content: center;
-}
-
-
-
-.loader {
-  border: 16px solid #f3f3f3;
-  /* Light grey */
-  border-top: 16px solid #3498db;
-  /* Blue */
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-html {
-  touch-action: manipulation;
 }

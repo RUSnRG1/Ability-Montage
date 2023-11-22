@@ -17,8 +17,58 @@ function parseCSV(text) {
     });
 }
 
+function animateUFO() {
+  const ufo1 = document.getElementById('ufo1');
+  const ufo2 = document.getElementById('ufo2');
+  const ufo3 = document.getElementById('ufo3');
+  const radius = 100;
+  const centerX = 465;
+  const centerY = 450;
+  let angle1 = 0;
+  let angle2 = 120*Math.PI/180;
+  let angle3 = 240*Math.PI/180;
+
+  function update() {
+      // 角度を更新
+      angle1 += 0.04; // 速度調整
+      angle2 += 0.04; // 速度調整
+      angle3 += 0.04; // 速度調整
+
+      // 新しい位置を計算
+      const x1 = centerX + radius * Math.cos(angle1);
+      const y1 = centerY + radius * Math.sin(angle1);
+
+      // UFOの位置を更新
+      ufo1.style.left = `${x1}px`;
+      ufo1.style.top = `${y1}px`;
+
+      const x2 = centerX + radius * Math.cos(angle2);
+      const y2 = centerY + radius * Math.sin(angle2);
+
+      // UFOの位置を更新
+      ufo2.style.left = `${x2}px`;
+      ufo2.style.top = `${y2}px`;
+
+      const x3 = centerX + radius * Math.cos(angle3);
+      const y3 = centerY + radius * Math.sin(angle3);
+
+      // UFOの位置を更新
+      ufo3.style.left = `${x3}px`;
+      ufo3.style.top = `${y3}px`;
+
+
+
+      // 次のフレームのために自身を呼び出す
+      requestAnimationFrame(update);
+  }
+
+  update();
+}
+
+
 function showLoadingScreen() {
     document.getElementById('loadingScreen').style.display = 'block';
+    animateUFO();
 
 }
 

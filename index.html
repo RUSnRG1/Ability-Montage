@@ -10,8 +10,10 @@
 
 <div id="initScene" class="scene active">
     <!-- ロード画面 -->
-    <div id="loadingScreen" style="display: none;">
-        <div class="loader"></div>
+    <div id="loadingScreen" class="loading-screen">
+        <img id="ufo1" src="images/UFO.png" alt="UFO" class="ufo">
+        <img id="ufo2" src="images/UFO.png" alt="UFO" class="ufo">
+        <img id="ufo3" src="images/UFO.png" alt="UFO" class="ufo">
     </div>
 </div>
 
@@ -28,7 +30,13 @@
 
     <div id="scoreTimerArea">
         <div id="score">スコア: 0</div>
-        <div id="timer">残り時間: 30秒</div>
+        <div id="timer">
+            <div class="timer-text">酸素ゲージ</div>
+            <div class="timer-bar-outer">
+                <div class="timer-bar-inner" style="width: 100%;"></div>
+            </div>
+            
+        </div>
     </div>
     <div id="gameImages"></div>
     <div id="messageArea">

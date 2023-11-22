@@ -5,12 +5,12 @@ let loadedImages = 0; //ロード枚数確認
 let gameActive = false; //ゲームがアクティブか判定する変数
 
 const scoreElement = document.getElementById('score');
-const timerElement = document.getElementById('timer');
 const scoreResultElement = document.getElementById('scoreResult');
 var imageButtons = null;
 
 window.scoreResult = 0; // スコアをリザルト画面に送るためのグローバル変数
 let score = 0;//スコア
+const maxTime=60;
 let timeLeft = 60; // 制限時間 (秒)
 let timerInterval = null; // タイマーのインターバルID
 let selectedImage = null; // 選択された画像の追跡
@@ -80,17 +80,25 @@ function updateMessage(massageText) {
   });
 }
 
+function updateTimerBar(time){
+  const timerBarInner = document.querySelector('.timer-bar-inner');
+  // バーの長さを計算
+  const percentage = (time / maxTime) * 100;
+  timerBarInner.style.width = percentage + '%';
+}
+
 // スコアとタイマーを更新
 function updateScoreAndTimer(correct) {
   if (correct) {
     score += 100; // 正解の場合、スコアを加算
     timeLeft += 5; // 時間を5秒延長
+    updateTimerBar(timeLeft);
   } else {
     timeLeft -= 3; // 間違いの場合、時間を3秒減少
     if (timeLeft < 0) timeLeft = 0; // 時間が負にならないようにする
+    updateTimerBar(timeLeft);
   }
   scoreElement.textContent = `スコア: ${score}`;
-  timerElement.textContent = `残り時間: ${timeLeft}秒`;
 }
 
 function resetGame(){
@@ -103,7 +111,6 @@ function resetGame(){
   timerInterval = null;
   gameText = ""; // 文章生成
   updateText(gameText);
-  timerElement.textContent = `残り時間: ${timeLeft}秒`;
   window.scoreResult = score;
   score = 0;
   scoreElement.textContent = `スコア: ${score}`;
@@ -112,12 +119,14 @@ function resetGame(){
     img.removeEventListener('click', onCardClick);
   });
   document.getElementById("dynamicBox").style.display = "none";
+  updateTimerBar(maxTime); // 初期化
 }
 
 // タイマーを開始
 function startTimer() {
   timerInterval = setInterval(() => {
     timeLeft--;
+    updateTimerBar(timeLeft);
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       currentIndex = 1000;
@@ -130,7 +139,6 @@ function startTimer() {
         changeScene("resultScene");
       },3000)
     }
-    timerElement.textContent = `残り時間: ${timeLeft}秒`;
   }, 1000);
 }
 
@@ -139,6 +147,7 @@ function startTimer() {
   // イベントリスナーのセットアップ関数にフォルダ選択ボタン用のリスナーを追加
 
 function showGameScreen() {
+  updateTimerBar(maxTime); // 初期化
   document.getElementById('startButtonImage').addEventListener('click', function (){
     if(imageButtons == null){
       imageButtons = document.querySelectorAll(".imageButton");
