@@ -106,6 +106,7 @@ function preloadImages(callback) {
           }
           window.gameImageElements.push(map);  
         });
+        console.log(window.gameImageElements);
         callback();
       })
       .catch(error => console.error("CSVの読み込みに失敗", error));
@@ -132,10 +133,12 @@ function preloadTexts(callback) {
       .then(response => response.text())
       .then(data => {
         const text = parseCSV(data);
+        console.log(text);
         text.forEach(t => {
-          textdata.push(t.text);
+          window.textdata.push(t.text.trim());
         });
-      })
+        console.log(window.textdata);
+      })  
       .catch(error => console.error("CSVの読み込みに失敗", error));
     callback();
 }
@@ -147,7 +150,7 @@ function generateImageNames(numberOfImages) {
   let imageNames = [];
   for (let i = 0; i < numberOfImages; i++) {
       // ゼロ埋めした画像ファイル名を生成（例：'00.gif', '01.gif', ...）
-      let imageName = `${i.toString().padStart(2, '0')}.gif`;
+      let imageName = `${i.toString().padStart(2, '0')}.png`;
       imageNames.push(imageName);
   }
   // 結果をオブジェクトとして返す
@@ -197,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById("resultImage").appendChild(resultimg);
 
   const startimg = document.createElement('img');
-  startimg.src = `images/startButton.jpg`;
+  startimg.src = `images/startButton.png`;
   document.getElementById("startButtonImage").appendChild(startimg);
 
   var backimg = document.querySelector('.backImage');
@@ -207,11 +210,11 @@ document.addEventListener('DOMContentLoaded', function() {
   descriptionElement.innerText = "How to play\nアビリティカードを繋げて文を作ろう！\nカードをクリックで選択\n文の完成でお金と酸素（制限時間）が増えるぞ！\n酸素が亡くなる前にたくさん完成させよう！";
 
   const onemoreimg = document.createElement('img');
-  onemoreimg.src = `images/OneMore.jpg`;
+  onemoreimg.src = `images/OneMore.png`;
   document.getElementById("oneMore").appendChild(onemoreimg);
 
   const tweetimg = document.createElement('img');
-  tweetimg.src = `images/Tweet.jpg`;
+  tweetimg.src = `images/Tweet.png`;
   document.getElementById("Tweet").appendChild(tweetimg);
 
   preloadAllResources(() => {

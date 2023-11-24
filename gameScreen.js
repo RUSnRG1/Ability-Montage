@@ -16,7 +16,7 @@ let timerInterval = null; // タイマーのインターバルID
 let selectedImage = null; // 選択された画像の追跡
 var gameText = "";
 var messageText = "";
-
+var fadein = 0;
 //以下デバッグ用
 var textCount = 55;
 
@@ -54,7 +54,7 @@ function makeText() {
 function makeTextForDebug() {
   textCount++;
   if(textCount == window.textdata.length){
-    textCount = 0;
+    textCount = 1;
   }
   return window.textdata[textCount];
 }
@@ -120,6 +120,7 @@ function resetGame(){
   });
   document.getElementById("dynamicBox").style.display = "none";
   updateTimerBar(maxTime); // 初期化
+  fadeOverlay.classList.remove('fadeOutActive');
 }
 
 // タイマーを開始
@@ -127,11 +128,10 @@ function startTimer() {
   timerInterval = setInterval(() => {
     timeLeft--;
     updateTimerBar(timeLeft);
-    if (timeLeft <= 0) {
+    if (timeLeft <= 0) {//ゲームオーバー処理
       clearInterval(timerInterval);
       currentIndex = 1000;
-      gameText = "ゲームオーバー！"; // 文章生成
-      updateText(gameText);
+      startFadeOutAnimation();
       setTimeout(() =>{
         resetGame();
         scoreResultElement.textContent = window.scoreResult;
@@ -158,22 +158,28 @@ function showGameScreen() {
   });
 }
 
+function startFadeInAnimation() {
+  const fadeOverlay = document.getElementById('fadeOverlay');
+  if (fadeOverlay.classList.contains('fadeOutActive')) {
+    fadeOverlay.classList.remove('fadeOutActive');
+  }
+  fadeOverlay.classList.add('fadeInActive');
+}
+
+function startFadeOutAnimation() {
+  const fadeOverlay = document.getElementById('fadeOverlay');
+  fadeOverlay.classList.remove('fadeInActive'); // フェードインクラスを削除
+  fadeOverlay.classList.add('fadeOutActive'); // フェードアウトクラスを追加
+}
 
 function showGameIntro() {
-  messageText = "Ready...";
-  updateMessage(messageText);
+  startFadeInAnimation();
   setTimeout(() => {
-    messageText = "Go!";
-    updateMessage(messageText);
-    setTimeout(() => {
-      document.getElementById("dynamicBox").style.display = "inline-block";
-      messageText = "";
-      updateMessage(messageText);
-      gameActive = true;
-      currentIndex = 0;
-      startGame();
-    }, 600);
-  }, 600);
+    document.getElementById("dynamicBox").style.display = "inline-block";
+    gameActive = true;
+    currentIndex = 0;
+    startGame();
+  }, 1200);
   
 }
 
@@ -200,10 +206,12 @@ function onCardClick(e) {
   }
   selectedImage = img;
   selectedImage.style.outline = "2px solid red";
-  console.log(gameText[currentIndex]);
+  //console.log(gameText[currentIndex]);
   if (img.alt.includes(gameText[currentIndex])) {
     displayImageFromMap(Number(img.folder),gameText[currentIndex])
     currentIndex++;
+    console.log(currentIndex);
+    console.log(gameText.length);
     if (currentIndex >= gameText.length) {
       gameActive = false;
       updateScoreAndTimer(true);
@@ -225,9 +233,9 @@ function onCardClick(e) {
 function startGame() {
   //gameText = makeText(); // 文章生成
   gameText = makeTextForDebug(); // 文章生成
+  console.log(gameText);
   updateText(gameText);
   imageButtons.forEach(img => {
-    console.log(img)
     img.addEventListener('click', onCardClick);
     buttonArea.appendChild(img);
   });

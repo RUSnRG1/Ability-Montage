@@ -46,6 +46,48 @@ body{
   height: 100%;  /* 画面全体の高さ */
 }
 
+.backImage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#fadeOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0);
+  opacity: 1;
+}
+
+.fadeInActive {
+  animation: fadeInEffect 1.2s forwards;
+}
+
+
+@keyframes fadeInEffect {
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOutActive {
+  animation: fadeOutEffect 2s forwards;
+}
+
+@keyframes fadeOutEffect {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
 .methodsBox{
   position: absolute;
   top: 10px;
