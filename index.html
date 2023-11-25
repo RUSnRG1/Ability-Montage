@@ -25,15 +25,24 @@
     <div class="backImage">
         <div id="fadeOverlay"></div>
     </div>
+
+    <audio id="touchSound"></audio>
+    <audio id="clearSound"></audio>
+    <audio id="missSound"></audio>
+    <audio id="BGM" loop></audio>
+
     <div id="methodsBox" class="box methodsBox">
         <div class="description">ここに説明文を記述します</div>
         <div id="startButtonImage"></div>
     </div>
 
     <div id="scoreTimerArea">
-        <div id="score">スコア: 0</div>
+        <div id="score">
+            <div class="moneyImage"></div>
+            <div class="scoreText">: 0</div>
+        </div>
         <div id="timer">
-            <div class="timer-text">酸素ゲージ</div>
+            <div class="timer-card"></div>
             <div class="timer-bar-outer">
                 <div class="timer-bar-inner" style="width: 100%;"></div>
             </div>

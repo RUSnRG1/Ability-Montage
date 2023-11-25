@@ -79,7 +79,9 @@ function hideLoadingScreen() {
 function preloadAllResources(callback) {
     preloadImages(() => {
       preloadTexts(() => {
-        callback();  
+        preloadSound(() => {
+          callback();  
+        })
       })
     })
 }
@@ -100,7 +102,7 @@ function preloadImages(callback) {
           let map = new Map();
           for (let i = 0; i < buttonimg.alt.length; i++) {
             const gameimg = new Image();
-            gameimg.src = `images/${buttonimg.folder}/${i.toString().padStart(2, '0')}.gif`;
+            gameimg.src = `images/${buttonimg.folder}/${i.toString().padStart(2, '0')}.png`;
             gameimg.alt = buttonimg.alt[i];
             map.set(gameimg.alt,gameimg.src);
           }
@@ -120,7 +122,7 @@ function preloadGameImages(){
     
     for (let i = 0; i < buttonImage.alt.length; i++) {
       const img = new Image();
-      img.src = `images/${buttonImage.folder}/${i.toString().padStart(2, '0')}.gif`;
+      img.src = `images/${buttonImage.folder}/${i.toString().padStart(2, '0')}.png`;
       img.alt = buttonImage.alt[i];
       map.set(img.alt,img.src);
     }
@@ -143,6 +145,14 @@ function preloadTexts(callback) {
     callback();
 }
 
+function preloadSound(callback) {
+  let soundsToLoad = ["sound/clear.mp3", "sound/touch.mp3", "sound/miss.mp3", "sound/momoyo.wav",];
+  document.getElementById("clearSound").src = soundsToLoad[0];
+  document.getElementById("touchSound").src = soundsToLoad[1];
+  document.getElementById("missSound").src = soundsToLoad[2];
+  document.getElementById("BGM").src = soundsToLoad[3];
+  callback();
+  }
 
 //各フォルダとファイル名オブジェクトを作る関数
 function generateImageNames(numberOfImages) {

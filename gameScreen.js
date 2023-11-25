@@ -4,21 +4,22 @@ let currentIndex = 1000; // 現在の赤文字インデックス
 let loadedImages = 0; //ロード枚数確認
 let gameActive = false; //ゲームがアクティブか判定する変数
 
-const scoreElement = document.getElementById('score');
+//const scoreElement = document.getElementById('score');
+const scoreElement = document.querySelector(".scoreText");
 const scoreResultElement = document.getElementById('scoreResult');
 var imageButtons = null;
 
 window.scoreResult = 0; // スコアをリザルト画面に送るためのグローバル変数
 let score = 0;//スコア
 const maxTime=60;
-let timeLeft = 60; // 制限時間 (秒)
+let timeLeft = maxTime; // 制限時間 (秒)
 let timerInterval = null; // タイマーのインターバルID
 let selectedImage = null; // 選択された画像の追跡
 var gameText = "";
 var messageText = "";
 var fadein = 0;
 //以下デバッグ用
-var textCount = 55;
+var textCount = -1;
 
 
 function changeScene(sceneId) {
@@ -38,7 +39,7 @@ function generateImageNames(numberOfImages) {
   let imageNames = [];
   for (let i = 0; i < numberOfImages; i++) {
       // ゼロ埋めした画像ファイル名を生成（例：'00.gif', '01.gif', ...）
-      let imageName = `${i.toString().padStart(2, '0')}.gif`;
+      let imageName = `${i.toString().padStart(2, '0')}.png`;
       imageNames.push(imageName);
   }
   // 結果をオブジェクトとして返す
@@ -56,7 +57,8 @@ function makeTextForDebug() {
   if(textCount == window.textdata.length){
     textCount = 1;
   }
-  return window.textdata[textCount];
+  zz = [22,41,37,24, 12, 53, 56, 29, 57, 59];
+  return window.textdata[zz[textCount]];
 }
 
 function updateText(gameText) {
@@ -90,20 +92,21 @@ function updateTimerBar(time){
 // スコアとタイマーを更新
 function updateScoreAndTimer(correct) {
   if (correct) {
-    score += 100; // 正解の場合、スコアを加算
-    timeLeft += 5; // 時間を5秒延長
+    score += 1000; // 正解の場合、スコアを加算
+    timeLeft += 15; // 時間を5秒延長
+    if (timeLeft > maxTime) timeLeft = maxTime;
     updateTimerBar(timeLeft);
   } else {
     timeLeft -= 3; // 間違いの場合、時間を3秒減少
     if (timeLeft < 0) timeLeft = 0; // 時間が負にならないようにする
     updateTimerBar(timeLeft);
   }
-  scoreElement.textContent = `スコア: ${score}`;
+  scoreElement.textContent = `: ${score}`;
 }
 
 function resetGame(){
   gameActive=false;
-  timeLeft = 60;
+  timeLeft = maxTime;
   if (selectedImage) {
     selectedImage.style.outline = "none"
   }
@@ -113,7 +116,7 @@ function resetGame(){
   updateText(gameText);
   window.scoreResult = score;
   score = 0;
-  scoreElement.textContent = `スコア: ${score}`;
+  scoreElement.textContent = `: ${score}`;
   document.getElementById("gameImages").innerHTML = '';
   imageButtons.forEach(img => {
     img.removeEventListener('click', onCardClick);
@@ -131,6 +134,8 @@ function startTimer() {
     if (timeLeft <= 0) {//ゲームオーバー処理
       clearInterval(timerInterval);
       currentIndex = 1000;
+      document.getElementById("BGM").pause();
+      document.getElementById("BGM").currentTime = "0";
       startFadeOutAnimation();
       setTimeout(() =>{
         resetGame();
@@ -174,6 +179,7 @@ function startFadeOutAnimation() {
 
 function showGameIntro() {
   startFadeInAnimation();
+  document.getElementById("BGM").play();
   setTimeout(() => {
     document.getElementById("dynamicBox").style.display = "inline-block";
     gameActive = true;
@@ -197,6 +203,12 @@ function displayImageFromMap(mapIndex, imageKey) {
   }
 }
 
+function soundClick(t) {
+  let sound = document.getElementById(t);
+  sound.currentTime = 0; // 再生位置を初期位置に戻す
+  sound.play();
+}
+
 function onCardClick(e) {
   const img = e.target;
   if (!gameActive) return;//ゲームが非アクティブならボタン押し無効
@@ -208,6 +220,7 @@ function onCardClick(e) {
   selectedImage.style.outline = "2px solid red";
   //console.log(gameText[currentIndex]);
   if (img.alt.includes(gameText[currentIndex])) {
+    soundClick("touchSound");
     displayImageFromMap(Number(img.folder),gameText[currentIndex])
     currentIndex++;
     console.log(currentIndex);
@@ -215,6 +228,7 @@ function onCardClick(e) {
     if (currentIndex >= gameText.length) {
       gameActive = false;
       updateScoreAndTimer(true);
+      document.getElementById("clearSound").play();
       setTimeout(() => {
         document.getElementById("gameImages").innerHTML = ''; // 既存の画像をクリア
         currentIndex = 0;
@@ -222,10 +236,11 @@ function onCardClick(e) {
         gameText = makeTextForDebug(); // 文章生成
         updateText(gameText);
         gameActive = true;
-      }, 2000);
+      }, 1000);
     }
     updateText(gameText);
   } else {
+    soundClick("missSound");
     updateScoreAndTimer(false);
   }
 }
