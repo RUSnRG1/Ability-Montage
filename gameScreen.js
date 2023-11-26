@@ -8,7 +8,8 @@ let gameActive = false; //ゲームがアクティブか判定する変数
 const scoreElement = document.querySelector(".scoreText");
 const scoreResultElement = document.getElementById('scoreResult');
 var imageButtons = null;
-
+var loopStart = 2.8;
+var loopEnd = 46.5;
 window.scoreResult = 0; // スコアをリザルト画面に送るためのグローバル変数
 let score = 0;//スコア
 const maxTime=60;
@@ -57,8 +58,8 @@ function makeTextForDebug() {
   if(textCount == window.textdata.length){
     textCount = 1;
   }
-  zz = [22,41,37,24, 12, 53, 56, 29, 57, 59];
-  return window.textdata[zz[textCount]];
+  //zz = [22,41,37,24, 12, 53, 56, 29, 57, 59];
+  return window.textdata[textCount];
 }
 
 function updateText(gameText) {
@@ -105,25 +106,27 @@ function updateScoreAndTimer(correct) {
 }
 
 function resetGame(){
-  gameActive=false;
-  timeLeft = maxTime;
+  gameActive=false;//ゲームを停止状態に
+  timeLeft = maxTime;//残り時間を最大時間に戻す
+  updateTimerBar(maxTime);//タイマーバーを元に戻す
   if (selectedImage) {
+    //ボタン選択の赤枠を取る
     selectedImage.style.outline = "none"
   }
-  selectedImage = null;
-  timerInterval = null;
-  gameText = ""; // 文章生成
-  updateText(gameText);
-  window.scoreResult = score;
-  score = 0;
-  scoreElement.textContent = `: ${score}`;
-  document.getElementById("gameImages").innerHTML = '';
+  selectedImage = null;//ボタンの現在選択状態を解除
+  timerInterval = null;//タイムインターバルを初期化
+  gameText = ""; // 文章を初期化
+  updateText(gameText);//文章を初期化
+
+  window.scoreResult = score;//スコアをリザルトに送る
+  score = 0;//ゲーム画面におけるスコアの初期化
+  scoreElement.textContent = `: ${score}`;//スコアテキスト初期化
+  document.getElementById("gameImages").innerHTML = '';//画面に残ってたカード画像を消す
+  document.getElementById("dynamicBox").style.display = "none";//テキスト表示部分のボックスを消す
   imageButtons.forEach(img => {
+    //これは必要らしい。
     img.removeEventListener('click', onCardClick);
   });
-  document.getElementById("dynamicBox").style.display = "none";
-  updateTimerBar(maxTime); // 初期化
-  fadeOverlay.classList.remove('fadeOutActive');
 }
 
 // タイマーを開始
@@ -139,7 +142,7 @@ function startTimer() {
       startFadeOutAnimation();
       setTimeout(() =>{
         resetGame();
-        scoreResultElement.textContent = window.scoreResult;
+        scoreResultElement.textContent = `獲得金額: ${window.scoreResult}`;
         document.getElementById("resultImage").style.display = "block";
         changeScene("resultScene");
       },3000)
@@ -157,8 +160,8 @@ function showGameScreen() {
     if(imageButtons == null){
       imageButtons = document.querySelectorAll(".imageButton");
     }
-    document.getElementById('methodsBox').style.display = "none";
-    //setupListeners();
+    document.getElementById("startButtonImage").style.display = "none"
+    document.getElementById("desk").style.display = "none"
     showGameIntro();
   });
 }
@@ -179,13 +182,14 @@ function startFadeOutAnimation() {
 
 function showGameIntro() {
   startFadeInAnimation();
+  document.getElementById("BGM").currentTime = 0;
   document.getElementById("BGM").play();
   setTimeout(() => {
     document.getElementById("dynamicBox").style.display = "inline-block";
     gameActive = true;
     currentIndex = 0;
     startGame();
-  }, 1200);
+  }, 2200);
   
 }
 
@@ -223,8 +227,6 @@ function onCardClick(e) {
     soundClick("touchSound");
     displayImageFromMap(Number(img.folder),gameText[currentIndex])
     currentIndex++;
-    console.log(currentIndex);
-    console.log(gameText.length);
     if (currentIndex >= gameText.length) {
       gameActive = false;
       updateScoreAndTimer(true);
@@ -248,8 +250,8 @@ function onCardClick(e) {
 function startGame() {
   //gameText = makeText(); // 文章生成
   gameText = makeTextForDebug(); // 文章生成
-  console.log(gameText);
   updateText(gameText);
+  
   imageButtons.forEach(img => {
     img.addEventListener('click', onCardClick);
     buttonArea.appendChild(img);
@@ -257,6 +259,15 @@ function startGame() {
   startTimer();
 }
 
+function audiocheck() {
+  if (document.getElementById("BGM").currentTime > loopEnd) {
+    document.getElementById("BGM").currentTime = loopStart;
+    document.getElementById("BGM").play();
+  }
+}
+
 // DOMContentLoadedイベントで関数を実
 document.addEventListener('DOMContentLoaded', showGameScreen);
+bgm = document.getElementById("BGM");
+bgm.addEventListener("timeupdate", audiocheck);
 

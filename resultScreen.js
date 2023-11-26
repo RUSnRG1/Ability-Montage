@@ -13,7 +13,8 @@ function changeScene(sceneId) {
 // イベントリスナーをセットアップするための関数
 function setupListeners() {
   document.getElementById('oneMore').addEventListener('click', function () {
-    document.getElementById('methodsBox').style.display = "flex";
+    document.getElementById("desk").style.display = "flex";
+    document.getElementById("startButtonImage").style.display = "flex";
     changeScene('gameScene');
   });
   document.getElementById('Tweet').addEventListener('click', function () {

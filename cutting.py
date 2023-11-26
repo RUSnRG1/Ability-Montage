@@ -21,9 +21,11 @@ for i in range(56):
     if(not os.path.exists(dest)):
         os.mkdir(dest)
     textnum = len(text[i])
-    a=160+(6-math.floor((textnum-1)/2))*40
-    print(textnum)
-    print(a)
+    if(textnum%2==0):
+        a=107+(8-textnum/2)*40
+    else:
+        a=127+(8-(textnum+1)/2)*40
+    
     for j in range(textnum):
         b = a+40
         split_pic=img.crop((a,0,b,300))
