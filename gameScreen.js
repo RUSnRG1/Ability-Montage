@@ -20,7 +20,7 @@ var gameText = "";
 var messageText = "";
 var fadein = 0;
 //以下デバッグ用
-var textCount = -1;
+var textCount = 54;
 
 
 function changeScene(sceneId) {

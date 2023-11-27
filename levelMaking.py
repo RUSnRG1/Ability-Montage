@@ -39,7 +39,6 @@ def checkLevel(letter,word):
             print("letter %s is none!"%ss)
             return
         else:
-            print(letter[ss])
             if(int(letter[ss])==1):
                 count=count+3
             elif(int(letter[ss])<=0):
@@ -62,8 +61,8 @@ def checkVoc(voc,letter):
             if(count == len(s)):
                 data.append(s)
 
+    print("level is: %i"%count)
     return data
-
 
 letter = {}
 text = makeTextList("text.csv")
@@ -72,7 +71,13 @@ voc = makeVocList("voc.csv")
 
 countEachLetter(text,letter)
 #print(voc[12][1:2] in letter)
-
-
+flag = True
+while flag:
+    print("文字列を入力")
+    word = input(">>")
+    if(word=="end"):
+        flag=False
+    checkLevel(letter,word)
+    
 data = checkVoc(voc,letter)
 print(data)
