@@ -54,15 +54,15 @@ function makeText() {
   while (true) {
     console.log(window.textLevel[a]);
     console.log(window.textdata[a]);
-    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 15) && window.textFlag[a]) {
+    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 13) && window.textFlag[a]) {
       window.textFlag[a] = false;
       return window.textdata[a];
     }
     else {
-      a = a + 1;
+      a = a + 13;
       count = count + 1;
-      if (a == max) {
-        a = 0;
+      if (a >= max) {
+        a = a%13;
       }
       if (count == max) {
         console.error("一致するカードがありません");

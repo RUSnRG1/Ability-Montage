@@ -12,7 +12,6 @@ function adjustSceneSize() {
         scene.style.width = (930 * scale) + 'px';
         scene.style.height = (750 * scale) + 'px';
     });
-
     const ufoElements = document.querySelectorAll('.ufo');
     ufoElements.forEach(ufo => {
         ufo.style.width = (85 * scale) + 'px';
@@ -22,6 +21,8 @@ function adjustSceneSize() {
     const backImageElements = document.getElementById('startButtonImage');
     backImageElements.style.width = (255 * scale) + 'px';
     backImageElements.style.height = (60 * scale) + 'px';
+
+
 
 
 
