@@ -18,13 +18,11 @@ function setupListeners() {
     changeScene('gameScene');
   });
   document.getElementById('Tweet').addEventListener('click', function () {
-    let text = document.getElementById("tweet-text").innerText;
+    //let text = document.getElementById("tweet-text").innerText;
     // オプションパラメータを設定
-    let hashtags = "ハッシュタグ";
-    let url = encodeURIComponent(location.href)  // location.hrefは今いるURL
-
-    // URLを生成して遷移
-    window.open("https://twitter.com/share?text=" + text + "&hashtags=" + hashtags + "&url=" + url);
+    var tweetText = `まだツイートしないでね♡ byれう\n今回の獲得金額: ${window.scoreResult} \n＃AbilityMontage`;
+    var tweetUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText);
+    window.open(tweetUrl, '_blank');
   });
 }
   

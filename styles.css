@@ -11,6 +11,7 @@ body{
 }
 
 .scene {
+  user-select: none;
   position: relative;
   width: 930px;   
   height: 750px;  

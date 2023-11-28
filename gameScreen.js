@@ -12,7 +12,7 @@ var loopStart = 2.8;
 var loopEnd = 46.5;
 window.scoreResult = 0; // スコアをリザルト画面に送るためのグローバル変数
 let score = 0;//スコア
-const maxTime=60;
+const maxTime=90;
 let timeLeft = maxTime; // 制限時間 (秒)
 let timerInterval = null; // タイマーのインターバルID
 let selectedImage = null; // 選択された画像の追跡
@@ -20,7 +20,7 @@ var gameText = "";
 var messageText = "";
 var fadein = 0;
 //以下デバッグ用
-var textCount = 54;
+var textCount = 50;
 
 
 function changeScene(sceneId) {
@@ -48,9 +48,30 @@ function generateImageNames(numberOfImages) {
 }
 
 function makeText() {
-  const max = 56;
+  const max = window.textLevel.length;
   var a = Math.floor(Math.random() * max);
-  return window.textdata[a];
+  count = 0;
+  while (true) {
+    console.log(window.textLevel[a]);
+    console.log(window.textdata[a]);
+    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 15) && window.textFlag[a]) {
+      window.textFlag[a] = false;
+      return window.textdata[a];
+    }
+    else {
+      a = a + 1;
+      count = count + 1;
+      if (a == max) {
+        a = 0;
+      }
+      if (count == max) {
+        console.error("一致するカードがありません");
+        return window.textdata[0];
+      }
+    }
+  }
+    
+  
 }
 
 function makeTextForDebug() {
@@ -222,7 +243,6 @@ function onCardClick(e) {
   }
   selectedImage = img;
   selectedImage.style.outline = "2px solid red";
-  //console.log(gameText[currentIndex]);
   if (img.alt.includes(gameText[currentIndex])) {
     soundClick("touchSound");
     displayImageFromMap(Number(img.folder),gameText[currentIndex])
@@ -234,8 +254,8 @@ function onCardClick(e) {
       setTimeout(() => {
         document.getElementById("gameImages").innerHTML = ''; // 既存の画像をクリア
         currentIndex = 0;
-        //gameText = makeText(); // 文章生成
-        gameText = makeTextForDebug(); // 文章生成
+        gameText = makeText(); // 文章生成
+        //gameText = makeTextForDebug(); // 文章生成
         updateText(gameText);
         gameActive = true;
       }, 1000);
@@ -248,8 +268,8 @@ function onCardClick(e) {
 }
 
 function startGame() {
-  //gameText = makeText(); // 文章生成
-  gameText = makeTextForDebug(); // 文章生成
+  gameText = makeText(); // 文章生成
+  //gameText = makeTextForDebug(); // 文章生成
   updateText(gameText);
   
   imageButtons.forEach(img => {

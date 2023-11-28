@@ -40,7 +40,7 @@ def checkLevel(letter,word):
             return
         else:
             if(int(letter[ss])==1):
-                count=count+3
+                count=count+2
             elif(int(letter[ss])<=0):
                 print("Error! zero value!")
                 return
@@ -77,7 +77,8 @@ while flag:
     word = input(">>")
     if(word=="end"):
         flag=False
-    checkLevel(letter,word)
+    count = checkLevel(letter,word)
+    print(count)
     
-data = checkVoc(voc,letter)
-print(data)
+#data = checkVoc(voc,letter)
+#print(data)

@@ -1,4 +1,6 @@
 window.textdata = []; //問題文テキストを格納する配列
+window.textLevel = [];
+window.textFlag = [];
 window.imageElements = []; //ボタン用の画像オブジェクトを格納する配列
 window.gameImageElements = [];//出力用の画像のMapオブジェクトを格納
 
@@ -137,12 +139,14 @@ function preloadGameImages(){
 }
 
 function preloadTexts(callback) {
-    fetch("text.csv")
+    fetch("text_Koryudo.csv")
       .then(response => response.text())
       .then(data => {
         const text = parseCSV(data);
         text.forEach(t => {
           window.textdata.push(t.text.trim());
+          window.textLevel.push(t.level);
+          window.textFlag.push(!!Number(t.flag));
         });
       })  
       .catch(error => console.error("CSVの読み込みに失敗", error));
