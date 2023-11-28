@@ -40,7 +40,7 @@ def checkLevel(letter,word):
             return
         else:
             if(int(letter[ss])==1):
-                count=count+2
+                count=count+3
             elif(int(letter[ss])<=0):
                 print("Error! zero value!")
                 return

@@ -52,17 +52,16 @@ function makeText() {
   var a = Math.floor(Math.random() * max);
   count = 0;
   while (true) {
-    console.log(window.textLevel[a]);
-    console.log(window.textdata[a]);
-    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 13) && window.textFlag[a]) {
+    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 20) && window.textFlag[a]) {
       window.textFlag[a] = false;
       return window.textdata[a];
     }
     else {
-      a = a + 13;
+      console.log(a);
+      a = a + 4;
       count = count + 1;
       if (a >= max) {
-        a = a%13;
+        a = a%4+1;
       }
       if (count == max) {
         console.error("一致するカードがありません");
