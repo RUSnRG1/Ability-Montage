@@ -20,6 +20,7 @@ let selectedImage = null; // 選択された画像の追跡
 let hintImage = null;
 var gameText = "";
 var messageText = "";
+var useButton = [] //解答に使用したボタンを記録する関数
 var fadein = 0;
 //以下デバッグ用
 var textCount = 50;
@@ -59,7 +60,6 @@ function makeText() {
       return window.textdata[a];
     }
     else {
-      console.log(a);
       a = a + 4;
       count = count + 1;
       if (a >= max) {
@@ -127,6 +127,19 @@ function updateScoreAndTimer(correct) {
   scoreElement.textContent = `: ${score}`;
 }
 
+function updateScoreAndTimerRe(correct,selectNum) {
+  if (correct) {
+    score += 1000+100*(selectNum-1); // 正解の場合、スコアを加算
+    timeLeft += 5*selectNum; // 時間を5秒延長
+    if (timeLeft > maxTime) timeLeft = maxTime;
+  } else {
+    timeLeft -= 3; // 間違いの場合、時間を3秒減少
+    if (timeLeft < 0) timeLeft = 0; // 時間が負にならないようにする
+  }
+  updateTimerBar(timeLeft);
+  scoreElement.textContent = `: ${score}`;
+}
+
 function resetGame(){
   gameActive=false;//ゲームを停止状態に
   timeLeft = maxTime;//残り時間を最大時間に戻す
@@ -147,7 +160,9 @@ function resetGame(){
   gameText = ""; // 文章を初期化
   updateText(gameText);//文章を初期化
 
-  window.textFlag.fill(1);
+  window.textFlag.fill(1);//問題出現フラグを戻す
+
+  useButton = [];//使用ボタンを空にする
 
   window.scoreResult = score;//スコアをリザルトに送る
   score = 0;//ゲーム画面におけるスコアの初期化
@@ -157,6 +172,7 @@ function resetGame(){
   imageButtons.forEach(img => {
     //これは必要らしい。
     img.removeEventListener('click', onCardClick);
+    
   });
 }
 
@@ -168,8 +184,7 @@ function startTimer() {
     updateTimerBar(timeLeft);
 
     if (hintTime == 10) {//ヒント出現処理
-      //hintImageOutline();
-      hintkari();
+      hintImageOutline();
     }
     if (timeLeft <= 0) {//ゲームオーバー処理
       clearInterval(timerInterval);
@@ -188,7 +203,7 @@ function startTimer() {
 }
 
 
-function hintkari() {
+function hintImageOutline() {
   for (let i = 0; i < imageButtons.length; i++) {
     let img = imageButtons[i];
     if (img.alt.includes(gameText[currentIndex])) {
@@ -276,11 +291,16 @@ function onCardClick(e) {
     if (hintImage) {
       hintImage.classList.remove('blinking-outline');
     }
+    if (!useButton.includes(img.folder)) {
+      useButton.push(img.folder);
+    }
     displayImageFromMap(Number(img.folder),gameText[currentIndex])
     currentIndex++;
+
     if (currentIndex >= gameText.length) {
       gameActive = false;
-      updateScoreAndTimer(true);
+      updateScoreAndTimerRe(true, useButton.length);
+      useButton = [];
       document.getElementById("clearSound").play();
       setTimeout(() => {
         document.getElementById("gameImages").innerHTML = ''; // 既存の画像をクリア
@@ -294,7 +314,7 @@ function onCardClick(e) {
     updateText(gameText);
   } else {
     soundClick("missSound");
-    updateScoreAndTimer(false);
+    updateScoreAndTimerRe(false,null);
   }
 }
 
