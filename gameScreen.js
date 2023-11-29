@@ -54,7 +54,7 @@ function makeText() {
   var a = Math.floor(Math.random() * max);
   count = 0;
   while (true) {
-    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 18) && window.textFlag[a]) {
+    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 15) && window.textFlag[a]) {
       window.textFlag[a] = false;
       return window.textdata[a];
     }
