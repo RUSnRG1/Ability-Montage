@@ -14,8 +14,10 @@ window.scoreResult = 0; // スコアをリザルト画面に送るためのグ�
 let score = 0;//スコア
 const maxTime=90;
 let timeLeft = maxTime; // 制限時間 (秒)
+let hintTime = 0;
 let timerInterval = null; // タイマーのインターバルID
 let selectedImage = null; // 選択された画像の追跡
+let hintImage = null;
 var gameText = "";
 var messageText = "";
 var fadein = 0;
@@ -52,7 +54,7 @@ function makeText() {
   var a = Math.floor(Math.random() * max);
   count = 0;
   while (true) {
-    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 20) && window.textFlag[a]) {
+    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 18) && window.textFlag[a]) {
       window.textFlag[a] = false;
       return window.textdata[a];
     }
@@ -134,9 +136,18 @@ function resetGame(){
     selectedImage.style.outline = "none"
   }
   selectedImage = null;//ボタンの現在選択状態を解除
+  
+  if (hintImage) {
+    //ボタン選択の赤枠を取る
+    hintImage.classList.remove('blinking-outline');
+  }
+  hintImage = null;//ボタンの現在選択状態を解除
+
   timerInterval = null;//タイムインターバルを初期化
   gameText = ""; // 文章を初期化
   updateText(gameText);//文章を初期化
+
+  window.textFlag.fill(1);
 
   window.scoreResult = score;//スコアをリザルトに送る
   score = 0;//ゲーム画面におけるスコアの初期化
@@ -149,11 +160,17 @@ function resetGame(){
   });
 }
 
-// タイマーを開始
+// タイマー
 function startTimer() {
   timerInterval = setInterval(() => {
     timeLeft--;
+    hintTime++;
     updateTimerBar(timeLeft);
+
+    if (hintTime == 10) {//ヒント出現処理
+      //hintImageOutline();
+      hintkari();
+    }
     if (timeLeft <= 0) {//ゲームオーバー処理
       clearInterval(timerInterval);
       currentIndex = 1000;
@@ -170,6 +187,17 @@ function startTimer() {
   }, 1000);
 }
 
+
+function hintkari() {
+  for (let i = 0; i < imageButtons.length; i++) {
+    let img = imageButtons[i];
+    if (img.alt.includes(gameText[currentIndex])) {
+      hintImage = img;
+      hintImage.classList.add("blinking-outline");
+      break;
+    }
+  }
+}
 
 //ボタン画像を押したらそれに対応する画像を表示するスクリプト
   // イベントリスナーのセットアップ関数にフォルダ選択ボタン用のリスナーを追加
@@ -244,6 +272,10 @@ function onCardClick(e) {
   selectedImage.style.outline = "2px solid red";
   if (img.alt.includes(gameText[currentIndex])) {
     soundClick("touchSound");
+    hintTime = -1;
+    if (hintImage) {
+      hintImage.classList.remove('blinking-outline');
+    }
     displayImageFromMap(Number(img.folder),gameText[currentIndex])
     currentIndex++;
     if (currentIndex >= gameText.length) {
@@ -276,6 +308,7 @@ function startGame() {
     buttonArea.appendChild(img);
   });
   startTimer();
+  
 }
 
 function audiocheck() {

@@ -301,3 +301,19 @@ body{
   justify-content: center;
   z-index: 3;
 }
+
+@keyframes blink {
+
+  0%,
+  100% {
+    outline: 3px solid rgb(209, 127, 4);
+  }
+
+  50% {
+    outline: none;
+  }
+}
+
+.blinking-outline {
+  animation: blink 0.7s linear infinite;
+}
