@@ -23,7 +23,7 @@ var messageText = "";
 var useButton = [] //解答に使用したボタンを記録する関数
 var fadein = 0;
 //以下デバッグ用
-var textCount = 50;
+var textCount = 99;
 
 
 function changeScene(sceneId) {
@@ -55,7 +55,7 @@ function makeText() {
   var a = Math.floor(Math.random() * max);
   count = 0;
   while (true) {
-    if (window.textLevel[a] <= score / 1000 && window.textLevel[a] > (score / 1000 - 15) && window.textFlag[a]) {
+    if (window.textLevel[a] <= score / 1000 && window.textMax[a] > score / 1000 && window.textFlag[a]) {
       window.textFlag[a] = false;
       return window.textdata[a];
     }
@@ -66,8 +66,7 @@ function makeText() {
         a = a%4+1;
       }
       if (count == max) {
-        console.error("一致するカードがありません");
-        return window.textdata[0];
+        return "このテキストが表示されたらスコアと共に製作者にDMください。";
       }
     }
   }
@@ -80,7 +79,6 @@ function makeTextForDebug() {
   if(textCount == window.textdata.length){
     textCount = 1;
   }
-  //zz = [22,41,37,24, 12, 53, 56, 29, 57, 59];
   return window.textdata[textCount];
 }
 
@@ -130,7 +128,7 @@ function updateScoreAndTimer(correct) {
 function updateScoreAndTimerRe(correct,selectNum) {
   if (correct) {
     score += 1000+100*(selectNum-1); // 正解の場合、スコアを加算
-    timeLeft += 5*selectNum; // 時間を5秒延長
+    timeLeft += 5 * Math.min(selectNum-1,6); // 時間を5秒延長
     if (timeLeft > maxTime) timeLeft = maxTime;
   } else {
     timeLeft -= 3; // 間違いの場合、時間を3秒減少
@@ -296,6 +294,10 @@ function onCardClick(e) {
     }
     displayImageFromMap(Number(img.folder),gameText[currentIndex])
     currentIndex++;
+    if (gameText[currentIndex]=="　") {
+      console.log("空文字");
+      currentIndex++;
+    }
 
     if (currentIndex >= gameText.length) {
       gameActive = false;

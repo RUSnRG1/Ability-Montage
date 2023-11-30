@@ -1,6 +1,7 @@
 window.textdata = []; //問題文テキストを格納する配列
 window.textLevel = [];
 window.textFlag = [];
+window.textMax = [];
 window.imageElements = []; //ボタン用の画像オブジェクトを格納する配列
 window.gameImageElements = [];//出力用の画像のMapオブジェクトを格納
 
@@ -147,6 +148,7 @@ function preloadTexts(callback) {
           window.textdata.push(t.text.trim());
           window.textLevel.push(t.level);
           window.textFlag.push(!!Number(t.flag));
+          window.textMax.push(t.max);
         });
       })  
       .catch(error => console.error("CSVの読み込みに失敗", error));
