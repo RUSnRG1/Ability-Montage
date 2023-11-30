@@ -12,7 +12,7 @@ var loopStart = 2.8;
 var loopEnd = 46.5;
 window.scoreResult = 0; // スコアをリザルト画面に送るためのグローバル変数
 let score = 0;//スコア
-const maxTime=90;
+const maxTime=70;
 let timeLeft = maxTime; // 制限時間 (秒)
 let hintTime = 0;
 let timerInterval = null; // タイマーのインターバルID
@@ -128,7 +128,7 @@ function updateScoreAndTimer(correct) {
 function updateScoreAndTimerRe(correct,selectNum) {
   if (correct) {
     score += 1000+100*(selectNum-1); // 正解の場合、スコアを加算
-    timeLeft += 5 * Math.min(selectNum-1,6); // 時間を5秒延長
+    timeLeft += 5 * Math.min(selectNum-1,5); // 時間を5秒延長
     if (timeLeft > maxTime) timeLeft = maxTime;
   } else {
     timeLeft -= 3; // 間違いの場合、時間を3秒減少
@@ -189,6 +189,7 @@ function startTimer() {
       currentIndex = 1000;
       document.getElementById("BGM").pause();
       document.getElementById("BGM").currentTime = "0";
+      document.getElementById("gameoverSound").play();
       startFadeOutAnimation();
       setTimeout(() =>{
         resetGame();
@@ -302,8 +303,14 @@ function onCardClick(e) {
     if (currentIndex >= gameText.length) {
       gameActive = false;
       updateScoreAndTimerRe(true, useButton.length);
+      if (useButton.length > 4) {
+        document.getElementById("excellentClearSound").play();
+      }
+      else {
+        document.getElementById("clearSound").play();
+      }
       useButton = [];
-      document.getElementById("clearSound").play();
+      
       setTimeout(() => {
         document.getElementById("gameImages").innerHTML = ''; // 既存の画像をクリア
         currentIndex = 0;

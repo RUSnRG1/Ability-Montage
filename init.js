@@ -156,11 +156,13 @@ function preloadTexts(callback) {
 }
 
 function preloadSound(callback) {
-  let soundsToLoad = ["sound/clear.mp3", "sound/touch.mp3", "sound/miss.mp3", "sound/momoyo.wav",];
+  let soundsToLoad = ["sound/clear.mp3", "sound/excellentClear.mp3", "sound/touch.mp3", "sound/miss.mp3", "sound/gameover.mp3", "sound/momoyo.wav",];
   document.getElementById("clearSound").src = soundsToLoad[0];
-  document.getElementById("touchSound").src = soundsToLoad[1];
-  document.getElementById("missSound").src = soundsToLoad[2];
-  document.getElementById("BGM").src = soundsToLoad[3];
+  document.getElementById("excellentClearSound").src = soundsToLoad[1];
+  document.getElementById("touchSound").src = soundsToLoad[2];
+  document.getElementById("missSound").src = soundsToLoad[3];
+  document.getElementById("gameoverSound").src = soundsToLoad[4];
+  document.getElementById("BGM").src = soundsToLoad[5];
   callback();
   }
 
