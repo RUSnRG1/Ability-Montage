@@ -156,13 +156,14 @@ function preloadTexts(callback) {
 }
 
 function preloadSound(callback) {
-  let soundsToLoad = ["sound/clear.mp3", "sound/excellentClear.mp3", "sound/touch.mp3", "sound/miss.mp3", "sound/gameover.mp3", "sound/momoyo.wav",];
+  let soundsToLoad = ["sound/clear.mp3", "sound/excellentClear.mp3", "sound/touch.mp3", "sound/miss.mp3", "sound/gameover.mp3", "sound/momoyo.wav", "sound/gameClear.mp3"];
   document.getElementById("clearSound").src = soundsToLoad[0];
   document.getElementById("excellentClearSound").src = soundsToLoad[1];
   document.getElementById("touchSound").src = soundsToLoad[2];
   document.getElementById("missSound").src = soundsToLoad[3];
   document.getElementById("gameoverSound").src = soundsToLoad[4];
   document.getElementById("BGM").src = soundsToLoad[5];
+  document.getElementById("gameClearBGM").src = soundsToLoad[6];
   callback();
   }
 
@@ -219,7 +220,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const resultimg = document.createElement('img');
   resultimg.src = `images/Result.jpg`;
+  resultimg.style.display = "none";
+  resultimg.setAttribute("name", "result");
   document.getElementById("resultImage").appendChild(resultimg);
+
+  const clearimg = document.createElement('img');
+  clearimg.src = `images/gameClear.jpg`;
+  clearimg.style.display = "none";
+  clearimg.setAttribute("name", "clear");
+  document.getElementById('resultImage').appendChild(clearimg);
+  
 
   var backimg = document.querySelector('.backImage');
   backimg.style.backgroundImage = 'url(images/Back.jpg)';

@@ -71,7 +71,6 @@ function makeText() {
     }
   }
     
-  
 }
 
 function makeTextForDebug() {
@@ -135,6 +134,9 @@ function updateScoreAndTimerRe(correct,selectNum) {
     if (timeLeft < 0) timeLeft = 0; // 時間が負にならないようにする
   }
   updateTimerBar(timeLeft);
+  if (score >= 50000) {
+    score = 50000;
+  }
   scoreElement.textContent = `: ${score}`;
 }
 
@@ -194,7 +196,9 @@ function startTimer() {
       setTimeout(() =>{
         resetGame();
         scoreResultElement.textContent = `獲得金額: ${window.scoreResult}`;
-        document.getElementById("resultImage").style.display = "block";
+        document.querySelector('[name="result"]').style.display = "block";
+        document.getElementById("scoreResult").style.display = "block";
+        //document.getElementById("resultImage").style.display = "block";
         changeScene("resultScene");
       },3000)
     }
@@ -310,15 +314,33 @@ function onCardClick(e) {
         document.getElementById("clearSound").play();
       }
       useButton = [];
+
+      if (score >= 50000) {//ゲームクリア処理
+        clearInterval(timerInterval);
+        currentIndex = 1000;
+        startFadeOutAnimation();
+        setTimeout(() => {
+          resetGame();
+          scoreResultElement.textContent = `獲得金額: ${window.scoreResult}`;
+          data = document.querySelector('[name="clear"]');
+          data.style.display = "block";
+          changeScene("resultScene");
+          document.getElementById("BGM").pause();
+          document.getElementById("BGM").currentTime = "0";
+          document.getElementById("gameClearBGM").play();
+        }, 3000)
+      }
       
-      setTimeout(() => {
-        document.getElementById("gameImages").innerHTML = ''; // 既存の画像をクリア
-        currentIndex = 0;
-        gameText = makeText(); // 文章生成
-        //gameText = makeTextForDebug(); // 文章生成
-        updateText(gameText);
-        gameActive = true;
-      }, 1000);
+      else {
+        setTimeout(() => {
+          document.getElementById("gameImages").innerHTML = ''; // 既存の画像をクリア
+          currentIndex = 0;
+          gameText = makeText(); // 文章生成
+          //gameText = makeTextForDebug(); // 文章生成
+          updateText(gameText);
+          gameActive = true;
+        }, 1000);
+      }
     }
     updateText(gameText);
   } else {
