@@ -70,10 +70,10 @@ voc = makeVocList("voc.csv")
 
 
 countEachLetter(text,letter)
-#print(voc[12][1:2] in letter)
+print(letter)
 flag = True
 while flag:
-    print("文字列を入力")
+    print("文字列を入力(endと打つと終了します)")
     word = input(">>")
     if(word=="end"):
         flag=False
