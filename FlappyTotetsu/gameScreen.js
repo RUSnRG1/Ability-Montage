@@ -13,12 +13,23 @@ const PLAYER_R = 30;//プレイヤー円の半径
 const FOOD_R = 10;
 const FOOD_H = 400;
 
-let score = 0;
+const MaxFoodMeter = 5000;
 
+
+let titleFlag = true;
 let introFlag = false;
-let gameFlag = true;
+let gameFlag = false;
 let resultFlag = false;
 
+//様々なエレメントを取得
+EtimerBarInner = document.getElementById('barI');
+Eintroduction = document.getElementById('introduction');
+Etweet = document.getElementById('Tweet');
+EoneMore = document.getElementById('oneMore');
+EtitleText = document.getElementById('titleText');
+EtimerBarOuter= document.getElementById("barO");
+Escore = document.getElementById("score");
+Eplay = document.getElementById("play");
 
 const player = {
   x: 310,
@@ -31,17 +42,16 @@ let n = 50;
 for (let i = 0; i < n; ++i){
   const width = 40;
   const height = 60 - 30 / n * i;
-  const xr = 310 - 280 * (i + 1) / n;
+  const xr = -1000;
   const yr = 300;
   const angle = 0;
-  const jumpFlag = 1;
   rects.push({ xr, yr, width, height, angle });
 }
 
 const hands = [];
 let n2 = 6;
 for (let i = 0; i < n2; ++i){
-  let handx = 1000 + i * INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
+  let handx = 1500 + i * INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
   let handc = Math.floor(Math.random() * (550 + 1 - 200)) + 200;
   let handCC = Math.floor(Math.random() * (130 + 1 - 100)) + 100;
   let clearFlag = Boolean(false);
@@ -56,7 +66,9 @@ for (let i = 0; i < n3; ++i) {
   foods.push({ foodx,foody });
 }
 
-let foodMeter = 5000;
+let score = 0;
+let foodMeter = MaxFoodMeter;
+let counter = 0;
 
 let touchHandFlag = false;
 let touchFoodFlag = false;
@@ -65,6 +77,42 @@ let y_before = 0;
 
 const face = document.getElementById("face");
 const ctx = face.getContext('2d');
+
+
+function initGame() {
+  let i = 0;
+  hands.forEach(hand => {
+    hand.handx = 1500 + i * INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
+    hand.handc = Math.floor(Math.random() * (550 + 1 - 200)) + 200;
+    hand.handCC = Math.floor(Math.random() * (130 + 1 - 100)) + 100;
+    hand.clearFlag = Boolean(false);
+    i++;
+  })
+
+  i = 0;
+  foods.forEach(food => {
+    food.foodx = (hands[i * 2 + 1].handx + hands[i * 2].handx) / 2;
+    food.foody = Math.floor(Math.random() * (650 + 1 - 100)) + 100;//Math.floor(Math.random() * (550 + 1 - 200)) + 200;
+    i++;
+  })
+
+  score = 0;
+  foodMeter = MaxFoodMeter;
+  touchHandFlag = false;
+  touchFoodFlag = false;
+  y_before = 0;
+  counter = 0;
+
+  player.x =310;
+  player.y = 300; // Y座標
+  player.velocity = 0; // 速度
+  rects.forEach(rect => {
+    rect.xr = -1000;
+    rect.yr = 300;
+    rect.angle = 0;
+  })
+
+}
 
 function calcPlayer() {
   player.velocity += GRAVITY;
@@ -76,6 +124,10 @@ function calcPlayer() {
     }
     else {
       rects[i].yr = rects[i - 1].yr
+    }
+    let k = counter - 30;
+    if (k >= 0 && k < n) {
+      rects[k].xr = 310 - 280 * (k + 1) / n;
     }
   }
 
@@ -89,7 +141,7 @@ function calcPlayer() {
       dy = rects[i - 1].yr - rects[i].yr;
     }
     rects[i].angle = Math.atan2(dy, dx);
-
+ 
     //console.log(rects[i].angle);
   }
 }
@@ -172,6 +224,8 @@ function calcMeter(flag) {
   if (flag) {
     foodMeter += 300;
   }
+  const percentage = (foodMeter / MaxFoodMeter) * 100;
+  EtimerBarInner.style.width = percentage + '%';
   //console.log(foodMeter);
 }
 
@@ -180,28 +234,32 @@ function calcScore() {
     if (hand.clearFlag == false && hand.handx < player.x - PLAYER_R - HAND_SIZE) {
       hand.clearFlag = true;
       score++;
-      console.log(score);
+      Escore.textContent = `: ${score}`;
     }
   })
 }
 
 function calc() {
-  calcPlayer();
-  calcHands();
-  if (touchCheck()) {
-    gameFlag = false;
-    resultFlag = true;
+  if(counter > 30) {
+    calcPlayer();
+    calcHands();
+    if (touchCheck()) {
+      gameFlag = false;
+      resultFlag = true;
+    }
+    calcScore();
+    calcFood();
+    touchFoodFlag = touchFoodCheck();
+    calcMeter(touchFoodFlag);
   }
-  calcScore();
-  calcFood();
-  touchFoodFlag = touchFoodCheck();
-  calcMeter(touchFoodFlag);
+
+  counter++; 
   
 }
 
 
 function drawRectangles() {
-  rects.forEach(rect => {
+  [...rects].reverse().forEach(rect => {
     ctx.translate(rect.xr, rect.yr);
     ctx.rotate(rect.angle);
     ctx.beginPath();
@@ -240,27 +298,70 @@ function drawFoods() {
 
 function draw() {
   drawHands();
-  drawRectangles();
   drawFoods();
-  ctx.beginPath();
-  //ctx.arc(300, player.y, 50, 0, Math.PI * 2, true);
-  ctx.arc(player.x, player.y, PLAYER_R, 0, Math.PI * 2, true);
-  ctx.stroke();
-  if (touchHandFlag==true) {
-    ctx.beginPath();
-    ctx.rect(100, 100, 100, 100);
-    ctx.fillStyle = 'black'; // 例えば青色で塗りつぶす
-    ctx.fill();
+
+  if (counter <= 30) {
+    //饕餮の溜め画像表示
   }
+  else {
+    drawRectangles();
+    ctx.beginPath();
+    //ctx.arc(300, player.y, 50, 0, Math.PI * 2, true);
+    ctx.arc(player.x, player.y, PLAYER_R, 0, Math.PI * 2, true);
+    ctx.stroke();
+    if (touchHandFlag == true) {
+      ctx.beginPath();
+      ctx.rect(100, 100, 100, 100);
+      ctx.fillStyle = 'black'; // 例えば青色で塗りつぶす
+      ctx.fill();
+    }
+  }
+  
   
 }
 
 function drawResult() {
   drawHands();
   drawFoods();
-  document.getElementById('Tweet').style.display = 'block';
-  document.getElementById('oneMore').style.display = 'block';
+  //饕餮落下モーション
+  Etweet.style.display = 'block';
+  EoneMore.style.display = 'block';
 
+}
+
+function drawTitle() {
+  //背景表示コード
+  drawHands();
+  drawFoods();
+  //饕餮待機モーションコード
+  EtitleText.style.display = "block";
+  Eplay = "block";
+  //ここをfaceじゃなくてblockボタンに変える
+  document.getElementById('face').addEventListener('click', function () {
+    titleFlag = false;
+    introFlag = true;
+    EtitleText.style.display = "none";
+  })
+  
+  
+}
+
+function drawIntro() {
+  drawHands();
+  drawFoods();
+  //饕餮の待機モーション
+  introduction.style.display = "block";
+  EtimerBarOuter.style.display = "block";
+  EtimerBarInner.style.display = "block";
+  Escore.style.display = "block";
+
+  Eintroduction.addEventListener('click', function () {
+    introFlag = false;
+    gameFlag = true;
+    Eintroduction.style.display = "none";
+  })
+  
+  
 }
 
 // ジャンプ処理
@@ -271,8 +372,15 @@ function jump() {
 
 
 function setting() {
-  document.getElementById('Tweet').style.display = 'none';
-  document.getElementById('oneMore').style.display = 'none';
+  Etweet.style.display = 'none';
+  EoneMore.style.display = 'none';
+  EtitleText.style.display = "none";
+  EtimerBarOuter.style.display = "none";
+  EtimerBarInner.style.display = "none";
+  Escore.style.display = "none";
+  Eintroduction.style.display = "none";
+  Eplay.style.display = "none";
+
   //いんとろからゲームスタートのためのコードとか
   //
   //
@@ -281,8 +389,13 @@ function setting() {
 
 // ゲームループ
 function gameLoop() {
-
   ctx.clearRect(0, 0, 930, 750);
+  if (titleFlag) {
+    drawTitle();
+  }
+  if (introFlag) {
+    drawIntro();
+  }
   if (gameFlag) {
     calc();
     draw();
@@ -296,12 +409,22 @@ function gameLoop() {
   setTimeout(gameLoop, 1000 / FRAME_RATE);
 }
 
-document.getElementById('Tweet').addEventListener('click', function () {
+Etweet.addEventListener('click', function () {
   //let text = document.getElementById("tweet-text").innerText;
   // オプションパラメータを設定
   var tweetText = `今回の獲得金額: ${window.scoreResult} \n＃AbilityMontage\nhttps://rusnrg1.github.io/Ability-Montage.github.io/`;
   var tweetUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText);
   window.open(tweetUrl, '_blank');
+});
+
+EoneMore.addEventListener('click', function () {
+  Etweet.style.display = 'none';
+  EoneMore.style.display = 'none';
+  resultFlag = false;
+  introFlag = true;
+  initGame();
+  Escore.textContent = `: ${score}`;
+  EtimerBarInner.style.width = '100%';
 });
 
 // キーボードイベントのリスナーを設定

@@ -224,6 +224,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const tweetimg = document.createElement('img');
   tweetimg.src = `images/Tweet.png`;
   document.getElementById("Tweet").appendChild(tweetimg);
+  
+
+  const introimg = document.createElement('img');
+  introimg.src = "images/intro.jpg";
+  document.getElementById("introduction").appendChild(introimg);
+  
+
   changeScene("gameScene");
   //preloadAllResources(() => {
     //setTimeout(() => {

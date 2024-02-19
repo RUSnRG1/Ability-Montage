@@ -53,6 +53,43 @@ body{
   background-color: rgb(109, 13, 13)
 }
 
+#score {
+  top: 6px;
+  left: 70px;
+  width: 120px;
+  /* 外枠の幅 */
+  font-size: 24px;
+  position: absolute;
+  color: rgb(200, 140, 0)
+}
+
+#barO {
+  position: absolute;
+  top: 3px;
+  left: 500px;
+  width: 300px;
+  /* 外枠の幅 */
+  height: 50px;
+  /* 外枠の高さ */
+  background-image: url("images/outerBar.png");
+  /* 外枠の画像 */
+  
+  z-index: 2;
+}
+
+#barI {
+  position: absolute;
+  height: 50px;
+  background-image: url('images/innerBar.png');
+  /* 中の棒の画像 */
+  
+  left: 2px;
+  background-size: cover;
+  /* または 100% 100% */
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
 #oneMore {
   position: absolute;
   top: 600px;
@@ -63,6 +100,18 @@ body{
   position: absolute;
   top: 600px;
   left: 580px;
+}
+
+#titleText {
+  position: absolute;
+  top: 100px;
+  left: 150px;
+}
+
+#introduction{
+  position: absolute;
+  top: 50px;
+  left: 50px;
 }
 
 .backImage {
@@ -169,14 +218,7 @@ body{
   background-image: url("images/money.png");
 }
 
-.scoreText{
-  top: 6px;
-  left: 70px;
-  width: 120px;/* 外枠の幅 */
-  font-size: 24px;
-  position: relative;
-  color: rgb(200, 140, 0)
-}
+
 
 
 #timer {
@@ -194,25 +236,7 @@ body{
   background-image: url("images/o2.png");
 }
 
-.timer-bar-outer {
-  top: 3px;
-  left: 500px;
-  width: 300px; /* 外枠の幅 */
-  height: 50px; /* 外枠の高さ */
-  background-image: url("images/outerBar.png"); /* 外枠の画像 */
-  position: relative;
-  z-index: 2;
-}
 
-.timer-bar-inner {
-  height: 50px;
-  background-image: url('images/innerBar.png'); /* 中の棒の画像 */
-  position: absolute;
-  left: 2px;
-  background-size: cover; /* または 100% 100% */
-  background-repeat: no-repeat;
-  z-index: 1;
-}
 
 
 
