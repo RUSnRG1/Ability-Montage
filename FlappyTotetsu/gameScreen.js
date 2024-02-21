@@ -19,7 +19,7 @@ const HAND_SIZE = 50;//障害物の横サイズ
 const INTERVAL = 550;//前後の障害物の間隔
 const MOVE_SPEED = 8;//動くスピード, Playerの長さで速さが変わるらしい。
 
-const PLAYER_R = 30;//プレイヤー円の半径
+const PLAYER_R = 35;//プレイヤー円の半径
 
 const FOOD_R = 10;
 const FOOD_H = 400;
@@ -44,11 +44,14 @@ Eplay = document.getElementById("play");
 Ewait = document.getElementById("waitMotion");
 Echarge = document.getElementById("chargeMotion");
 Edamage = document.getElementById("damageMotion");
+Ehead = document.getElementById("totetsuHead");
+Ebody =document.getElementById("totetsuBody");
 
 const player = {
   x: 310,
   y: 300, // Y座標
-  velocity: 0 // 速度
+  velocity: 0, // 速度
+  angle:0
 };
 
 const rects = [];
@@ -94,7 +97,6 @@ let y_before = 0;
 const face = document.getElementById("face");
 const ctx = face.getContext('2d');
 
-
 function initGame() {
   let i = 0;
   hands.forEach(hand => {
@@ -123,6 +125,7 @@ function initGame() {
   player.x =310;
   player.y = 300; // Y座標
   player.velocity = 0; // 速度
+  player.angle = 0;
   rects.forEach(rect => {
     rect.xr = -1000;
     rect.yr = 300;
@@ -130,6 +133,8 @@ function initGame() {
   })
 
 }
+
+
 
 function calcPlayer() {
   player.velocity += GRAVITY;
@@ -142,25 +147,24 @@ function calcPlayer() {
     else {
       rects[i].yr = rects[i - 1].yr
     }
-    let k = counter - 30;
+    let k = counter - 31;
     if (k >= 0 && k < n) {
-      rects[k].xr = 310 - 280 * (k + 1) / n;
+      rects[k].xr = 310 - 290 * (k + 1) / n;
     }
   }
 
   for (let i = 0; i < n; ++i) {
     if (i == 0) {
-      dx = player.x - rects[i].xr;
+      //dx = player.x - rects[i].xr;
       dy = player.y - rects[i].yr;
     }
     else {
-      dx = rects[i - 1].xr - rects[i].xr;
+      //dx = rects[i - 1].xr - rects[i].xr;
       dy = rects[i - 1].yr - rects[i].yr;
     }
-    rects[i].angle = Math.atan2(dy, dx);
- 
-    //console.log(rects[i].angle);
+    rects[i].angle = Math.atan2(dy, MOVE_SPEED);
   }
+  player.angle = Math.atan2(player.velocity,MOVE_SPEED);
 }
 
 function calcHands() {
@@ -265,6 +269,7 @@ function calc() {
   });
 
   if(counter > 30) {
+    Ehead.style.display = "block";
     calcPlayer();
     calcHands();
     if (touchCheck()) {
@@ -306,6 +311,19 @@ function drawRectangles() {
   });
 }
 
+function drawBody(){
+  Ehead.style.left = `${player.x-40}px`;
+  Ehead.style.top = `${player.y-40}px`;
+  Ehead.style.transform =`rotate(${player.angle}rad)`;
+  for (let i = n - 1; i >= 0; --i) {
+    
+    Ebody.querySelector(`[num="${i}"]`).style.left = `${rects[i].xr-20}px`;
+    Ebody.querySelector(`[num="${i}"]`).style.top = `${rects[i].yr-30}px`;
+    Ebody.querySelector(`[num="${i}"]`).style.transform =`rotate(${rects[i].angle}rad)`;
+    
+  }
+}
+
 
 //100-130... 115から上下15
 function drawHands() {
@@ -342,7 +360,7 @@ function drawTotetsu(k) {
     Echarge.style.display = "block";
   }
   if (k == 2) {
-    
+    drawBody();
   }
   if (k == 3) {
     Edamage.style.display = "block";
@@ -362,7 +380,7 @@ function draw() {
     drawTotetsu(1);
   }
   else {
-    drawRectangles();
+    //drawRectangles();
     ctx.beginPath();
     //ctx.arc(300, player.y, 50, 0, Math.PI * 2, true);
     ctx.arc(player.x, player.y, PLAYER_R, 0, Math.PI * 2, true);
@@ -440,6 +458,7 @@ function setting() {
   Ewait.style.display = "none";
   Echarge.style.display = "none";
   Edamage.style.display = "none";
+  Ehead.style.display = "none";
  
 
   //いんとろからゲームスタートのためのコードとか

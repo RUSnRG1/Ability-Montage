@@ -241,6 +241,33 @@ document.addEventListener('DOMContentLoaded', function () {
   const damageimg = document.createElement('img');
   damageimg.src = "images/wait.png";
   document.getElementById("damageMotion").appendChild(damageimg);
+
+  const headimg = document.createElement('img');
+  headimg.src = "images/head.png";
+  document.getElementById("totetsuHead").appendChild(headimg);
+
+  const container = document.getElementById("totetsuBody");
+  const rows = 5;
+  const cols=6;
+  let counter=0;
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      const posX = -1000
+      const posY = 300
+      const sprite = document.createElement('div');
+      sprite.classList.add('sprites');
+      sprite.style.width = `40px`;
+      sprite.style.height = `60px`;
+      sprite.style.backgroundImage = `url('images/body.png')`;
+      sprite.style.left = `${posX}px`; // 絶対位置X
+      sprite.style.top = `${posY}px`; // 絶対位置Y
+      sprite.style.backgroundPosition = `-${x * 40}px -${y * 60}px`;
+      sprite.setAttribute("num",counter);
+      sprite.style.zIndex = `${30-counter}`;
+      container.appendChild(sprite);
+      ++counter;
+    }
+  }
   
 
   changeScene("gameScene");

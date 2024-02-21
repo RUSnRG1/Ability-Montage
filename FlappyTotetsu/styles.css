@@ -138,6 +138,33 @@ body{
   left: 280px;
 }
 
+#totetsuHead{
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: -100px;
+  left: -100px;
+  z-index: 31;
+  transform: translate(-50%,-50%);
+}
+
+#totetsuBody{
+  position: absolute;
+  width: 240px; /* 元の画像の幅に合わせる */
+  height: 300px;
+  top: 0px;
+  left: 0px;
+  
+  
+}
+.sprites {
+  width: 40px; /* 分割後の画像の幅 */
+  height: 60px; /* 分割後の画像の高さ */
+  position: absolute;
+  transform: translate(-50%,-50%);
+  
+}
+
 .backImage {
   position: relative;
   width: 100%;
