@@ -50,11 +50,16 @@ body{
 
 #gameScene{
   position: relative; /* この行を追加 */
-  background-color: rgb(109, 13, 13)
+  background-color: rgb(109, 13, 13);
+  width: 930px; /* canvasと同じ幅 */
+  height: 750px; /* canvasと同じ高さ */
+  overflow: hidden; /* この領域外の内容を非表示にする */
+
+
 }
 
 #score {
-  top: 6px;
+  top: 30px;
   left: 70px;
   width: 120px;
   /* 外枠の幅 */
@@ -65,7 +70,7 @@ body{
 
 #barO {
   position: absolute;
-  top: 3px;
+  top: 30px;
   left: 500px;
   width: 300px;
   /* 外枠の幅 */
@@ -110,8 +115,27 @@ body{
 
 #introduction{
   position: absolute;
-  top: 50px;
-  left: 50px;
+  top: 0px;
+  left: 0px;
+  z-index: 5;
+}
+
+#waitMotion{
+  position: absolute;
+  top: 288px;
+  left:280px;
+}
+
+#chargeMotion{
+  position: absolute;
+  top: 288px;
+  left:280px;
+}
+
+#damageMotion {
+  position: absolute;
+  top: 288px;
+  left: 280px;
 }
 
 .backImage {
@@ -155,43 +179,6 @@ body{
   }
 }
 
-#desk{
-  background-image: url("images/description.png");
-  position: absolute;
-  width: 100%;   /* 画面全体の幅 */
-  height: 100%;  /* 画面全体の高さ */
-  z-index: 1;
-  background-size: contain;
-}
-
-#startButtonImage{
-  background-image: url("images/startButton.png");
-  position: absolute;
-  top: 45%; /* 画面の高さの50%の位置 */
-  left: 50%; /* 画面の幅の50%の位置 */
-  transform: translate(-50%, -50%);
-  width: 255px;
-  height: 60px;
-  z-index: 2;
-  background-size: contain;
-}
-
-#gameIntro {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  /* 必要に応じて他のスタイルを追加 */
-}
-
-.backImage{
-  position: absolute;
-  width: 100%;   /* 画面全体の幅 */
-  height: 100%;  /* 画面全体の高さ */
-  z-index: -1;
-}
 
 #scoreTimerArea{
   height: 60px;

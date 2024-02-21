@@ -227,8 +227,20 @@ document.addEventListener('DOMContentLoaded', function () {
   
 
   const introimg = document.createElement('img');
-  introimg.src = "images/intro.jpg";
+  introimg.src = "images/intro.png";
   document.getElementById("introduction").appendChild(introimg);
+
+  const waitimg = document.createElement('img');
+  waitimg.src = "images/wait.png";
+  document.getElementById("waitMotion").appendChild(waitimg);
+
+  const chargeimg = document.createElement('img');
+  chargeimg.src = "images/charge.png";
+  document.getElementById("chargeMotion").appendChild(chargeimg);
+
+  const damageimg = document.createElement('img');
+  damageimg.src = "images/wait.png";
+  document.getElementById("damageMotion").appendChild(damageimg);
   
 
   changeScene("gameScene");

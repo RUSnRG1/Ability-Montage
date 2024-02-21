@@ -1,3 +1,14 @@
+//ゲーム設計としては、フラッピー要素はかなり簡単だけど、飢餓状態がかなり深刻だからフラッピーでミスりやすくなる、という感じがいいと思う
+//作るもの（優先順）
+//totetsu(move)
+//background
+//hand
+//food
+//titleのstart button
+//introのintroduction
+
+
+
 // 自機の状態
 // 定数
 const GRAVITY = 1.2; // 重力
@@ -6,7 +17,7 @@ const FRAME_RATE = 60; // フレームレート
 
 const HAND_SIZE = 50;//障害物の横サイズ
 const INTERVAL = 550;//前後の障害物の間隔
-const MOVE_SPEED = 6;//動くスピード
+const MOVE_SPEED = 8;//動くスピード, Playerの長さで速さが変わるらしい。
 
 const PLAYER_R = 30;//プレイヤー円の半径
 
@@ -30,6 +41,9 @@ EtitleText = document.getElementById('titleText');
 EtimerBarOuter= document.getElementById("barO");
 Escore = document.getElementById("score");
 Eplay = document.getElementById("play");
+Ewait = document.getElementById("waitMotion");
+Echarge = document.getElementById("chargeMotion");
+Edamage = document.getElementById("damageMotion");
 
 const player = {
   x: 310,
@@ -38,10 +52,11 @@ const player = {
 };
 
 const rects = [];
-let n = 50;
+let n = 30;
 for (let i = 0; i < n; ++i){
   const width = 40;
-  const height = 60 - 30 / n * i;
+  //const height = 60 - 30 / n * i;
+  const height = 60;
   const xr = -1000;
   const yr = 300;
   const angle = 0;
@@ -69,6 +84,7 @@ for (let i = 0; i < n3; ++i) {
 let score = 0;
 let foodMeter = MaxFoodMeter;
 let counter = 0;
+let resultCounter = 0;
 
 let touchHandFlag = false;
 let touchFoodFlag = false;
@@ -102,6 +118,7 @@ function initGame() {
   touchFoodFlag = false;
   y_before = 0;
   counter = 0;
+  resultCounter = 0;
 
   player.x =310;
   player.y = 300; // Y座標
@@ -223,6 +240,7 @@ function calcMeter(flag) {
   foodMeter--;
   if (flag) {
     foodMeter += 300;
+    if (foodMeter > MaxFoodMeter) foodMeter = MaxFoodMeter;
   }
   const percentage = (foodMeter / MaxFoodMeter) * 100;
   EtimerBarInner.style.width = percentage + '%';
@@ -240,6 +258,12 @@ function calcScore() {
 }
 
 function calc() {
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'z') {
+      jump();
+    }
+  });
+
   if(counter > 30) {
     calcPlayer();
     calcHands();
@@ -257,6 +281,17 @@ function calc() {
   
 }
 
+function calcResult() {
+  if (resultCounter == 0) {
+    jump();
+  }
+  else if (resultCounter > 60) {
+    return;
+  }
+  calcPlayer();
+  resultCounter++;
+
+}
 
 function drawRectangles() {
   [...rects].reverse().forEach(rect => {
@@ -296,18 +331,42 @@ function drawFoods() {
   })
 }
 
+function drawTotetsu(k) {
+  Ewait.style.display = "none";
+  Echarge.style.display = "none";
+  Edamage.style.display = "none";
+  if (k == 0) {
+    Ewait.style.display = "block";
+  }
+  if (k == 1) {
+    Echarge.style.display = "block";
+  }
+  if (k == 2) {
+    
+  }
+  if (k == 3) {
+    Edamage.style.display = "block";
+    Edamage.style.top = `${player.y-32}px`;
+  }
+}
+
 function draw() {
   drawHands();
   drawFoods();
 
+  if (counter == 31) {
+    jump();
+  }
+
   if (counter <= 30) {
-    //饕餮の溜め画像表示
+    drawTotetsu(1);
   }
   else {
     drawRectangles();
     ctx.beginPath();
     //ctx.arc(300, player.y, 50, 0, Math.PI * 2, true);
     ctx.arc(player.x, player.y, PLAYER_R, 0, Math.PI * 2, true);
+    drawTotetsu(2);
     ctx.stroke();
     if (touchHandFlag == true) {
       ctx.beginPath();
@@ -323,7 +382,7 @@ function draw() {
 function drawResult() {
   drawHands();
   drawFoods();
-  //饕餮落下モーション
+  drawTotetsu(3);
   Etweet.style.display = 'block';
   EoneMore.style.display = 'block';
 
@@ -333,7 +392,7 @@ function drawTitle() {
   //背景表示コード
   drawHands();
   drawFoods();
-  //饕餮待機モーションコード
+  drawTotetsu(0);
   EtitleText.style.display = "block";
   Eplay = "block";
   //ここをfaceじゃなくてblockボタンに変える
@@ -342,14 +401,12 @@ function drawTitle() {
     introFlag = true;
     EtitleText.style.display = "none";
   })
-  
-  
 }
 
 function drawIntro() {
   drawHands();
   drawFoods();
-  //饕餮の待機モーション
+  drawTotetsu(0);
   introduction.style.display = "block";
   EtimerBarOuter.style.display = "block";
   EtimerBarInner.style.display = "block";
@@ -380,6 +437,10 @@ function setting() {
   Escore.style.display = "none";
   Eintroduction.style.display = "none";
   Eplay.style.display = "none";
+  Ewait.style.display = "none";
+  Echarge.style.display = "none";
+  Edamage.style.display = "none";
+ 
 
   //いんとろからゲームスタートのためのコードとか
   //
@@ -401,6 +462,7 @@ function gameLoop() {
     draw();
   }
   if (resultFlag) {
+    calcResult();
     drawResult();
   }
   
@@ -428,11 +490,7 @@ EoneMore.addEventListener('click', function () {
 });
 
 // キーボードイベントのリスナーを設定
-document.addEventListener('keydown', function (event) {
-  if (event.key === 'z') {
-    jump();
-  }
-});
+
 
 
 
