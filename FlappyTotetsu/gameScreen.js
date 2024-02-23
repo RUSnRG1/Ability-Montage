@@ -18,6 +18,8 @@ const FRAME_RATE = 60; // フレームレート
 const HAND_SIZE = 50;//障害物の横サイズ
 const INTERVAL = 550;//前後の障害物の間隔
 const MOVE_SPEED = 9;//動くスピード, Playerの長さで速さが変わるらしい。
+const MOVE_SPEED_B1 = 6;//動くスピード, Playerの長さで速さが変わるらしい。
+const MOVE_SPEED_B2 = 3;//動くスピード, Playerの長さで速さが変わるらしい。
 
 const PLAYER_R = 40;//プレイヤー円の半径
 
@@ -45,7 +47,12 @@ Ewait = document.getElementById("waitMotion");
 Echarge = document.getElementById("chargeMotion");
 Edamage = document.getElementById("damageMotion");
 Ehead = document.getElementById("totetsuHead");
-Ebody =document.getElementById("totetsuBody");
+Ebody = document.getElementById("totetsuBody");
+Ehand = document.getElementById("hand");
+Eb11 = document.getElementById("background1-1");
+Eb12 = document.getElementById("background1-2");
+Eb21 = document.getElementById("background2-1");
+Eb22 = document.getElementById("background2-2");
 
 const player = {
   x: 310,
@@ -94,6 +101,11 @@ let touchFoodFlag = false;
 
 let y_before = 0;
 
+let b11 = 0;
+let b12 = 1000;
+let b21 = 0;
+let b22 = 1000;
+
 const face = document.getElementById("face");
 const ctx = face.getContext('2d');
 
@@ -132,6 +144,10 @@ function initGame() {
     rect.angle = 0;
   })
 
+  Eb11.style.left = `${b11}px`;
+  Eb12.style.left = `${b12}px`;
+  Eb21.style.left = `${b21}px`;
+  Eb22.style.left = `${b22}px`;
 }
 
 
@@ -261,6 +277,29 @@ function calcScore() {
   })
 }
 
+function calcBack() {
+  b11 -= MOVE_SPEED_B2;
+  b12 -= MOVE_SPEED_B2;
+  b21 -= MOVE_SPEED_B2;
+  b22 -= MOVE_SPEED_B2;
+
+  if (b11 < -1001) {
+    b11 = b12 + 1000;
+  }
+  else if (b12 < -1001) {
+    b12 = b11 + 1000;
+  }
+
+  if (b21 < -1001) {
+    b21 = b22 + 1000;
+  }
+  else if (b22 < -1001) {
+    b22 = b21 + 1000;
+  }
+
+  
+}
+
 function calc() {
   document.addEventListener('keydown', function (event) {
     if (event.key === 'z') {
@@ -270,6 +309,7 @@ function calc() {
 
   if(counter > 30) {
     Ehead.style.display = "block";
+    calcBack();
     calcPlayer();
     calcHands();
     if (touchCheck()) {
@@ -337,6 +377,14 @@ function drawHands() {
     ctx.fill();
     ctx.stroke(); // 枠線を描画
   })
+
+  for (let i = 0; i < 6; ++i){
+    Ehand.querySelector(`[num="${i}"]`,`[updown="${0}"]`).style.left = `${hands[i].handx}px`;
+    Ehand.querySelector(`[num="${i}"]`,`[updown="${0}"]`).style.top = `${hands[i].handc + hands[i].handCC}px`;
+    Ehand.querySelector(`[num="${i}"]`,`[updown="${1}"]`).style.left = `${hands[i].handx}px`;
+    Ehand.querySelector(`[num="${i}"]`,`[updown="${1}"]`).style.top = `${hands[i].handc - hands[i].handCC-700}px`;
+    
+  }
 }
 
 function drawFoods() {
@@ -368,7 +416,15 @@ function drawTotetsu(k) {
   }
 }
 
+function drawBack() {
+  Eb11.style.left = `${b11}px`;
+  Eb12.style.left = `${b12}px`;
+  Eb21.style.left = `${b21}px`;
+  Eb22.style.left = `${b22}px`;
+}
+
 function draw() {
+  drawBack();
   drawHands();
   drawFoods();
 
@@ -398,6 +454,7 @@ function draw() {
 }
 
 function drawResult() {
+  drawBack();
   drawHands();
   drawFoods();
   drawTotetsu(3);
@@ -407,21 +464,23 @@ function drawResult() {
 }
 
 function drawTitle() {
-  //背景表示コード
+  drawBack();
   drawHands();
   drawFoods();
   drawTotetsu(0);
   EtitleText.style.display = "block";
-  Eplay = "block";
+  Eplay.style.display = "block";
   //ここをfaceじゃなくてblockボタンに変える
-  document.getElementById('face').addEventListener('click', function () {
+  Eplay.addEventListener('click', function () {
     titleFlag = false;
     introFlag = true;
     EtitleText.style.display = "none";
+    Eplay.style.display = "none"
   })
 }
 
 function drawIntro() {
+  drawBack();
   drawHands();
   drawFoods();
   drawTotetsu(0);

@@ -224,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const tweetimg = document.createElement('img');
   tweetimg.src = `images/Tweet.png`;
   document.getElementById("Tweet").appendChild(tweetimg);
-  
 
   const introimg = document.createElement('img');
   introimg.src = "images/intro.png";
@@ -242,9 +241,29 @@ document.addEventListener('DOMContentLoaded', function () {
   damageimg.src = "images/wait.png";
   document.getElementById("damageMotion").appendChild(damageimg);
 
+  const backimg11 = document.createElement('img');
+  backimg11.src = "images/back1.png";
+  document.getElementById("background1-1").appendChild(backimg11);
+
+  const backimg12 = document.createElement('img');
+  backimg12.src = "images/back1.png";
+  document.getElementById("background1-2").appendChild(backimg12);
+
+  const backimg21 = document.createElement('img');
+  backimg21.src = "images/back2.png";
+  document.getElementById("background2-1").appendChild(backimg21);
+
+  const backimg22 = document.createElement('img');
+  backimg22.src = "images/back2.png";
+  document.getElementById("background2-2").appendChild(backimg22);
+
   const headimg = document.createElement('img');
   headimg.src = "images/head.png";
   document.getElementById("totetsuHead").appendChild(headimg);
+
+  const playimg = document.createElement('img');
+  playimg.src = "images/start.png";
+  document.getElementById("play").appendChild(playimg);
 
   const container = document.getElementById("totetsuBody");
   const rows = 5;
@@ -263,9 +282,23 @@ document.addEventListener('DOMContentLoaded', function () {
       sprite.style.top = `${posY}px`; // 絶対位置Y
       sprite.style.backgroundPosition = `-${150-x * 30}px -${y * 60}px`;
       sprite.setAttribute("num",counter);
-      sprite.style.zIndex = `${30-counter}`;
+      sprite.style.zIndex = `${35-counter}`;
       container.appendChild(sprite);
       ++counter;
+    }
+  }
+
+  const container2 = document.getElementById("head");
+  for (let i = 0; i < 6; ++i){
+    for (let j = 0; j < 2; ++j){
+      sprite.classList.add('sprites');
+      sprite.style.width = `50px`;
+      sprite.style.height = `700px`;
+      sprite.createElement('img');
+      sprite.src = "images/hand.png";
+      sprite.setAttribute("num", i);
+      sprite.setAttribute("updown", j);
+      container2.appendChild(sprite);
     }
   }
   
