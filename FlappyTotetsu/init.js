@@ -256,12 +256,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const posY = 300
       const sprite = document.createElement('div');
       sprite.classList.add('sprites');
-      sprite.style.width = `40px`;
+      sprite.style.width = `30px`;
       sprite.style.height = `60px`;
       sprite.style.backgroundImage = `url('images/body.png')`;
       sprite.style.left = `${posX}px`; // 絶対位置X
       sprite.style.top = `${posY}px`; // 絶対位置Y
-      sprite.style.backgroundPosition = `-${x * 40}px -${y * 60}px`;
+      sprite.style.backgroundPosition = `-${150-x * 30}px -${y * 60}px`;
       sprite.setAttribute("num",counter);
       sprite.style.zIndex = `${30-counter}`;
       container.appendChild(sprite);

@@ -17,9 +17,9 @@ const FRAME_RATE = 60; // フレームレート
 
 const HAND_SIZE = 50;//障害物の横サイズ
 const INTERVAL = 550;//前後の障害物の間隔
-const MOVE_SPEED = 8;//動くスピード, Playerの長さで速さが変わるらしい。
+const MOVE_SPEED = 9;//動くスピード, Playerの長さで速さが変わるらしい。
 
-const PLAYER_R = 35;//プレイヤー円の半径
+const PLAYER_R = 40;//プレイヤー円の半径
 
 const FOOD_R = 10;
 const FOOD_H = 400;
@@ -312,8 +312,8 @@ function drawRectangles() {
 }
 
 function drawBody(){
-  Ehead.style.left = `${player.x-40}px`;
-  Ehead.style.top = `${player.y-40}px`;
+  Ehead.style.left = `${player.x-50}px`;
+  Ehead.style.top = `${player.y-50}px`;
   Ehead.style.transform =`rotate(${player.angle}rad)`;
   for (let i = n - 1; i >= 0; --i) {
     
