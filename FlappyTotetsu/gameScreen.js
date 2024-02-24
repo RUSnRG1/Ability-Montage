@@ -242,13 +242,15 @@ function calcHands() {
     hands[i].handx -= MOVE_SPEED;
     if (hands[i].handx < -60) {
       if (i == 0) {
-        hands[0].handx = hands[5].handx + INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
+        hands[0].handx = hands[5].handx + INTERVAL - Math.floor(Math.random() * (220 + 1));//障害物の右端指定
       }
       else {
         hands[i].handx = hands[i-1].handx + INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
       }
       hands[i].handc = Math.floor(Math.random() * (intervalMax[phase] + 1 - intervalMin[phase])) + intervalMin[phase];
       hands[i].handCC = Math.floor(Math.random() * (centerMax[phase] + 1 - centerMin[phase])) + centerMin[phase];
+      //hands[i].handc = Math.floor(Math.random() * (intervalMax[7] + 1 - intervalMin[7])) + intervalMin[7];
+      //hands[i].handCC = Math.floor(Math.random() * (centerMax[7] + 1 - centerMin[7])) + centerMin[7];
       hands[i].clearFlag = false;
     }
   } 
@@ -321,6 +323,10 @@ function calcMeter(flag) {
   }
   const percentage = (foodMeter / MaxFoodMeter) * 100;
   EtimerBarInner.style.width = percentage + '%';
+  if(foodMeter<=0){
+    return true;
+  }
+  else return false;
   //console.log(foodMeter);
 }
 
@@ -391,17 +397,19 @@ function calc() {
     calcBack();
     calcPlayer();
     calcHands();
-    if (touchCheck()) {
+    calcScore();
+    calcFood();
+    touchFoodFlag = touchFoodCheck();
+    if (touchCheck() || calcMeter(touchFoodFlag)) {
       gameFlag = false;
       resultFlag = true;
       Sover.currentTime = 0;
       Sover.play();
       removeClickListener();
     }
-    calcScore();
-    calcFood();
-    touchFoodFlag = touchFoodCheck();
-    calcMeter(touchFoodFlag);
+    
+    
+    ;
   }
 
   counter++; 
