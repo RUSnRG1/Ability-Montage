@@ -23,7 +23,7 @@ const MOVE_SPEED_B2 = 3;//動くスピード, Playerの長さで速さが変わ�
 
 const PLAYER_R = 40;//プレイヤー円の半径
 
-const FOOD_R = 10;
+const FOOD_R = 20;
 const FOOD_H = 400;
 
 const MaxFoodMeter = 5000;
@@ -49,6 +49,7 @@ Edamage = document.getElementById("damageMotion");
 Ehead = document.getElementById("totetsuHead");
 Ebody = document.getElementById("totetsuBody");
 Ehand = document.getElementById("hand");
+Efood = document.getElementById("foods");
 Eb11 = document.getElementById("background1-1");
 Eb12 = document.getElementById("background1-2");
 Eb21 = document.getElementById("background2-1");
@@ -77,8 +78,8 @@ const hands = [];
 let n2 = 6;
 for (let i = 0; i < n2; ++i){
   let handx = 1500 + i * INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
-  let handc = Math.floor(Math.random() * (550 + 1 - 200)) + 200;
-  let handCC = Math.floor(Math.random() * (130 + 1 - 100)) + 100;
+  let handc = Math.floor(Math.random() * (550 + 1 - 200)) + 200;//中点
+  let handCC = Math.floor(Math.random() * (200 + 1 - 150)) + 150;//中点からの距離（つまり間の広さ）
   let clearFlag = Boolean(false);
   hands.push({handx,handc,handCC,clearFlag});
 }
@@ -101,6 +102,9 @@ let touchFoodFlag = false;
 
 let y_before = 0;
 
+let phaseCount = 0;
+let phase = 0;
+
 let b11 = 0;
 let b12 = 1000;
 let b21 = 0;
@@ -114,7 +118,7 @@ function initGame() {
   hands.forEach(hand => {
     hand.handx = 1500 + i * INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
     hand.handc = Math.floor(Math.random() * (550 + 1 - 200)) + 200;
-    hand.handCC = Math.floor(Math.random() * (130 + 1 - 100)) + 100;
+    hand.handCC = Math.floor(Math.random() * (200 + 1 - 150)) + 150;
     hand.clearFlag = Boolean(false);
     i++;
   })
@@ -132,6 +136,8 @@ function initGame() {
   touchFoodFlag = false;
   y_before = 0;
   counter = 0;
+  phase = 0;
+  phaseCount = 0;
   resultCounter = 0;
 
   player.x =310;
@@ -148,6 +154,21 @@ function initGame() {
   Eb12.style.left = `${b12}px`;
   Eb21.style.left = `${b21}px`;
   Eb22.style.left = `${b22}px`;
+
+  Efood.querySelector(`[num="0"] img`).src = `images/foods/0.png`;
+  Efood.querySelector(`[num="1"] img`).src = `images/foods/0.png`;
+  Efood.querySelector(`[num="2"] img`).src = `images/foods/0.png`;
+
+
+  const sprites = Ebody.querySelectorAll('.sprites');
+  sprites.forEach(function (sprite) {
+    sprite.style.filter = 'brightness(100%)';
+    sprite.style.opacity = "1";
+  });
+
+  Ehead.style.filter = 'brightness(100%)';
+  Ehead.style.opacity = "1";
+  
 }
 
 
@@ -194,7 +215,7 @@ function calcHands() {
         hands[i].handx = hands[i-1].handx + INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
       }
       hands[i].handc = Math.floor(Math.random() * (550 + 1 - 200)) + 200;
-      hands[i].handCC = Math.floor(Math.random() * (130 + 1 - 100)) + 100;
+      hands[i].handCC = Math.floor(Math.random() * (200 + 1 - 150)) + 150;
       hands[i].clearFlag = false;
     }
   } 
@@ -206,6 +227,7 @@ function calcFood() {
     if (foods[i].foodx < -400) {
       foods[i].foodx = (hands[i * 2 + 1].handx + hands[i * 2].handx) / 2;//障害物の右端指定
       foods[i].foody = Math.floor(Math.random() * (650 + 1 - 100)) + 100;
+      Efood.querySelector(`[num="${i}"] img`).src = `images/foods/${phase}.png`;
     }
   }
 }
@@ -273,8 +295,12 @@ function calcScore() {
       hand.clearFlag = true;
       score++;
       Escore.textContent = `: ${score}`;
+      if(phaseCount < 85)
+      phaseCount++;
     }
   })
+  phase = Math.floor(phaseCount / 10);
+  
 }
 
 function calcBack() {
@@ -305,6 +331,10 @@ function calc() {
     if (event.key === 'z') {
       jump();
     }
+  });
+
+  document.getElementById("gameScene").addEventListener('mousedown', function() {
+    jump();
   });
 
   if(counter > 30) {
@@ -367,22 +397,12 @@ function drawBody(){
 
 //100-130... 115から上下15
 function drawHands() {
-  hands.forEach(hand => {
-    ctx.beginPath();
-    //ctx.rect(100, 100, 100, 100);
-    ctx.rect(hand.handx, hand.handc + hand.handCC, HAND_SIZE, 750 - hand.handc-hand.handCC);
-    ctx.rect(hand.handx, 0, HAND_SIZE, hand.handc - hand.handCC);
-    
-    ctx.fillStyle = 'green'; // 例えば青色で塗りつぶす
-    ctx.fill();
-    ctx.stroke(); // 枠線を描画
-  })
 
   for (let i = 0; i < 6; ++i){
-    Ehand.querySelector(`[num="${i}"]`,`[updown="${0}"]`).style.left = `${hands[i].handx}px`;
-    Ehand.querySelector(`[num="${i}"]`,`[updown="${0}"]`).style.top = `${hands[i].handc + hands[i].handCC}px`;
-    Ehand.querySelector(`[num="${i}"]`,`[updown="${1}"]`).style.left = `${hands[i].handx}px`;
-    Ehand.querySelector(`[num="${i}"]`,`[updown="${1}"]`).style.top = `${hands[i].handc - hands[i].handCC-700}px`;
+    Ehand.querySelector(`[num="${i}"][updown="0"]`).style.left = `${hands[i].handx}px`;
+    Ehand.querySelector(`[num="${i}"][updown="0"]`).style.top = `${hands[i].handc + hands[i].handCC}px`;
+    Ehand.querySelector(`[num="${i}"][updown="1"]`).style.left = `${hands[i].handx}px`;
+    Ehand.querySelector(`[num="${i}"][updown="1"]`).style.top = `${hands[i].handc - hands[i].handCC-700}px`;
     
   }
 }
@@ -395,6 +415,11 @@ function drawFoods() {
     ctx.fill();
     ctx.stroke(); // 枠線を描画
   })
+
+  for (let i = 0; i < n3; ++i){
+    Efood.querySelector(`[num="${i}"]`).style.left = `${foods[i].foodx-40}px`;
+    Efood.querySelector(`[num="${i}"]`).style.top = `${foods[i].foody - 40}px`;
+  }
 }
 
 function drawTotetsu(k) {
@@ -453,13 +478,27 @@ function draw() {
   
 }
 
+function startAnimation() {
+  const sprites = Ebody.querySelectorAll('.sprites');
+  sprites.forEach(function (sprite) {
+    sprite.style.filter = 'brightness(0%)';
+    sprite.style.opacity = "0";
+  });
+
+  Ehead.style.filter = 'brightness(0%)';
+  Ehead.style.opacity = "0";
+}
+
 function drawResult() {
   drawBack();
   drawHands();
   drawFoods();
   drawTotetsu(3);
-  Etweet.style.display = 'block';
-  EoneMore.style.display = 'block';
+  startAnimation();
+  setTimeout(() => {
+    Etweet.style.display = 'block';
+    EoneMore.style.display = 'block';
+  }, 1000);
 
 }
 
@@ -518,6 +557,8 @@ function setting() {
   Echarge.style.display = "none";
   Edamage.style.display = "none";
   Ehead.style.display = "none";
+
+
  
 
   //いんとろからゲームスタートのためのコードとか
@@ -557,7 +598,7 @@ Etweet.addEventListener('click', function () {
   window.open(tweetUrl, '_blank');
 });
 
-EoneMore.addEventListener('click', function () {
+EoneMore.addEventListener('mousedown', function () {
   Etweet.style.display = 'none';
   EoneMore.style.display = 'none';
   resultFlag = false;
@@ -567,6 +608,8 @@ EoneMore.addEventListener('click', function () {
   EtimerBarInner.style.width = '100%';
 });
 
+
+
 // キーボードイベントのリスナーを設定
 
 
@@ -575,5 +618,8 @@ EoneMore.addEventListener('click', function () {
 //初期配置(ボタンを指定場所において非表示にしたりする。読み込み自体はinitでやる)
 setting();
 // ゲーム開始
-gameLoop();
+setTimeout(() => {
+  gameLoop();
+}, 3000);
+
 

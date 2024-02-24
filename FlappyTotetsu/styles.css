@@ -99,12 +99,14 @@ body{
   position: absolute;
   top: 600px;
   left: 150px;
+  z-index: 3;
 }
 
 #Tweet {
   position: absolute;
   top: 600px;
   left: 580px;
+  z-index: 3;
 }
 
 #titleText {
@@ -149,6 +151,10 @@ body{
   left: -100px;
   z-index: 36;
   transform: translate(-50%,-50%);
+
+  transition: filter 0.5s linear, opacity 1s linear; /* 2秒かけて変化 */
+  filter: brightness(100%); /* 初期明るさ */
+  opacity: 1; /* 初期透明度 */
 }
 
 #totetsuBody{
@@ -163,7 +169,10 @@ body{
   height: 60px; /* 分割後の画像の高さ */
   position: absolute;
   transform: translate(-50%,-50%);
-  
+
+  transition: filter 0.5s linear, opacity 1s linear; /* 2秒かけて変化 */
+  filter: brightness(100%); /* 初期明るさ */
+  opacity: 1; /* 初期透明度 */
 }
 
 #hand{
@@ -174,10 +183,24 @@ body{
   left: 0px;
 }
 .sprites {
-  width: 50px; /* 分割後の画像の幅 */
-  height: 700px; /* 分割後の画像の高さ */
   position: absolute;
   z-index: 3;
+  transform: translate(0%, 0%);
+}
+
+#foods {
+  position: absolute;
+  width: 40px;
+  /* 元の画像の幅に合わせる */
+  height: 40px;
+  top: 0px;
+  left: 0px;
+}
+
+.sprites {
+  position: absolute;
+  z-index: 3;
+  transform: translate(0%, 0%);
 }
 
 #background1-1{
@@ -219,8 +242,8 @@ body{
   position: absolute;
     width: 150px;/* 元の画像の幅に合わせる */
     height: 75px;
-    top: 500px;
-    left: 300px;
+    top: 540px;
+    left: 390px;
     z-index: 4;
 }
 

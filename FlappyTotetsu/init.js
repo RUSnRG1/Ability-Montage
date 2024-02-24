@@ -213,7 +213,6 @@ function displayImage() {
 
 document.addEventListener('DOMContentLoaded', function () {
   showLoadingScreen();
-
   //var backimg = document.querySelector('.backImage');
   //backimg.style.backgroundImage = 'url(images/Back.jpg)';
 
@@ -288,22 +287,44 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  const container2 = document.getElementById("head");
+  const container2 = document.getElementById("hand");
   for (let i = 0; i < 6; ++i){
     for (let j = 0; j < 2; ++j){
+      const sprite = document.createElement('div');
       sprite.classList.add('sprites');
       sprite.style.width = `50px`;
       sprite.style.height = `700px`;
-      sprite.createElement('img');
-      sprite.src = "images/hand.png";
+      sprite.style.left = `${-1000}px`; // 絶対位置X
+      sprite.style.top = `${0}px`; // 絶対位置Y
+      const img = document.createElement('img');
+      img.src = "images/hand.png";
+      sprite.appendChild(img);
       sprite.setAttribute("num", i);
       sprite.setAttribute("updown", j);
       container2.appendChild(sprite);
     }
   }
-  
 
+  const container3 = document.getElementById("foods");
+  for (let j = 0; j < 3; ++j) {
+    const sprite = document.createElement('div');
+    sprite.classList.add('sprites');
+    sprite.style.width = `40px`;
+    sprite.style.height = `40px`;
+    sprite.style.left = `${-1000}px`; // 絶対位置X
+    sprite.style.top = `${0}px`; // 絶対位置Y
+    const img = document.createElement('img');
+    img.src = `images/foods/0.png`;
+    sprite.appendChild(img);
+    sprite.setAttribute("num", j);
+    container3.appendChild(sprite);
+    
+  }
+  
   changeScene("gameScene");
+
+  
+  
   //preloadAllResources(() => {
     //setTimeout(() => {
       //displayImage();
