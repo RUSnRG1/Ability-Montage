@@ -407,9 +407,7 @@ function calc() {
       Sover.play();
       removeClickListener();
     }
-    
-    
-    ;
+
   }
 
   counter++; 
