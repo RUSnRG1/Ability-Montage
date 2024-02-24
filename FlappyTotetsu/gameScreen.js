@@ -37,15 +37,18 @@ let resultFlag = false;
 //様々なエレメントを取得
 EtimerBarInner = document.getElementById('barI');
 Eintroduction = document.getElementById('introduction');
+Eresult = document.getElementById('result');
 Etweet = document.getElementById('Tweet');
 EoneMore = document.getElementById('oneMore');
+Ebase = document.getElementById('base');
 EtitleText = document.getElementById('titleText');
 EtimerBarOuter= document.getElementById("barO");
 Escore = document.getElementById("score");
+Escore2 = document.getElementById("score2");
+Ebest = document.getElementById("bestscore");
 Eplay = document.getElementById("play");
 Ewait = document.getElementById("waitMotion");
 Echarge = document.getElementById("chargeMotion");
-Edamage = document.getElementById("damageMotion");
 Ehead = document.getElementById("totetsuHead");
 Ebody = document.getElementById("totetsuBody");
 Ehand = document.getElementById("hand");
@@ -57,7 +60,7 @@ Eb22 = document.getElementById("background2-2");
 
 const player = {
   x: 310,
-  y: 300, // Y座標
+  y: 350, // Y座標
   velocity: 0, // 速度
   angle:0
 };
@@ -93,6 +96,7 @@ for (let i = 0; i < n3; ++i) {
 }
 
 let score = 0;
+let bestscore=getHighScore();
 let foodMeter = MaxFoodMeter;
 let counter = 0;
 let resultCounter = 0;
@@ -105,6 +109,7 @@ let y_before = 0;
 let phaseCount = 0;
 let phase = 0;
 
+let basex = 255;
 let b11 = 0;
 let b12 = 1000;
 let b21 = 0;
@@ -112,6 +117,22 @@ let b22 = 1000;
 
 const face = document.getElementById("face");
 const ctx = face.getContext('2d');
+
+function getHighScore() {
+  const name = "highScore=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return parseInt(c.substring(name.length, c.length), 10);
+    }
+  }
+  return 0; // クッキーが見つからない場合は0を返す
+}
 
 function initGame() {
   let i = 0;
@@ -139,9 +160,10 @@ function initGame() {
   phase = 0;
   phaseCount = 0;
   resultCounter = 0;
+  basex = 255;
 
   player.x =310;
-  player.y = 300; // Y座標
+  player.y = 350; // Y座標
   player.velocity = 0; // 速度
   player.angle = 0;
   rects.forEach(rect => {
@@ -168,7 +190,7 @@ function initGame() {
 
   Ehead.style.filter = 'brightness(100%)';
   Ehead.style.opacity = "1";
-  
+  Ebase.style.left = `${basex}.px`
 }
 
 
@@ -202,6 +224,7 @@ function calcPlayer() {
     rects[i].angle = Math.atan2(dy, MOVE_SPEED);
   }
   player.angle = Math.atan2(player.velocity,MOVE_SPEED);
+  basex-=MOVE_SPEED;
 }
 
 function calcHands() {
@@ -294,7 +317,7 @@ function calcScore() {
     if (hand.clearFlag == false && hand.handx < player.x - PLAYER_R - HAND_SIZE) {
       hand.clearFlag = true;
       score++;
-      Escore.textContent = `: ${score}`;
+      Escore.textContent = `SCORE: ${score}`;
       if(phaseCount < 85)
       phaseCount++;
     }
@@ -333,7 +356,7 @@ function calc() {
     }
   });
 
-  document.getElementById("gameScene").addEventListener('mousedown', function() {
+  document.getElementById("gameScene").addEventListener('click', function() {
     jump();
   });
 
@@ -405,6 +428,7 @@ function drawHands() {
     Ehand.querySelector(`[num="${i}"][updown="1"]`).style.top = `${hands[i].handc - hands[i].handCC-700}px`;
     
   }
+  Ebase.style.left = `${basex}px`;
 }
 
 function drawFoods() {
@@ -425,7 +449,6 @@ function drawFoods() {
 function drawTotetsu(k) {
   Ewait.style.display = "none";
   Echarge.style.display = "none";
-  Edamage.style.display = "none";
   if (k == 0) {
     Ewait.style.display = "block";
   }
@@ -434,10 +457,6 @@ function drawTotetsu(k) {
   }
   if (k == 2) {
     drawBody();
-  }
-  if (k == 3) {
-    Edamage.style.display = "block";
-    Edamage.style.top = `${player.y-32}px`;
   }
 }
 
@@ -478,7 +497,7 @@ function draw() {
   
 }
 
-function startAnimation() {
+function startAnimation(callback) {
   const sprites = Ebody.querySelectorAll('.sprites');
   sprites.forEach(function (sprite) {
     sprite.style.filter = 'brightness(0%)';
@@ -487,19 +506,40 @@ function startAnimation() {
 
   Ehead.style.filter = 'brightness(0%)';
   Ehead.style.opacity = "0";
+  setTimeout(callback(), 500)
+}
+
+function setHighScore(score) {
+  const d = new Date();
+  d.setTime(d.getTime() + (365*24*60*60*1000)); // 1年後に有効期限を設定
+  const expires = "expires=" + d.toUTCString();
+  document.cookie = "highScore=" + score + ";" + expires + ";path=/";
+}
+
+function updateScore(newScore) {
+  score = newScore;
+  if (score > bestscore) {
+    bestscore = score; // ハイスコアを更新
+    setHighScore(bestscore); // 新しいハイスコアをクッキーに保存
+  }
 }
 
 function drawResult() {
   drawBack();
   drawHands();
   drawFoods();
-  drawTotetsu(3);
-  startAnimation();
-  setTimeout(() => {
+  updateScore(score);
+  Eresult.style.display="block";
+  Escore2.textContent = `SCORE: ${score}`;
+  Escore2.style.display = "block";
+  Ebest.textContent = `BEST: ${bestscore}`;
+  Ebest.style.display = "block";
+
+  startAnimation(() => {
     Etweet.style.display = 'block';
     EoneMore.style.display = 'block';
-  }, 1000);
-
+  });
+  
 }
 
 function drawTitle() {
@@ -507,6 +547,7 @@ function drawTitle() {
   drawHands();
   drawFoods();
   drawTotetsu(0);
+  Ebase.style.display = "block";
   EtitleText.style.display = "block";
   Eplay.style.display = "block";
   //ここをfaceじゃなくてblockボタンに変える
@@ -547,24 +588,19 @@ function jump() {
 function setting() {
   Etweet.style.display = 'none';
   EoneMore.style.display = 'none';
+  Ebase.style.display = "none";
   EtitleText.style.display = "none";
   EtimerBarOuter.style.display = "none";
   EtimerBarInner.style.display = "none";
   Escore.style.display = "none";
   Eintroduction.style.display = "none";
+  Eresult.style.display="none";
   Eplay.style.display = "none";
   Ewait.style.display = "none";
   Echarge.style.display = "none";
-  Edamage.style.display = "none";
   Ehead.style.display = "none";
-
-
- 
-
-  //いんとろからゲームスタートのためのコードとか
-  //
-  //
-
+  Escore2.style.display = "none";
+  Ebest.style.display = "none";
 }
 
 // ゲームループ
@@ -593,19 +629,27 @@ function gameLoop() {
 Etweet.addEventListener('click', function () {
   //let text = document.getElementById("tweet-text").innerText;
   // オプションパラメータを設定
-  var tweetText = `今回の獲得金額: ${window.scoreResult} \n＃AbilityMontage\nhttps://rusnrg1.github.io/Ability-Montage.github.io/`;
+  var tweetText = `Flappy Totetsuでスコア: ${score}でした。 \n＃FlappyTotetsu\nhttps://rusnrg1.github.io/Ability-Montage.github.io/FlappyTotetsu`;
   var tweetUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText);
   window.open(tweetUrl, '_blank');
 });
 
-EoneMore.addEventListener('mousedown', function () {
+EoneMore.addEventListener('click', function () {
   Etweet.style.display = 'none';
   EoneMore.style.display = 'none';
+  Eresult.style.display="none";
   resultFlag = false;
   introFlag = true;
   initGame();
-  Escore.textContent = `: ${score}`;
+  Escore.textContent = `SCORE: ${score}`;
   EtimerBarInner.style.width = '100%';
+  Ehead.style.left = '-100px';
+  const sprites = Ebody.querySelectorAll('.sprites');
+  sprites.forEach(function (sprite) {
+    sprite.style.left = "-100px"
+  });
+  Escore2.style.display = "none";
+  Ebest.style.display = "none";
 });
 
 

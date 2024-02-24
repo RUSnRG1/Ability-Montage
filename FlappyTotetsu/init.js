@@ -216,6 +216,10 @@ document.addEventListener('DOMContentLoaded', function () {
   //var backimg = document.querySelector('.backImage');
   //backimg.style.backgroundImage = 'url(images/Back.jpg)';
 
+  const titleimg = document.createElement('img');
+  titleimg.src = `images/FlappyTotetsu.png`;
+  document.getElementById("titleText").appendChild(titleimg);
+
   const onemoreimg = document.createElement('img');
   onemoreimg.src = `images/OneMore.png`;
   document.getElementById("oneMore").appendChild(onemoreimg);
@@ -228,6 +232,14 @@ document.addEventListener('DOMContentLoaded', function () {
   introimg.src = "images/intro.png";
   document.getElementById("introduction").appendChild(introimg);
 
+  const resultimg = document.createElement('img');
+  resultimg.src = "images/result.png";
+  document.getElementById("result").appendChild(resultimg);
+
+  const baseimg = document.createElement('img');
+  baseimg.src = "images/base.png";
+  document.getElementById("base").appendChild(baseimg);
+
   const waitimg = document.createElement('img');
   waitimg.src = "images/wait.png";
   document.getElementById("waitMotion").appendChild(waitimg);
@@ -235,10 +247,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const chargeimg = document.createElement('img');
   chargeimg.src = "images/charge.png";
   document.getElementById("chargeMotion").appendChild(chargeimg);
-
-  const damageimg = document.createElement('img');
-  damageimg.src = "images/wait.png";
-  document.getElementById("damageMotion").appendChild(damageimg);
 
   const backimg11 = document.createElement('img');
   backimg11.src = "images/back1.png";
