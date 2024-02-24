@@ -155,39 +155,14 @@ function preloadTexts(callback) {
   callback();
 }
 
-function preloadSound(callback) {
-  let soundsToLoad = ["sound/clear.mp3", "sound/excellentClear.mp3", "sound/touch.mp3", "sound/miss.mp3", "sound/gameover.mp3", "sound/momoyo.wav", "sound/gameClear.mp3"];
-  document.getElementById("clearSound").src = soundsToLoad[0];
-  document.getElementById("excellentClearSound").src = soundsToLoad[1];
-  document.getElementById("touchSound").src = soundsToLoad[2];
-  document.getElementById("missSound").src = soundsToLoad[3];
-  document.getElementById("gameoverSound").src = soundsToLoad[4];
-  document.getElementById("BGM").src = soundsToLoad[5];
-  document.getElementById("gameClearBGM").src = soundsToLoad[6];
-  callback();
+function preloadSound() {
+  let soundsToLoad = ["sounds/jump.mp3", "sounds/eat.mp3", "sounds/over.mp3", "sounds/score.mp3"];
+  document.getElementById("jumpSound").src = soundsToLoad[0];
+  document.getElementById("eatSound").src = soundsToLoad[1];
+  document.getElementById("overSound").src = soundsToLoad[2];
+  document.getElementById("scoreSound").src = soundsToLoad[3];
 }
 
-//各フォルダとファイル名オブジェクトを作る関数
-function generateImageNames(numberOfImages) {
-  // 画像ファイル名の配列を生成
-  let imageNames = [];
-  for (let i = 0; i < numberOfImages; i++) {
-    // ゼロ埋めした画像ファイル名を生成（例：'00.gif', '01.gif', ...）
-    let imageName = `${i.toString().padStart(2, '0')}.png`;
-    imageNames.push(imageName);
-  }
-  // 結果をオブジェクトとして返す
-  return imageNames;
-}
-
-function loadImageFromFolder(folderName, imageNum, indexNum) {
-  const gameImages = document.getElementById('gameImages');
-  const images = generateImageNames(imageNum)
-  const img = document.createElement('img');
-  img.src = `images/${folderName}/${images[indexNum]}`;
-  img.alt = "hello";
-  gameImages.appendChild(img);
-}
 
 
 
@@ -202,13 +177,6 @@ function changeScene(sceneId) {
   document.getElementById(sceneId).classList.add('active');
 }
 
-function displayImage() {
-  const buttonArea = document.getElementById('buttonArea');
-  window.imageElements.forEach(img => {
-    img.style.boxSizing = 'border-box';
-    buttonArea.appendChild(img);
-  })
-}
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -328,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
     container3.appendChild(sprite);
     
   }
-  
+  preloadSound();
   changeScene("gameScene");
 
   

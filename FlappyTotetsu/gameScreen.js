@@ -26,7 +26,7 @@ const PLAYER_R = 40;//プレイヤー円の半径
 const FOOD_R = 20;
 const FOOD_H = 400;
 
-const MaxFoodMeter = 5000;
+const MaxFoodMeter = 1000;
 
 
 let titleFlag = true;
@@ -58,6 +58,11 @@ Eb12 = document.getElementById("background1-2");
 Eb21 = document.getElementById("background2-1");
 Eb22 = document.getElementById("background2-2");
 
+Sjump = document.getElementById("jumpSound");
+Seat = document.getElementById("eatSound");
+Sover = document.getElementById("overSound");
+Sscore = document.getElementById("scoreSound");
+
 const player = {
   x: 310,
   y: 350, // Y座標
@@ -81,8 +86,8 @@ const hands = [];
 let n2 = 6;
 for (let i = 0; i < n2; ++i){
   let handx = 1500 + i * INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
-  let handc = Math.floor(Math.random() * (550 + 1 - 200)) + 200;//中点
-  let handCC = Math.floor(Math.random() * (200 + 1 - 150)) + 150;//中点からの距離（つまり間の広さ）
+  let handc = Math.floor(Math.random() * (550 + 1 - 300)) + 300;//中点
+  let handCC = Math.floor(Math.random() * (250 + 1 - 200)) + 200;//中点からの距離（つまり間の広さ）
   let clearFlag = Boolean(false);
   hands.push({handx,handc,handCC,clearFlag});
 }
@@ -108,6 +113,10 @@ let y_before = 0;
 
 let phaseCount = 0;
 let phase = 0;
+const intervalMax = [550,550,550,580,580,600,600,620];
+const intervalMin = [300,300,280,280,250,240,230,220];
+const centerMax = [250,240,230,220,200,180,160,150];
+const centerMin = [200,190,180,170,160,150,140,130];
 
 let basex = 255;
 let b11 = 0;
@@ -136,10 +145,11 @@ function getHighScore() {
 
 function initGame() {
   let i = 0;
+
   hands.forEach(hand => {
     hand.handx = 1500 + i * INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
-    hand.handc = Math.floor(Math.random() * (550 + 1 - 200)) + 200;
-    hand.handCC = Math.floor(Math.random() * (200 + 1 - 150)) + 150;
+    hand.handc = Math.floor(Math.random() * (550 + 1 - 300)) + 300;
+    hand.handCC = Math.floor(Math.random() * (200 + 1 - 200)) + 200;
     hand.clearFlag = Boolean(false);
     i++;
   })
@@ -237,8 +247,8 @@ function calcHands() {
       else {
         hands[i].handx = hands[i-1].handx + INTERVAL - Math.floor(Math.random() * (200 + 1));//障害物の右端指定
       }
-      hands[i].handc = Math.floor(Math.random() * (550 + 1 - 200)) + 200;
-      hands[i].handCC = Math.floor(Math.random() * (200 + 1 - 150)) + 150;
+      hands[i].handc = Math.floor(Math.random() * (intervalMax[phase] + 1 - intervalMin[phase])) + intervalMin[phase];
+      hands[i].handCC = Math.floor(Math.random() * (centerMax[phase] + 1 - centerMin[phase])) + centerMin[phase];
       hands[i].clearFlag = false;
     }
   } 
@@ -304,7 +314,9 @@ function touchFoodCheck() {
 function calcMeter(flag) {
   foodMeter--;
   if (flag) {
-    foodMeter += 300;
+    Seat.currentTime =0;
+    Seat.play();
+    foodMeter += 120;
     if (foodMeter > MaxFoodMeter) foodMeter = MaxFoodMeter;
   }
   const percentage = (foodMeter / MaxFoodMeter) * 100;
@@ -318,6 +330,8 @@ function calcScore() {
       hand.clearFlag = true;
       score++;
       Escore.textContent = `SCORE: ${score}`;
+      Sscore.currentTime = 0;
+      Sscore.play();
       if(phaseCount < 85)
       phaseCount++;
     }
@@ -348,19 +362,31 @@ function calcBack() {
 
   
 }
-
-function calc() {
+// イベントリスナーを追加する関数
+function addClickListener() {
+  document.getElementById("gameScene").addEventListener('click', jump);
   document.addEventListener('keydown', function (event) {
     if (event.key === 'z') {
       jump();
     }
   });
+}
 
-  document.getElementById("gameScene").addEventListener('click', function() {
-    jump();
+// イベントリスナーを削除する関数
+function removeClickListener() {
+  document.getElementById("gameScene").removeEventListener('click', jump);
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'z') {
+      jump();
+    }
   });
+}
+
+
+function calc() {
 
   if(counter > 30) {
+    addClickListener();
     Ehead.style.display = "block";
     calcBack();
     calcPlayer();
@@ -368,6 +394,9 @@ function calc() {
     if (touchCheck()) {
       gameFlag = false;
       resultFlag = true;
+      Sover.currentTime = 0;
+      Sover.play();
+      removeClickListener();
     }
     calcScore();
     calcFood();
@@ -377,18 +406,6 @@ function calc() {
 
   counter++; 
   
-}
-
-function calcResult() {
-  if (resultCounter == 0) {
-    jump();
-  }
-  else if (resultCounter > 60) {
-    return;
-  }
-  calcPlayer();
-  resultCounter++;
-
 }
 
 function drawRectangles() {
@@ -582,6 +599,8 @@ function drawIntro() {
 function jump() {
   player.velocity = JUMP_FORCE;
   player.jumpFlag = 0;
+  Sjump.currentTime = 0;
+  Sjump.play();
 }
 
 
@@ -617,7 +636,6 @@ function gameLoop() {
     draw();
   }
   if (resultFlag) {
-    calcResult();
     drawResult();
   }
   
