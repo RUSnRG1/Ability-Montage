@@ -1,0 +1,320 @@
+html {
+  touch-action: manipulation;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  min-height: 10vh; /* ビューポートの高さに合わせる */
+  margin: 0; /* デフォルトのマージンを削除 */
+  background-color: #100029;
+}
+
+
+#outerDescription{
+  width: 80%; /* 幅を調整する */
+  margin-top: 10px;
+  color: #ffffff;
+}
+
+.scene {
+  user-select: none;
+  position: relative;
+  width: 930px;   
+  height: 750px;  
+  display: none;  /* デフォルトでは非表示 */
+} 
+.scene.active {
+  display: block;
+}
+
+.loading-screen{
+  position: absolute;
+  width: 100%; /* 画面全体を覆う */
+  height: 100%;
+  background-image: url('images/Loading.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.ufo {
+  position: absolute;
+  width: 50px; /* UFOのサイズを適切に設定 */
+  height: 50px;
+  top: 50%;  /* 初期位置設定 */
+  left: 50%;
+  transform-origin: 50px 50px; /* UFOの中心点を指定 */
+}
+
+#titleScene{
+  background-color: rgb(109, 13, 13)
+}
+#titleImage img{
+  width: 100%;   /* 画面全体の幅 */
+  height: 100%;  /* 画面全体の高さ */
+}
+
+.backImage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+}
+
+#fadeOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0);
+  opacity: 1;
+}
+
+.fadeInActive {
+  animation: fadeInEffect 2.2s forwards;
+}
+
+
+@keyframes fadeInEffect {
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOutActive {
+  animation: fadeOutEffect 2s forwards;
+}
+
+@keyframes fadeOutEffect {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#desk{
+  background-image: url("images/description.png");
+  position: absolute;
+  width: 100%;   /* 画面全体の幅 */
+  height: 100%;  /* 画面全体の高さ */
+  z-index: 1;
+  background-size: contain;
+}
+
+#startButtonImage{
+  background-image: url("images/startButton.png");
+  position: absolute;
+  top: 45%; /* 画面の高さの50%の位置 */
+  left: 50%; /* 画面の幅の50%の位置 */
+  transform: translate(-50%, -50%);
+  width: 255px;
+  height: 60px;
+  z-index: 2;
+  background-size: contain;
+}
+
+#gameIntro {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  /* 必要に応じて他のスタイルを追加 */
+}
+
+.backImage{
+  position: absolute;
+  width: 100%;   /* 画面全体の幅 */
+  height: 100%;  /* 画面全体の高さ */
+  z-index: -1;
+}
+
+#scoreTimerArea{
+  height: 60px;
+  position:relative;
+  z-index: 3;
+}
+
+#score{
+  display: flex; /* フレックスボックスを使用 */
+  align-items: center; /* 中央揃え */
+  position: absolute;
+  left: 100px;
+  color: rgb(255, 255, 255);
+  
+}
+
+.moneyImage{
+  margin-right: 5px; /* バーとの間隔 */
+  top: 3px;
+  left: 70px;
+  width: 40px;/* 外枠の幅 */
+  height: 55px;/* 外枠の高さ */
+  position: relative;
+  background-image: url("images/money.png");
+}
+
+.scoreText{
+  top: 6px;
+  left: 70px;
+  width: 120px;/* 外枠の幅 */
+  font-size: 24px;
+  position: relative;
+  color: rgb(200, 140, 0)
+}
+
+
+#timer {
+  display: flex; /* フレックスボックスを使用 */
+  align-items: center; /* 中央揃え */
+}
+
+.timer-card {
+  margin-right: 5px; /* バーとの間隔 */
+  top: 3px;
+  left: 500px;
+  width: 40px;/* 外枠の幅 */
+  height: 55px;/* 外枠の高さ */
+  position: relative;
+  background-image: url("images/o2.png");
+}
+
+.timer-bar-outer {
+  top: 3px;
+  left: 500px;
+  width: 300px; /* 外枠の幅 */
+  height: 50px; /* 外枠の高さ */
+  background-image: url("images/outerBar.png"); /* 外枠の画像 */
+  position: relative;
+  z-index: 2;
+}
+
+.timer-bar-inner {
+  height: 50px;
+  background-image: url('images/innerBar.png'); /* 中の棒の画像 */
+  position: absolute;
+  left: 2px;
+  background-size: cover; /* または 100% 100% */
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+
+
+#gameImages{
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  flex-wrap: wrap; /* 要素が多い場合は折り返し */
+  height: 300px; 
+}
+#gameImage img{
+  margin-right: -1px; /* 右の画像と1px重なる */
+}
+
+
+.result {
+  position: absolute;
+  width: 900px;
+  height: 700px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#scoreResult{
+  position: absolute;
+  font-size: 40px;
+  top: 350px;
+  left:320px;
+  color: rgb(200, 140, 0);
+  display: none;
+}
+
+#oneMore{
+  position: absolute;
+  top: 600px;
+  left:150px;
+}
+
+#Tweet{
+  position: absolute;
+  top: 600px;
+  left: 580px;
+}
+
+#textArea{
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  height: 60px;
+}
+
+.textBox{
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.274);
+  color: #ffffff;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+  display: none; /* ボックスの幅を内容に合わせる */
+  font-size: 24px;
+}
+
+#text span.current {
+  color: red;
+}
+#text span {
+  color: rgb(255, 255, 255);
+}
+
+#messageArea{
+  position: absolute;
+  top: 300px;
+  width: 930px;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  text-align: center;
+  z-index: -1;
+}
+
+#message{
+  color: rgb(216, 4, 4);
+  font-size: 60px;
+}
+
+
+#buttonArea{
+  position: absolute;
+  height: 326px;
+  display: grid;
+  grid-template-columns: repeat(14, 64px);
+  grid-gap: 2px;
+  padding: 2px 2px;
+  justify-content: center;
+  z-index: 3;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    outline: 3px solid rgb(209, 127, 4);
+  }
+
+  50% {
+    outline: none;
+  }
+}
+
+.blinking-outline {
+  animation: blink 0.7s linear infinite;
+}

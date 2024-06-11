@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Layout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+        .grid-item {
+            text-align: center;
+        }
+        .grid-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .description {
+            margin-top: 10px;
+            font-size: 16px;
+            max-width: 100%; /* 画像サイズに合わせる */
+            word-wrap: break-word; /* テキストを折り返す */
+            white-space: normal; /* 自動改行を有効にする */
+        }
+        .title {
+            text-align: center; /* 中央揃え */
+            font-weight: bold;
+            margin-bottom: 5px; /* タイトルと説明の間にスペースを追加 */
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item">
+            <a href="Ability-Montage/index.html">
+                <img src="images/AbilityMontage.jpg" alt="Ability Montage">
+            </a>
+            <div class="description">
+                <div class="title">Ability Montage</div>
+                アビリティカードの文字を並び替えて文章を作るゲーム
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image2.jpg" alt="脱出レッドブロック">
+            <div class="description">
+                脱出レッドブロックの説明。このゲームは、赤いブロックを動かして出口に導くパズルゲームです。
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image3.jpg" alt="森の冒険パズル">
+            <div class="description">
+                森の冒険パズルの説明。森の中でアイテムを見つけてパズルを解くアドベンチャーゲームです。
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image4.jpg" alt="パズルタイニー合唱団">
+            <div class="description">
+                パズルタイニー合唱団の説明。音符を合わせて美しいメロディーを作るパズルゲームです。
+            </div>
+        </div>
+        <!-- ここに他のグリッド項目を追加 -->
+    </div>
+</body>
+</html>
