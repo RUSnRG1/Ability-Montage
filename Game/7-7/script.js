@@ -32,5 +32,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    setImage();
+    async function fetchForecast() {
+        try {
+            const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=35.6895&longitude=139.6917&hourly=temperature_2m&timezone=Asia%2FTokyo');
+            const data = await response.json();
+            return parseForecastData(data);
+        } catch (error) {
+            console.error('Error fetching forecast:', error);
+            return [1, 2, 3, 4, 5, 6, 2, 1]; // エラーハンドリング用のデフォルトデータ
+        }
+    }
+
+    function parseForecastData(data) {
+        hourly = data
+        console.log(hourly)
+        return [1, 2, 3, 4, 5, 6, 2, 1];
+    }
+
+
+    //setImage();
+    setInterval(fetchForecast, 6*1000);
 });
