@@ -15,22 +15,27 @@ body {
 }
 
 .current-weather img {
-    width: 500px;
-    height: 500px;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    aspect-ratio: 1 / 1; /* 画像のアスペクト比を正方形に保つ */
 }
 
 .forecast-container {
     display: flex;
+    flex-wrap: wrap; /* 小さい画面でアイテムが折り返されるように */
     justify-content: center;
 }
 
 .forecast {
-    margin: 0 10px;
+    margin: 10px;
 }
 
 .forecast img {
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    aspect-ratio: 1 / 1; /* 画像のアスペクト比を正方形に保つ */
 }
 
 .forecast p {
