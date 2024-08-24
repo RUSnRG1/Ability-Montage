@@ -28,7 +28,9 @@
 ## ゲーム画面
 GameScenが司り、様々な処理を行う。  
 - GameScene
-  - calc()...計算を行う
+  - loop...calcとdrawを回す。その際状態を制御
+  - calc(s)...計算を行う.引数sは状態。これに合わせて遷移
+  - draw(s)... 描画を行う。
 以下はGameScene内の各クラス
 - Player  
   - 自機
