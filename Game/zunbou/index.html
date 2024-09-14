@@ -1,0 +1,54 @@
+<!--ソースコードも秘匿してくれ尊大椅子女さんよ。-->
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="UTF-8">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@RUSnRG1" />
+<meta name="twitter:title" content="Flappy Totetsu" />
+<meta name="twitter:description" content="フラッピー饕餮" />
+<meta name="twitter:image" content="https://rusnrg1.github.io/Ability-Montage.github.io/FlappyTotetsu/images/base.png"/>
+<title>Flappy Totetsu</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="./FlappyTotetsu/images/favicon.ico">
+</head>
+<body oncontextmenu="return false;">
+
+<div id="initScene" class="scene active">
+    <!-- ロード画面 -->
+</div>
+
+<div id="gameScene" class="scene">
+    <canvas id ="face" width = "930" height = "750"></canvas>
+    
+
+</div>
+
+<div id="outerDescription">
+    <h2>遊び方：空腹になる前に弾幕を避けながらご飯を集めよう！</h2>
+    <p>
+        詳細な遊び方：<br>
+        画面クリックで饕餮がジャンプします。<br>
+        弾幕に当たるか空腹メーターが0になるとゲームオーバーです。<br>
+        目指せスコア100！<br>
+        感想、バグ報告、新たな問題文の提案は<a href="https://twitter.com/RUSnRG1">https://twitter.com/RUSnRG1</a>まで
+    </p>
+    <h2>更新履歴</h2>
+    <p>
+        2024.02.25 公開<br>
+    </p>
+    <h2>お借りした素材</h2>
+    <a href="https://soundeffect-lab.info/">効果音ラボ</a>
+    <a href="https://illustimage.com/">イラストイメージ</a>
+</div>
+
+
+<script src="init.js"></script>
+<script src="titleScreen.js"></script>
+<script src="gameScreen.js"></script>
+<script src="resultScreen.js"></script>
+
+<script src="class/player.js"></script>
+
+</body>
+</html>

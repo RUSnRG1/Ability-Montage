@@ -1,0 +1,26 @@
+html {
+    touch-action: manipulation;
+  }
+  
+  body{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    min-height: 10vh; /* ビューポートの高さに合わせる */
+    margin: 0; /* デフォルトのマージンを削除 */
+    background-color: #100029;
+  }
+  
+
+  canvas {
+    border: 2px solid #ffffff;
+  }
+
+  
+  #outerDescription{
+    width: 80%; /* 幅を調整する */
+    margin-top: 10px;
+    color: #ffffff;
+  }
+  
