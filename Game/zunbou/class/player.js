@@ -26,7 +26,8 @@ class Player {
 
     }
 
-    update(obstacles) {
+    update(buildings) {
+        
         this.velocity += this.acceleration;
         if (this.velocity > this.maxVelocity){
             this.velocity=this.maxVelocity;
@@ -42,8 +43,7 @@ class Player {
 
 
         //ビルとの接触判定
-        this.flag = this.checkCollision(obstacles);
-        console.log(this.flag)
+        this.flag = this.checkCollision(buildings);
 
         // 地面に衝突した場合
         if (this.y + this.height > 750) {
@@ -61,21 +61,21 @@ class Player {
         ctx.fillRect(this.x2,this.y2, this.width2, this.height2)
     }
 
-    checkCollision(obstacles) {
+    checkCollision(buildings) {
 
         //obstacles.forEach(obstacle => {
         // 恐ろしいことに、forEach文を使うとreturnで抜けられなくなる
         // どうすれば抜けられますか？→forEach使うな。　だそうです
-        for(let i=0;i<obstacles.length;++i){
-            let obstacleBounds = obstacles[i].getBounds();
+        for(let i=0;i<buildings.length;++i){
+            let buildingBounds = buildings[i].getBounds();
             //1:正方形部分
             //もしかしてこれ、長方形部分だけ考えればいいのか？？？？
 
             //2:長方形部分
-            if(this.x2+this.width2 > obstacleBounds.x &&
-                this.x2 < obstacleBounds.x+obstacleBounds.width
+            if(this.x2+this.width2 > buildingBounds.x &&
+                this.x2 < buildingBounds.x+buildingBounds.width
             ){
-                if(this.y2+this.height2 > obstacleBounds.y){
+                if(this.y2+this.height2 > buildingBounds.y){
                     return true;
                 }
             }

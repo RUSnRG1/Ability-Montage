@@ -1,6 +1,6 @@
 let obsStartPos = 210 //スタート時の一番左側にあるビルのx座標
 
-class Obstacle {
+class Building {
     constructor(num,speed,len) {
         this.length = len;
         this.number = num;//何個目のビルか。
@@ -13,12 +13,15 @@ class Obstacle {
         
     }
 
-    update() {
+    update(firework) {
         this.x -= this.speed;
         // 画面外に出たら再配置する
         if (this.x + this.width < 0) {
             this.x += this.width*this.length;  // 初期位置に戻す
             this.randomHeight();
+            if(this.number==7){
+                firework.checkFlag(this.x,this.y);
+            }
         }
     }
 
