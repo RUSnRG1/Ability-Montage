@@ -1,14 +1,30 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 50px;
-    padding: 0;
-    box-sizing: border-box;
+/*all right reserved End of My Lilith*/
+/*PCとスマホで大きく変わる可能性のあるものは下に入れること！*/
+
+
+/*共通設定*/
+/*body*/
+body{
+    background: black;
+
+    margin: 0px;
+    padding:0px;
+
+    color:"#80a6b0";
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 2;
+    -webkit-text-size-adjust: none;
 }
 
-header {
-    position: relative;
-    max-width: 1000px;
-    margin: 0 auto; /* 中央に配置 */
+#container{
+    background:#0e69c4;
+    overflow: hidden;
+	max-width: 1200px;
+	margin: 30px auto 0;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
+	border-radius: 20px;	/*角丸のサイズ*/
+	padding: 40px;		/*ボックス内の余白*/
 }
 
 .slider {
@@ -21,110 +37,32 @@ header {
     height: auto;
 }
 
-.slider-text {
-    position: relative;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 5px 10px;
-}
 
-
-main {
+.content-links {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 1000px;
-    gap: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    margin: 0 auto; /* 中央に配置 */
-    
+    justify-content: space-between; /* 等間隔に配置 */
+    max-width: 100%;
+    gap: 10px;
 }
 
-.main_contents {
-    display: grid;
-    grid-template-areas: 
-        "information content"
-        "whats-new content";
-    grid-template-columns: 60% 40%;
-    grid-template-rows: 60% 40%;
-    gap: 20px;
-    width: 980px;
-    height: 480px;
-    margin: 0 auto ;
-    box-sizing: border-box;
-    transform: translateX(-10px); /* gapの半分だけ左にずらす */
-}
-
-
-/* 子要素のスタイル */
-.information, .whats-new {
-    box-sizing: border-box;
-    overflow-y: scroll;
-    padding: 5px 20px;
-
-    background-color: #141b22;
-}
-
-.information {
-    grid-area: information;
-}
-
-.whats-new {
-    grid-area: whats-new;
-}
-
-.content {
-    grid-area: content;
-    box-sizing: border-box;
-    background-color: #141b22;
-    padding: 5px 20px;
-}
-
-@media (max-width: 740px) {
-    .main_contents {
-        display: flex;
-        flex-wrap: wrap;
-        width: 740px;
-    }
-
-    .information, .whats-new {
-        width: 100%;
-        height: 200px;
-    }
-    .content {
-        width: 100%;
-        height: 460px;
-    }
-}
-
-footer {
-    clear: both;
+.content-item {
+    flex: 1; /* 各リンクが均等な幅になるように */
+    padding: 0px 0;
+    background-color: #333;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
     text-align: center;
-    background-color: #000000;
-    border-top: 1px solid #ccc;
-
-    width: 90%;
-    height: 75px; /* 高さを50pxに指定 */
-    color: #fff;
-    padding: 30px 0;
-    position: absolute;/*←絶対位置*/
-    margin-top: 100px;
 }
 
-footer .social-icons {
-    margin-top: 10px;
+.content-item:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05); /* ホバーで拡大 */
 }
 
-footer .social-icons a {
-    margin: 0 5px;
-}
 
-@media (max-width: 740px) {
-    footer{
-        position: absolute;/*←絶対位置*/
-        margin-top: 500px;
-    }
-
+header {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto; /* 中央に配置 */
 }
