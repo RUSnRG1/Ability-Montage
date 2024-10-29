@@ -11,6 +11,16 @@ header {
     margin: 0 auto; /* 中央に配置 */
 }
 
+#container {
+	overflow: hidden;
+	max-width: 1000px;		/*最大幅の制限。これ以上広がらない。*/
+	margin: 30px auto 0;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.2);	/*ボックスの影。右へ、下へ、ぼかし幅。0,0,0は黒の事で0.2は色が20%ついた状態の事。*/
+	border-radius: 30px;	/*角丸のサイズ*/
+	padding: 40px;		/*ボックス内の余白*/
+	background: #00151d;	/*背景色*/
+}
+
 .slider {
     position: relative;
     text-align: center;
@@ -127,4 +137,18 @@ footer .social-icons a {
         margin-top: 500px;
     }
 
+}
+
+.book {
+    display: flex;
+    width: 80%;
+    /* Adjust based on your preference */
+    margin-bottom: 20px;
+}
+
+.book img {
+    width: 200px;
+    /* Adjust based on your book cover sizes */
+    height: auto;
+    margin-right: 20px;
 }
