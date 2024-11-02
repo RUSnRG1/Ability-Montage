@@ -1,11 +1,11 @@
 /*all right reserved End of My Lilith*/
 /*PCとスマホで大きく変わる可能性のあるものは下に入れること！*/
 
-
+/*-----------------------------------------------------*/
 /*共通設定*/
 /*body*/
 body{
-    background: black;
+    background: #131318;
 
     margin: 0px;
     padding:0px;
@@ -17,16 +17,20 @@ body{
     -webkit-text-size-adjust: none;
 }
 
+/*footer以外全要素を囲んでいる枠*/
 #container{
-    background:#0e69c4;
+    background:#07121e;
+    border: 1px solid;
+    border-color:#74e9f9;
     overflow: hidden;
-	max-width: 1200px;
+	max-width: 1000px;
 	margin: 30px auto 0;
 	box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
 	border-radius: 20px;	/*角丸のサイズ*/
 	padding: 40px;		/*ボックス内の余白*/
 }
-
+/*一番上に表示する画像
+もしかしたら時間経過でスライドショー形式にする？*/
 .slider {
     position: relative;
     text-align: center;
@@ -37,7 +41,7 @@ body{
     height: auto;
 }
 
-
+/*画像下に配置するコンテンツへの遷移ボタン*/
 .content-links {
     display: flex;
     justify-content: space-between; /* 等間隔に配置 */
@@ -48,21 +52,139 @@ body{
 .content-item {
     flex: 1; /* 各リンクが均等な幅になるように */
     padding: 0px 0;
-    background-color: #333;
-    color: #ffffff;
+    border: 1px solid;
+    border-color:#355265;
+    color:#74e9f9;
     text-decoration: none;
     transition: background-color 0.3s, transform 0.2s;
     text-align: center;
 }
 
 .content-item:hover {
-    background-color: #e0e0e0;
+    background-color: #dfe7e9;
     transform: scale(1.05); /* ホバーで拡大 */
 }
 
-
-header {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto; /* 中央に配置 */
+/*各ページのメイン要素全部に適用*/
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1000px;
+    box-sizing: border-box;
+    margin: 0px auto; /* 中央に配置 */
+    margin-top: 20px;
+    color: #74e9f9;
 }
+
+/*footer*/
+footer {
+    clear: both;
+    text-align: center;
+    padding-bottom: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    color: #ccc;
+
+
+}
+footer a {
+    
+    
+    width: 90%;
+    /*height: 75px; /* 高さを50pxに指定 */
+    color: #fff;
+    /*padding: 30px 0;
+    position: absolute;/*←絶対位置*/    
+}
+
+/*-----------------------------------------------------*/
+/*main page*/
+/*三つのコンテンツの総合*/
+
+.main_contents {
+    display: grid;
+    grid-template-areas: 
+        "information emp1 content"
+        "emp2 emp1 content"
+        "whats-new emp1 content";
+    grid-template-columns: 59% 2% 39%;
+    grid-template-rows: 59% 2% 39%;
+    width: 1000px;
+    height: 480px;
+    margin: 0 auto ;
+    box-sizing: border-box;
+    /*transform: translateX(-10px); /* gapの半分だけ左にずらす */
+}
+
+.information, .whats-new {
+    box-sizing: border-box;
+    overflow-y: scroll;
+    padding: 5px 20px;
+    border: 2px solid #355265;
+    line-height: 25px;
+}
+
+.information {
+    grid-area: information;
+}
+
+.whats-new {
+    grid-area: whats-new;
+}
+
+.content {
+    grid-area: content;
+    box-sizing: border-box;
+    border: 2px solid #355265;
+    padding: 5px 20px;
+}
+
+/*-----------------------------------------------------*/
+/*ブログページ*/
+/*全体設計*/
+.blog_contents {
+    display: grid;
+    grid-template-columns: 74% 2% 24%;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: start; /* 内容に応じて高さを自動調整 */
+}
+
+.blog_text {
+    padding: 20px;
+    color: #74e9f9;
+    border: 2px solid #355265;
+    line-height: 25px;
+    box-sizing: border-box;
+    grid-column: 1 / 2;
+}
+
+.blog_description{
+    padding: 20px;
+    color: #74e9f9;
+    border: 2px solid #355265;
+    line-height: 25px;
+    box-sizing: border-box;
+    grid-column: 3 / 4; 
+
+}
+
+@media (max-width: 740px) {
+    .main_contents {
+        display: flex;
+        flex-wrap: wrap;
+        width: 740px;
+    }
+
+    .information, .whats-new {
+        width: 100%;
+        height: 200px;
+    }
+    .content {
+        width: 100%;
+        height: 460px;
+    }
+}
+
