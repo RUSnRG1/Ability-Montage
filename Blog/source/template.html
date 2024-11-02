@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="auther" content="れう すずらぎ">
+        <title>End of my Lilithのブログ</title><!--ここにブログタイトル入れる。タブに表示される-->
+        <link rel="stylesheet" href="/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="/script.js"></script>
+    </head>
+    <body>
+        <div id="container">
+            <div class="slider">
+                <img src="/images/header.png" alt="Top Illustration">
+            </div>
+            <div class="content-links">
+                <a href="about.html" class="content-item">About</a>
+                <a href="book.html" class="content-item">Book</a>
+                <a href="game.html" class="content-item">Game</a>
+                <a href="Blog.html" class="content-item">Blog</a>
+                <a href="music.html" class="content-item">Music</a>
+                <a href="cosplay.html" class="content-item">Cosplay</a>
+            </div>
+            <main>
+                <div class="blog_contents">
+                    <div class="blog_text" id="blog-text">
+                        <!-- Markdownの内容がここに表示されます -->
+                    </div>
+                    <div class="blog_description">
+                        <p>ここに著作情報とか</p>
+                    </div>
+                </div>
+            </main>
+        </div>  
+        <footer>
+            <p>&copy; 2023-2024 "End of My Lilith" All Rights Reserved.</p>
+            <div class="social-icons">
+                <a href="https://x.com/RUSnRG1"><img src="twitter-icon.png" alt="Twitter"></a>
+                <a href="#"><img src="facebook-icon.png" alt="BlueSky"></a>       
+                <a href="#"><img src="line-icon.png" alt="Pixiv"></a>
+            </div>
+        </footer>
+
+        <!-- ページ読み込み時にMarkdownファイルを指定してロード -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // script.js 内の loadMarkdown 関数にパスを渡す
+                loadMarkdown("/Blog/source/temp.md");
+            });
+        </script>
+    </body>
+</html>
