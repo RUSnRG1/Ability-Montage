@@ -152,23 +152,114 @@ footer a {
     align-items: start; /* 内容に応じて高さを自動調整 */
 }
 
+/* ブログ一覧のスタイル */
+.blog-list {
+    display: grid;
+    gap: 20px;
+    margin-top: 0px;
+    grid-column: 1/2;
+}
+
+.blog-thumbnail {
+    padding: 20px;
+    color: #2ea3b2;
+    border: 2px solid #355265;
+    line-height: 25px;
+    box-sizing: border-box;
+}
+
+.blog-thumbnail h2 {
+    font-size: 1.2em;
+    color: #355265;
+}
+
+.blog-thumbnail p {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.blog-thumbnail a {
+    color: #0e69c4;
+    text-decoration: none;
+}
+
+/* ページ分割ボタン */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+.pagination button {
+    padding: 6px 6px;
+    border: none;
+    background-color: #0e69c4;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.pagination button.active {
+    background-color: #555;
+    color: white;
+    font-weight: bold;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    color: #aaa;
+    cursor: default;
+}
+
+.pagination button:hover:not(.active):not(:disabled) {
+    background-color: #eee;
+}
+
+/* Markdownに関する記述 */
 .blog_text {
     padding: 20px;
-    color: #74e9f9;
+    color: #2ea3b2;
     border: 2px solid #355265;
     line-height: 25px;
     box-sizing: border-box;
     grid-column: 1 / 2;
 }
 
+/* Markdown内の画像に最大幅を設定 */
+.blog_text img {
+    max-width: 100%;  /* 枠内に収める */
+    height: auto;     /* アスペクト比を保つ */
+    display: block;
+    margin: 10px auto; /* 枠内で中央に表示 */
+}
+
 .blog_description{
     padding: 20px;
-    color: #74e9f9;
+    color: #2ea3b2;
     border: 2px solid #355265;
     line-height: 25px;
     box-sizing: border-box;
     grid-column: 3 / 4; 
+}
 
+/* タイトル */
+.blog_title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2ea3b2;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+/* 区切り線 */
+.separator {
+    width: 100%;
+    height: 2px;
+    background-color: #295f67; /* 色を指定 */
+    margin-bottom: 20px;
 }
 
 @media (max-width: 740px) {

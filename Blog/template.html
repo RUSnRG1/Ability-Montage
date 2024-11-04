@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="auther" content="れう すずらぎ">
-        <title>End of my Lilithのブログ</title><!--ここにブログタイトル入れる。タブに表示される-->
+        <title id="page-title"></title><!--ここにブログタイトル入れる。タブに表示される-->
         <link rel="stylesheet" href="/style.css">
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script src="/script.js"></script>
@@ -17,14 +17,22 @@
                 <a href="about.html" class="content-item">About</a>
                 <a href="book.html" class="content-item">Book</a>
                 <a href="game.html" class="content-item">Game</a>
-                <a href="Blog.html" class="content-item">Blog</a>
+                <a href="/Blog/index.html" class="content-item">Blog</a>
                 <a href="music.html" class="content-item">Music</a>
                 <a href="cosplay.html" class="content-item">Cosplay</a>
             </div>
             <main>
                 <div class="blog_contents">
-                    <div class="blog_text" id="blog-text">
+                    <div class="blog_text">
+                        <!-- タイトル -->
+                        <h1  id="blog-title"></h1>
+
+                        <!-- 区切り線（将来的に画像に置き換えられる） -->
+                        <div class="separator"></div>
+
                         <!-- Markdownの内容がここに表示されます -->
+                        <div id="blog-text"></div>
+
                     </div>
                     <div class="blog_description">
                         <p>ここに著作情報とか</p>
@@ -43,10 +51,13 @@
 
         <!-- ページ読み込み時にMarkdownファイルを指定してロード -->
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                // script.js 内の loadMarkdown 関数にパスを渡す
-                loadMarkdown("/Blog/source/temp.md");
-            });
+            const urlParams = new URLSearchParams(window.location.search);
+            const blogPath = urlParams.get('path');
+            const blogTitle = urlParams.get('title');
+            // タイトルをページ内にセット
+            document.getElementById("page-title").textContent = blogTitle || "ブログ記事";
+            document.getElementById("blog-title").textContent = blogTitle || "ブログ記事";
+            loadMarkdown(blogPath);
         </script>
     </body>
 </html>
