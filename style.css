@@ -99,6 +99,7 @@ footer a {
     position: absolute;/*←絶対位置*/    
 }
 
+
 /*-----------------------------------------------------*/
 /*main page*/
 /*三つのコンテンツの総合*/
@@ -140,6 +141,66 @@ footer a {
     border: 2px solid #355265;
     padding: 5px 20px;
 }
+
+/*-----------------------------------------------------*/
+/*工事中 page*/
+/*About領域*/
+.kouji{
+    color: #2ea3b2;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.kouji img {
+    max-width: 100%;  /* 枠内に収める */
+    height: auto;     /* アスペクト比を保つ */
+    display: block;
+    margin: 10px auto; /* 枠内で中央に表示 */
+}
+
+
+/*-----------------------------------------------------*/
+/*about page*/
+/*About全体*/
+
+.about{
+    display: grid;
+    grid-template-columns: 65% 0% 25%;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: start; /* 内容に応じて高さを自動調整 */
+}
+
+.about p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+
+.about img {
+    max-width: 100%;  /* 枠内に収める */
+    height: auto;     /* アスペクト比を保つ */
+    display: block;
+    margin: 10px auto; /* 枠内で中央に表示 */
+}
+
+.about_text{
+    color: #2ea3b2;
+    text-align: left;
+    margin-left: 20px;
+    grid-column: 1/2;
+}
+
+.about_img{
+    color: #2ea3b2;
+    text-align: left;
+    width: 100%;
+    margin-top: 30px;
+    margin-right: 0px;
+    grid-column: 3/4;
+}
+
+
 
 /*-----------------------------------------------------*/
 /*ブログページ*/
