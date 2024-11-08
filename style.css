@@ -86,12 +86,8 @@ footer {
     margin-top: 20px;
     border-top: 1px solid #ccc;
     color: #ccc;
-
-
 }
 footer a {
-    
-    
     width: 90%;
     /*height: 75px; /* 高さを50pxに指定 */
     color: #fff;
@@ -99,6 +95,12 @@ footer a {
     position: absolute;/*←絶対位置*/    
 }
 
+footer .social-icons img {
+    max-width: 30px;   /* 最大幅を30pxに設定 */
+    height: auto;      /* 高さは自動調整でアスペクト比を維持 */
+    margin: 0 5px;     /* アイコン同士の間隔を設定 */
+    vertical-align: middle; /* テキストと中央揃え */
+}
 
 /*-----------------------------------------------------*/
 /*main page*/

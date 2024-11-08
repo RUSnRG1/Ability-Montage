@@ -1,30 +1,18 @@
 # End of My LilithのHP
 よおこそ
-## 統一構造
-- body:
-  - 文字色
-  - フォント
-  - フォントサイズ
-  - 行間
-  - 背景色
-- a
-  - リンクのこと。
-- container
-  - 背景色
-  - margin:30px auto 0
-  - これはサイト全を囲むので画面幅で変わる？
-  - 
-- slider
-  - 要はヘッダー画像。container内部
-  - 
-- header
-  - container内部、ヘッダー画像の下
-  - contentを載せておく
-- footer
-  - container外部
-  - All Right とアイコンを載せる
+# Blog投稿方法
 
-## main
-- information
-- whats-new
-- content
+1. 投稿日時のフォルダをsource内に作る
+2. この中にtext.mdファイルを作る
+3. text.mdにブログを書く
+   1. この際、タイトルはscript.jsの方に記載するため、いきなり本文からスタートさせる
+   2. 画像を挿入する場合は(/Blog/source/2024-11-04/6.jpg)という風に絶対パスで記載し、text.mdと同じフォルダに入れる
+4. script.jsにタイトルとtext.mdのパスを載せる。
+5. 以上！
+
+## 変更すべき場所
+- blog用のjsファイルを作って、機能はそこに集約させる
+- 全頁共通項目はscript.jsを使って一括にまとめる
+- ヘッダー画像をクリックしたらホームに戻れるようにする
+- ブログの横作る。
+  - ここもブログ全頁共通。
