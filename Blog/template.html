@@ -17,7 +17,7 @@
                 <div class="blog_contents">
                     <div class="blog_text">
                         <!-- タイトル -->
-                        <h1  id="blog-title"></h1>
+                        <h1 id="blog-title"></h1>
 
                         <!-- 区切り線（将来的に画像に置き換えられる） -->
                         <div class="separator"></div>
@@ -36,6 +36,9 @@
 
         <!-- ページ読み込み時にMarkdownファイルを指定してロード -->
         <script>
+            marked.setOptions({
+                breaks : true,
+            });
             const urlParams = new URLSearchParams(window.location.search);
             const blogPath = urlParams.get('path');
             const blogTitle = urlParams.get('title');
