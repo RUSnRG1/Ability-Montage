@@ -128,7 +128,7 @@ function generateShareLinks() {
         }
         // Blueskyの共有リンク
         if (blueskyShareLink) {
-            blueskyShareLink.href = `https://bsky.app/intent/compose?text=${blogTitle}%0A${currentUrl}`;
+            blueskyShareLink.href = `https://bsky.app/intent/compose?text=${blogTitle}%0a${currentUrl}`;
         }
 
         // href属性を設定
