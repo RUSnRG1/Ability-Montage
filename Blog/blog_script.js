@@ -108,3 +108,28 @@ async function loadMarkdown(markdownPath) {
         document.getElementById("blog-text").innerHTML = "<p>コンテンツを読み込めませんでした。</p>";
     }
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const blogTitleElement = document.getElementById("blog-title");
+    const twitterShareLink = document.getElementById("twitter-share");
+    const blueskyShareLink = document.getElementById("bluesky-share");
+
+    if (blogTitleElement && twitterShareLink) {
+        // ブログのタイトルを取得
+        const blogTitle = encodeURIComponent(blogTitleElement.textContent);
+        const currentUrl = encodeURIComponent(window.location.href);
+
+        // Twitterの共有リンク
+        if (twitterShareLink) {
+            twitterShareLink.href = `https://twitter.com/share?url=${currentUrl}&text=${blogTitle}`;
+        }
+        // Blueskyの共有リンク
+        if (blueskyShareLink) {
+            blueskyShareLink.href = `https://bsky.app/intent/compose?text=${blogTitle}%0A${currentUrl}`;
+        }
+
+        // href属性を設定
+        twitterShareLink.href = twitterUrl;
+    }
+});

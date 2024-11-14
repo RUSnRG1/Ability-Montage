@@ -319,6 +319,20 @@ footer .social-icons img {
     line-height: 100%;
 }
 
+/* 共有ボタン */
+.blog_share {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* テキストとアイコンの間隔 */
+}
+
+.blog_share img {
+    max-width: 30px;   /* 最大幅を30pxに設定 */
+    height: auto;      /* 高さは自動調整でアスペクト比を維持 */
+    margin: 0 5px;     /* アイコン同士の間隔を設定 */
+    vertical-align: middle; /* テキストと中央揃え */
+}
+
 /* 区切り線 */
 .separator {
     width: 100%;
