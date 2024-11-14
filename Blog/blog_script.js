@@ -124,7 +124,7 @@ function generateShareLinks() {
 
         // Twitterの共有リンク
         if (twitterShareLink) {
-            twitterShareLink.href = `https://twitter.com/share?url=${currentUrl}&text=${blogTitle}`;
+            twitterShareLink.href = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${blogTitle}`;
         }
         // Blueskyの共有リンク
         if (blueskyShareLink) {
