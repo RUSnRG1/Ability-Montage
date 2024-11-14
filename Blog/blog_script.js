@@ -134,4 +134,4 @@ function generateShareLinks() {
         // href属性を設定
         twitterShareLink.href = twitterUrl;
     }
-});
+};
