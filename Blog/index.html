@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="auther" content="れう すずらぎ">
+        <title>End of My Lilithのブログ</title><!--ここにブログタイトル入れる。タブに表示される-->
+        <link rel="stylesheet" href="/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="/script.js" defer></script>
+        <script src="/Blog/blog_script.js"></script>
+    </head>
+    <body>
+        <div id="container">
+            <div class="slider-placeholder"></div>
+            <div class="contentlink-placeholder"></div>
+            <main>
+                <div class="blog_contents">
+                    <div class="blog-list" id="blog-list"></div>
+        
+                    <!-- ページ分割ボタン -->
+                    <div class="pagination" id="pagination"></div>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Blog</title>
-    <link rel="stylesheet" href="../style.css">
-</head>
-
-<body bgcolor="#000000" text="#80a6b0" link="#46644e" vlink="#6864b9">
-    <div id="container">
-    <header>
-        <div class="slider">
-            <img src="../images/header.png" alt="Top Illustration">
-            <div class="slider-text">And its Rebirth</div>
-        </div>
-    </header>
-    <main>
-        <div class="book">
-            <img src="images/Chinese_Food.jpg" alt="Book Cover">
-            <div class="description">
-                <h2>中華美食探訪 <span class="format">(B5　漫画)</span></h2>
-                <p>2023/10/15 第一九回 東方紅楼夢 にて頒布</p>
-                <p>饕餮熱望幻一品　吉弔翻弄此我儘　美鈴演神業調理　娘々企姑息取引</p>
-                <p><span class="format">本作使用偽中国語。然、数人見本誌読後、勘違本当中国語。我大変愉快。</span></p>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2023-2024 "End of My Lilith" All Rights Reserved.</p>
-        <div class="social-icons">
-            <a href="https://x.com/RUSnRG1"><img src="twitter-icon.png" alt="Twitter"></a>
-            <a href="#"><img src="facebook-icon.png" alt="BlueSky"></a>       
-            <a href="#"><img src="line-icon.png" alt="Pixiv"></a>
-        </div>
-    </footer>
-    <script src="script.js"></script>
-</body>
+                    <div class="blog_description">
+                        <p>ここに著作情報とか</p>
+                    </div>
+                </div>
+            </main>
+        </div>  
+        <div class="footer-placeholder"></div>
+        <!-- ページ読み込み時にMarkdownファイルを指定してロード -->
+        <script>
+            loadBlogList(1);
+        </script>
+    </body>
 </html>
-

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="auther" content="れう すずらぎ">
+        <title id="page-title"></title><!--ここにブログタイトル入れる。タブに表示される-->
+        <link rel="stylesheet" href="/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="/script.js"></script>
+        <script src="/Blog/blog_script.js"></script>
+    </head>
+    <body>
+        <div id="container">
+            <div class="slider-placeholder"></div>
+            <div class="contentlink-placeholder"></div>
+            <main>
+                <div class="blog_contents">
+                    <div class="blog_text">
+                        <!-- タイトル -->
+                        <h1 id="blog-title"></h1>
+
+                        <!-- 区切り線（将来的に画像に置き換えられる） -->
+                        <div class="separator"></div>
+
+                        <!-- Markdownの内容がここに表示されます -->
+                        <div id="blog-text"></div>
+                        </br>
+                        </br>
+                        <div class="blog_share">
+                            共有⇒
+                            <a
+                                id="twitter-share"
+                                href=""
+                                target="_blank"
+                                rel="nofollow noopener noreferrer"
+                            >
+                                <img src="/images/twitter.png" alt="Twitterアイコン" class="share-icon">
+                            </a>
+                            <a
+                                id="bluesky-share"
+                                href=""
+                                target="_blank"
+                                rel="nofollow noopener noreferrer"
+                            >
+                                <img src="/images/bluesky.png" alt="Blueskyアイコン" class="share-icon">
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="blog_description">
+                        <p>ここに著作情報とか</p>
+                    </div>
+                </div>
+            </main>
+        </div>  
+        <div class="footer-placeholder"></div>
+
+        <!-- ページ読み込み時にMarkdownファイルを指定してロード -->
+        <script>
+            marked.setOptions({
+                breaks : true,
+            });
+            const urlParams = new URLSearchParams(window.location.search);
+            const blogPath = urlParams.get('path');
+            const blogTitle = urlParams.get('title');
+            // タイトルをページ内にセット
+            document.getElementById("page-title").textContent = blogTitle || "ブログ記事";
+            document.getElementById("blog-title").textContent = blogTitle || "ブログ記事";
+            loadMarkdown(blogPath);
+        </script>
+    </body>
+</html>
