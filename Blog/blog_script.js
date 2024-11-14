@@ -102,6 +102,8 @@ async function loadMarkdown(markdownPath) {
     }).then(response => response.text())
     .then(text => {
         exportMarkdown.innerHTML = marked.parse(text);
+        // Markdownの読み込みが完了した後に共有リンクを生成
+        generateShareLinks();
     });
     } catch (error) {
         console.error("Markdownファイルの読み込みに失敗しました:", error);
@@ -110,7 +112,7 @@ async function loadMarkdown(markdownPath) {
 }
 
 
-document.addEventListener("DOMContentLoaded", () => {
+function generateShareLinks() {
     const blogTitleElement = document.getElementById("blog-title");
     const twitterShareLink = document.getElementById("twitter-share");
     const blueskyShareLink = document.getElementById("bluesky-share");
