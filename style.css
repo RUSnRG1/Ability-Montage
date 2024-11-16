@@ -302,11 +302,19 @@ footer .social-icons img {
 
 .blog_description{
     padding: 20px;
+    line-height: 1em;
     color: #2ea3b2;
     border: 2px solid #355265;
-    line-height: 25px;
+    text-align: center;
     box-sizing: border-box;
     grid-column: 3 / 4; 
+}
+
+.blog_description img{
+    max-width: 100%;  /* 枠内に収める */
+    height: auto;     /* アスペクト比を保つ */
+    display: block;
+    margin: 5px auto; /* 枠内で中央に表示 */
 }
 
 /* タイトル */
