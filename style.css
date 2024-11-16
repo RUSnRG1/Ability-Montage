@@ -349,6 +349,84 @@ footer .social-icons img {
     margin-bottom: 20px;
 }
 
+
+/*-----------------------------------------------------*/
+/* 頒布物ページ */
+/* フィルターボタンを横並びに配置 */
+.filter-buttons {
+    display: flex; /* フレックスボックスを使用 */
+    justify-content:flex-end; /* 横中央揃え */
+    width: 100%;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.filter-button {
+    width: 100px;
+    padding: 0px 0;
+    border: 1px solid;
+    border-color:#355265;
+    color:#355265;
+    background-color: #07121e;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    text-align: center;
+}
+
+.filter-button.active {
+    background-color: #2ea3b2;
+    color: white;
+}
+
+.filter-button:hover {
+    background-color: #ddd;
+}
+
+/* 本の要素を順に配置 */
+.works_contents {
+    width: 100%; /* 横幅100% */
+    display: flex;
+    flex-direction: column;
+}
+
+.work-item {
+    display: flex;
+    width: 100%;; 
+    min-height: 200px;
+    margin: 0 auto; /* 中央揃え */
+    border: 1px solid #2ea3b2;
+    border-radius: 10px;
+    background-color: #07121e;
+    margin-bottom: 20px;
+}
+
+.book-cover {
+    width: 240px;
+    height: 320px;
+    object-fit: cover;
+    margin: 20px 20px 20px 20px ;
+    border-radius: 5px;
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.book-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.book-description {
+    font-size: 18px;
+    color: #469fac;
+}
+
+
+
 @media (max-width: 740px) {
     .main_contents {
         display: grid;
