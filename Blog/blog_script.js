@@ -124,11 +124,11 @@ function generateShareLinks() {
 
         // Twitterの共有リンク
         if (twitterShareLink) {
-            twitterShareLink.href = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${blogTitle}`;
+            twitterShareLink.href = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${blogTitle}：End of My Lilithのブログ`;
         }
         // Blueskyの共有リンク
         if (blueskyShareLink) {
-            blueskyShareLink.href = `https://bsky.app/intent/compose?text=${blogTitle}%0a${currentUrl}`;
+            blueskyShareLink.href = `https://bsky.app/intent/compose?text=${blogTitle}：End of My Lilithのブログ%0a${currentUrl}`;
         }
 
         // href属性を設定
