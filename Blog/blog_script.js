@@ -1,8 +1,8 @@
 // ブログデータ（仮のデータ構造）
 const blogData = [
-    { title: "社会人生活7ヵ月、サークル参加6回", path: "source/2024-11-08/text.md" },
-    { title: "投稿テスト", path: "source/2024-11-04/text.md" },
-    { title: "メモ", path: "source/2024-11-16/text.md" },
+    { title: "社会人生活7ヵ月、サークル参加6回", path: "Blog/source/2024-11-08/text.md" },
+    { title: "投稿テスト", path: "Blog/source/2024-11-04/text.md" },
+    { title: "メモ", path: "Blog/source/2024-11-16/text.md" },
     { title: "2024年8月24日", path: "source/2024-08-22/text.md" },
     { title: "2024年8月25日", path: "source/2024-08-10/text.md" },
     { title: "2024年8月26日", path: "source/2024-08-22/text.md" },
@@ -34,7 +34,7 @@ function loadBlogList(page) {
                     <div class="blog-thumbnail">
                         <h2>${blog.title}</h2>
                         <p>${excerpt}...</p>
-                        <a href="template.html?path=${blog.path}&title=${encodeURIComponent(blog.title)}">続きを読む</a>
+                        <a href="Blog/template.html?path=${blog.path}&title=${encodeURIComponent(blog.title)}">続きを読む</a>
                     </div>
                 `;
                 blogListContainer.innerHTML += blogHTML;
