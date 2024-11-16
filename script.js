@@ -13,7 +13,7 @@ function loadHTML(selector, file) {
 
 // ページが読み込まれたときに共通部分を挿入
 document.addEventListener("DOMContentLoaded", () => {
-    loadHTML(".contentlink-placeholder", "/End-of-My-Lilith/html_source/content-links.html");  // ナビゲーションバー
-    loadHTML(".slider-placeholder", "/End-of-My-Lilith/html_source/slider.html");  // スライダー
-    loadHTML(".footer-placeholder", "/End-of-My-Lilith/html_source/footer.html");  // フッター
+    loadHTML(".contentlink-placeholder", "./html_source/content-links.html");  // ナビゲーションバー
+    loadHTML(".slider-placeholder", "./html_source/slider.html");  // スライダー
+    loadHTML(".footer-placeholder", "./html_source/footer.html");  // フッター
 });

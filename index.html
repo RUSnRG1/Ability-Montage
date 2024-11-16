@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
+        <script>
+            // ローカル環境と本番環境を判定して <base> タグを動的に設定
+            (function() {
+                var baseTag = document.createElement("base");
+                
+                // hostname でローカル環境か本番環境かを判定
+                if (location.hostname === "192.168.10.110" || location.hostname === "localhost") {
+                    // ローカル環境: Live Serverなど
+                    baseTag.href = "/";
+                } else {
+                    // 本番環境: GitHub Pagesのパス
+                    baseTag.href = "/End-of-My-Lilith/";
+                }
+    
+                // <head> に <base> タグを挿入
+                document.head.appendChild(baseTag);
+            })();
+        </script>
         <meta charset="UTF-8">
         <meta name="auther" content="れう すずらぎ">
         <title>End of my Lilith</title>
