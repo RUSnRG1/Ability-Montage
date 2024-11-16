@@ -24,8 +24,8 @@
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:site" content="@RUSnRG1" />
         <meta name="twitter:title" content="" id="twitter-title" />
-        <meta property="og:title" content="" id="page-title"/>
-        <meta property="og:description" content="End of My Lilithのブログ" />
+        <meta property="og:title" content="" id="page-title1"/>
+        <meta property="og:description" content="" id="page-title2" />
         <meta property="og:image" content="https://rusnrg1.github.io/End-of-My-Lilith/images/meta.png" />
         <title id="page-title"></title><!--ここにブログタイトル入れる。タブに表示される-->
         <link rel="stylesheet" href="style.css">
@@ -97,9 +97,12 @@
             document.getElementById("blog-title").textContent = blogTitle || "ブログ記事";
 
             const twitterTitleMeta = document.getElementById('twitter-title');
-            if (twitterTitleMeta) {
-                twitterTitleMeta.setAttribute('content', blogTitle);
-            }
+            twitterTitleMeta.setAttribute('content', blogTitle);
+
+            const twitterTitleMeta2 = document.getElementById('page-title1');
+            twitterTitleMeta2.setAttribute('content', blogTitle);
+            const twitterTitleMeta3 = document.getElementById('page-title2');
+            twitterTitleMeta3.setAttribute('content', blogTitle);
             loadMarkdown(blogPath);
         </script>
     </body>
