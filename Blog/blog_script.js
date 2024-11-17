@@ -1,13 +1,11 @@
 // ブログデータ（仮のデータ構造）
 const blogData = [
+    // 上に追加していく
+    //{ title: "『春怨』の補足：モブについて", path: "Blog/source/2024-08-10/text.md" },
+    { title: "世はまさに、大個人サイト時代！", path: "Blog/source/2024-11-17/text.md" },
     { title: "社会人生活7ヵ月、サークル参加6回", path: "Blog/source/2024-11-08/text.md" },
     { title: "投稿テスト", path: "Blog/source/2024-11-04/text.md" },
-    { title: "メモ", path: "Blog/source/2024-11-16/text.md" },
-    { title: "2024年8月24日", path: "source/2024-08-22/text.md" },
-    { title: "2024年8月25日", path: "source/2024-08-10/text.md" },
-    { title: "2024年8月26日", path: "source/2024-08-22/text.md" },
-    { title: "2024年8月27日", path: "source/2024-08-22/text.md" },
-    // 以降も追加
+    { title: " ", path: "Blog/source/2024-11-16/text.md" },
 ];
 
 const blogsPerPage = 6;
@@ -25,21 +23,35 @@ function loadBlogList(page) {
     const blogListContainer = document.getElementById("blog-list");
     blogListContainer.innerHTML = ""; // 一旦クリア
 
-    blogsToDisplay.forEach(blog => {
+    const fetchPromises = blogsToDisplay.map(blog => 
         fetch(blog.path)
             .then(response => response.text())
             .then(markdown => {
                 const excerpt = markdown.split("\n").slice(0, 3).join(" ");
-                const blogHTML = `
+                return `
                     <div class="blog-thumbnail">
                         <h2>${blog.title}</h2>
                         <p>${excerpt}...</p>
                         <a href="Blog/template.html?path=${blog.path}&title=${encodeURIComponent(blog.title)}">続きを読む</a>
                     </div>
                 `;
-                blogListContainer.innerHTML += blogHTML;
             })
-            .catch(error => console.error("Error loading blog:", error));
+            .catch(error => {
+                console.error("Error loading blog:", error);
+                return `
+                    <div class="blog-thumbnail">
+                        <h2>${blog.title}</h2>
+                        <p>コンテンツを読み込めませんでした。</p>
+                    </div>
+                `;
+            })
+    );
+
+    // Promise.all ですべての処理を待機し、順序を維持
+    Promise.all(fetchPromises).then(blogHTMLs => {
+        blogHTMLs.forEach(blogHTML => {
+            blogListContainer.innerHTML += blogHTML;
+        });
     });
 
     renderPagination();
