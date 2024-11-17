@@ -7,7 +7,7 @@
                 var baseTag = document.createElement("base");
                 
                 // hostname でローカル環境か本番環境かを判定
-                if (location.hostname === "192.168.10.110" || location.hostname === "localhost") {
+                if (location.hostname === "127.0.0.1" || location.hostname === "localhost") {
                     // ローカル環境: Live Serverなど
                     baseTag.href = "/";
                 } else {
@@ -32,6 +32,7 @@
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script src="script.js"></script>
         <script src="Blog/blog_script.js"></script>
+       
     </head>
     <body>
         <div id="container">
