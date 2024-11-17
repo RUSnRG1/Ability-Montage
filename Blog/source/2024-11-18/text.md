@@ -1,4 +1,4 @@
-<img src="/Blog/source/2024-11-18/表紙.jpeg" width="200">
+<img src="Blog/source/2024-11-18/表紙.jpeg" width="200">
  
 　京都秘封、および秋例大祭で頒布した小説『春怨』。
 　この本には名前付きモブが5人出てくる。彼らの設定も決して適当に作っているわけではないということを補足したい。
@@ -46,7 +46,7 @@
 ## マルブランシュという名前
 　マルブランシュとGoogle検索すれば、「もしかして：マールブランシュ」と表示され、美味しそうな洋菓子の写真と、「京都北山マールブランシュ」のお店HPが出てくるだろう。京都駅にも店舗を構えており、お土産として購入したことのある方もいるのでは？　私も京都合同の前日にカヌレを買ってホテルで食べた。
 <figure style="text-align:center;">
-  <img src="/Blog/source/2024-11-18/mare.jpg"  width="200"/>
+  <img src="Blog/source/2024-11-18/mare.jpg"  width="200"/>
   <figcaption style="font-size:small;">美味しかった</figcaption>
 </figure>
 
@@ -85,7 +85,7 @@
 > 黒い体に蝙蝠のような翼を生やし、鋭い牙と爪を持つとされる。汚職の罪を犯し煮えたぎった瀝青の池に沈められた亡者を見張り、浮かんできた者を鉤手で苛む役割を持つ。
 
 > <figure style="text-align:center;">
-  <img src="/Blog/source/2024-11-18/mareb.jpg" width="200">
+  <img src="Blog/source/2024-11-18/mareb.jpg" width="200">
   <figcaption style="font-size:small;">
     <a href="https://ja.wikipedia.org/wiki/%E3%83%9E%E3%83%AC%E3%83%96%E3%83%A9%E3%83%B3%E3%82%B1" target="_blank">マレブランケ</a>
 </figcaption>
@@ -96,7 +96,7 @@
 　ここで簡単に神曲という作品の解説をしよう。この本は筆者でかつ主人公であるダンテが、古代ローマの詩人、ウェルギリウスの導きにより地獄・煉獄・天国を回り、見神の域へと昇ってゆく叙事詩である。
 　地獄篇では、「この門をくぐる者は一切の希望を捨てよ」で有名な地獄の門（上野にあるやつ）をくぐり、そこで罰を受ける罪人たちの間をめぐりながら、地獄の最下層であるコキュートスを目指す。マレブランケがいるのは地獄のなかでも下層の方で、そこで罪の種類ごとに悪の嚢に振り分けられた罪人たちを楽しく痛めつけている。しかもあろうことか、この悪魔たちは初めはダンテたちを案内していたのに、途中から逆上して彼らを追い回す。
 <figure style="text-align:center;">
-  <img src="/Blog/source/2024-11-18/hell.jpg" width="200">
+  <img src="Blog/source/2024-11-18/hell.jpg" width="200">
   <figcaption style="font-size:small;">地獄の様子（ボッティチェリ作）</figcaption>
 </figure>
 　
