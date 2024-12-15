@@ -426,8 +426,25 @@ footer .social-icons img {
     color: #469fac;
 }
 
+/*-----------------------------------------------------*/
+/*Cosplay page*/
+/*Cosplay全体*/
 
+.Cosplay {
+    display: flex; /* フレックスボックスで配置 */
+    flex-wrap: wrap; /* 折り返しを許可 */
+    justify-content: center; /* コンテナ内で中央揃え */
+    gap: 5px; /* 画像間のスペースを固定で2pxに設定 */
+    width: 100%;
+    margin-top: 20px;
+}
 
+.Cosplay img {
+    height: 150px; /* 縦の長さを200pxに統一 */
+    width: auto; /* 横幅を自動調整して縦横比を維持 */
+    display: block; /* 画像をブロック要素にして中央寄せを簡単にする */
+    border:none /* ボーダーを削除 */
+}
 
 @media (max-width: 740px) {
     .main_contents {

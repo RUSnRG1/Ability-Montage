@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <script>
+            // ローカル環境と本番環境を判定して <base> タグを動的に設定
+            (function() {
+                var baseTag = document.createElement("base");
+                
+                // hostname でローカル環境か本番環境かを判定
+                if (location.hostname === "127.0.0.1" || location.hostname === "localhost") {
+                    // ローカル環境: Live Serverなど
+                    baseTag.href = "/";
+                } else {
+                    // 本番環境: GitHub Pagesのパス
+                    baseTag.href = "/End-of-My-Lilith/";
+                }
+    
+                // <head> に <base> タグを挿入
+                document.head.appendChild(baseTag);
+            })();
+        </script>
+        <meta charset="UTF-8">
+        <meta name="auther" content="れう すずらぎ">
+        <title>End of My Lilith</title><!--タイトル入れる。タブに表示される-->
+        <link rel="stylesheet" href="./style.css">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="./script.js"></script>
+        <!--以下写真のサムネイル配置、拡大表示のためのスクリプト（Cosようのjsとlightbox2とjquery）-->
+        <script src="/Cosplay/Cos_Script.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div id="container">
+            <div class="slider-placeholder"></div>
+            <div class="contentlink-placeholder"></div>
+            <div class="Cosplay">
+            <!--https://allabout.co.jp/gm/gc/23975/
+            https://qiita.com/tomo-ka/items/450b6cf6f8b9ae213feb
+            参考にはなる？gridを使っていきたい。というかやっぱり頑張ってChatGPTに書かせるか
+            -->
+            </div>
+            
+        </div>  
+        <div class="footer-placeholder"></div>
+
+        <!-- ページ読み込み時にMarkdownファイルを指定してロード -->
+        <script>
+            loadBlogList(1);
+        </script>
+    </body>
+</html>
