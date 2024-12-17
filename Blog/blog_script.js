@@ -1,6 +1,7 @@
 // ブログデータ（仮のデータ構造）
 const blogData = [
     // 上に追加していく
+    { title: "冬コミ　新刊告知", path: "Blog/source/2024-12-21/text.md" },
     { title: "『春怨』の補足：モブについて", path: "Blog/source/2024-11-18/text.md" },
     { title: "世はまさに、大個人サイト時代！", path: "Blog/source/2024-11-17/text.md" },
     { title: "社会人生活7ヵ月、サークル参加6回", path: "Blog/source/2024-11-08/text.md" },
