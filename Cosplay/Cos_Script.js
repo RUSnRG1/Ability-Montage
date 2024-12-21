@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cosplayContainer = document.querySelector('.Cosplay');
-    const csvFilePath = '/Cosplay/metadata.csv'; // CSVファイルのパス
+    const csvFilePath = './Cosplay/metadata.csv'; // CSVファイルのパス
 
     fetch(csvFilePath)
       .then(response => response.text())
@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // 画像要素を生成して挿入
         imageData.forEach(({ filename, title }) => {
           const imgElement = `
-            <a href="/Cosplay/image/hp-${filename}.jpg" data-lightbox="cosimage" data-title="${title}">
-              <img src="/Cosplay/tumbnail_img/hpt-${filename}.jpg" alt="${title}">
+            <a href="./Cosplay/image/hp-${filename}.jpg" data-lightbox="cosimage" data-title="${title}">
+              <img src="./Cosplay/tumbnail_img/hpt-${filename}.jpg" alt="${title}">
             </a>
           `;
           cosplayContainer.innerHTML += imgElement;
