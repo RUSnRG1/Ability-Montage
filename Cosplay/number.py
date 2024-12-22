@@ -36,13 +36,29 @@ def change_filename(from_num, to_num):
     # 後ろに持っていく場合は？
     # fをtempに、f-1から一つずつ前に、、ｔまで来たらtempをtにする
 
-
+    
     if(from_num > to_num):#　後ろのものを前に持ってくるとき
         os.rename(f"image/hp-{from_num}.jpg","image/temp.jpg")
-        for i in range(from_num,to_num,-1):
-            ic()
+        os.rename(f"tumbnail_img/hpt-{from_num}.jpg","tumbnail_img/temp.jpg")
+        for i in range(from_num-1,to_num-1,-1):
+            os.rename(f"image/hp-{i}.jpg",f"image/hp-{i+1}.jpg")
+            os.rename(f"tumbnail_img/hpt-{i}.jpg",f"tumbnail_img/hpt-{i+1}.jpg")
+        os.rename("image/temp.jpg",f"image/hp-{to_num}.jpg")
+        os.rename("tumbnail_img/temp.jpg",f"tumbnail_img/hpt-{to_num}.jpg")
 
-    pass
+    elif(from_num<to_num):
+        os.rename(f"image/hp-{from_num}.jpg","image/temp.jpg")
+        os.rename(f"tumbnail_img/hpt-{from_num}.jpg","tumbnail_img/temp.jpg")
+        for i in range(from_num+1,to_num+1):
+            os.rename(f"tumbnail_img/hpt-{i}.jpg",f"tumbnail_img/hpt-{i-1}.jpg")
+            os.rename(f"image/hp-{i}.jpg",f"image/hp-{i-1}.jpg")
+        os.rename("image/temp.jpg",f"image/hp-{to_num}.jpg")
+        os.rename("tumbnail_img/temp.jpg",f"tumbnail_img/hpt-{to_num}.jpg")
+
+    else:
+        print("input same value")
+
+    return
 
 
 
@@ -57,11 +73,16 @@ def main():
     from_num = int(input())
     print("input to_num")
     to_num = int(input())
-    df = insert_csv(df, from_num, to_num)
-    
-    # 結果をCSVファイルに保存
-    output_csv = 'output.csv'
-    df.to_csv(output_csv, index=False)
+    if(from_num==to_num):
+        print("cant input same values")
+        return
 
+    df = insert_csv(df, from_num, to_num)
+    # 結果をCSVファイルに保存
+    df.to_csv(input_csv, index=False)
+
+    change_filename(from_num,to_num)
+    return 0
+    
 if __name__ == "__main__":
     main()
