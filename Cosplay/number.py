@@ -68,20 +68,30 @@ def main():
     input_csv = 'metadata.csv'
     df = pd.read_csv(input_csv)
 
-    # 各操作を実行
-    print("input from_num")
-    from_num = int(input())
-    print("input to_num")
-    to_num = int(input())
-    if(from_num==to_num):
-        print("cant input same values")
-        return
+    print("Cosplayの写真の順番を入れ替えるコードです")
+    while(1):
+        print("修了する場合はqを、続行する場合はそれ以外を入力してください")
+        if(input()=="q"):
+            break
+        else:
+        # 各操作を実行
+            print("input from_num")
+            from_num = int(input())
+            print("input to_num")
+            to_num = int(input())
 
-    df = insert_csv(df, from_num, to_num)
+            if(from_num==to_num):
+                print("cant input same values")
+                break
+            df = insert_csv(df, from_num, to_num)
+            change_filename(from_num,to_num)
+            print(f"{from_num}番の写真を{to_num}番にしました")
+
+    
     # 結果をCSVファイルに保存
     df.to_csv(input_csv, index=False)
+    print("終了します")
 
-    change_filename(from_num,to_num)
     return 0
     
 if __name__ == "__main__":
