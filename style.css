@@ -204,7 +204,6 @@ footer .social-icons img {
 }
 
 
-
 /*-----------------------------------------------------*/
 /*ブログページ*/
 /*全体設計*/
@@ -234,16 +233,16 @@ footer .social-icons img {
 
 .blog-thumbnail h2 {
     font-size: 1.2em;
-    color: #355265;
+    color: #2ea3b2;
 }
 
 .blog-thumbnail p {
-    color: #666;
+    color: #355265;
     font-size: 0.9em;
 }
 
 .blog-thumbnail a {
-    color: #0e69c4;
+    color: #1e568d;
     text-decoration: none;
 }
 
@@ -444,6 +443,16 @@ footer .social-icons img {
     width: auto; /* 横幅を自動調整して縦横比を維持 */
     display: block; /* 画像をブロック要素にして中央寄せを簡単にする */
     border:none /* ボーダーを削除 */
+}
+
+.Cos_text span { /* テキスト要素に適用 */
+    color: #2ea3b2; /* テキストの色を指定 */
+    font-size: 20px; /* テキストサイズを指定 */
+    text-align: center; /* テキストを中央揃え */
+    margin: 0px 0px; /* テキストの上下間隔を調整 */
+    white-space: pre-line; /* 改行を有効にする */
+    word-break: break-word; /* テキストが長い場合に折り返す */
+    display: block; /* 改行を確実にするため、ブロック要素に設定 */
 }
 
 @media (max-width: 740px) {
